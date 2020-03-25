@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.ProjectMapper">
+  <resultMap id="BaseResultMap" type="com.woniuxy.pojo.Project">
+    <id column="project_id" jdbcType="INTEGER" property="projectId" />
+    <result column="skillgroup_id" jdbcType="INTEGER" property="skillgroupId" />
+    <result column="equipment_id" jdbcType="INTEGER" property="equipmentId" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="project_cost" jdbcType="DECIMAL" property="projectCost" />
+    <result column="project_comment" jdbcType="VARCHAR" property="projectComment" />
+  </resultMap>
+</mapper>
