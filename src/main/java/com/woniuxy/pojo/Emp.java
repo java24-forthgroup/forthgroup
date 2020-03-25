@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Emp {
-    private Integer eid;
-    private String ename;
+    private Integer emp_id;
+    private String emp_name;
 }

@@ -23,7 +23,7 @@
         <c:forEach items="${empList}" var="emp" varStatus="i">
         <tr>
             <td>${i.count}</td>
-            <td>${emp.ename}</td>
+            <td>${emp.emp_name}</td>
         </tr>
         </c:forEach>
         </tbody>
