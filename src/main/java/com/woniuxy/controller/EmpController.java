@@ -18,7 +18,6 @@ public class EmpController {
     //展示所有员工信息，不带分页
     @RequestMapping("index")
     public String index(Model model) {
-        System.out.println("0000");
         List<Emp> empList = empService.findAll();
         model.addAttribute("empList", empList);
         for (Emp e:empList){
