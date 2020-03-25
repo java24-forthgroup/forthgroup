@@ -13,12 +13,11 @@ import java.util.List;
 @Service
 @Transactional
 public class EmpServiceImpl implements EmpService {
-    @Autowired
+    @Autowired(required = false)
     EmpDao empDao;
 
     @Override
     public List<Emp> findAll() {
-        System.out.println("11111");
         return empDao.findAll();
     }
 }
