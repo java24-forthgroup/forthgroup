@@ -18,5 +18,6 @@ public class Emp {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date empBirthday;
     private String empGrade;
-
+    private Aroom aroom;
+    private User user;
 }
