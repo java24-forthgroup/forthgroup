@@ -1,6 +1,6 @@
 package com.woniuxy.service.impl;
 
-import com.woniuxy.dao.EmpDao;
+import com.woniuxy.dao.EmpMapper;
 import com.woniuxy.pojo.Emp;
 import com.woniuxy.service.EmpService;
 
@@ -14,7 +14,7 @@ import java.util.List;
 @Transactional
 public class EmpServiceImpl implements EmpService {
     @Autowired(required = false)
-    EmpDao empDao;
+    EmpMapper empDao;
 
     @Override
     public List<Emp> findAll() {

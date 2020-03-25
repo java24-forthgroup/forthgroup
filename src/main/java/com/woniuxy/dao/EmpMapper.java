@@ -4,7 +4,6 @@ import com.woniuxy.pojo.Emp;
 
 import java.util.List;
 
-public interface EmpDao {
+public interface EmpMapper {
     List<Emp> findAll();
-
 }

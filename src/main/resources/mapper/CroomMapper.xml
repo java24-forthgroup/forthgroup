@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.CroomMapper">
+  <resultMap id="BaseResultMap" type="com.woniuxy.pojo.Croom">
+    <id column="croom_id" jdbcType="INTEGER" property="croomId" />
+    <result column="aroom_id" jdbcType="INTEGER" property="aroomId" />
+    <result column="croom_code" jdbcType="VARCHAR" property="croomCode" />
+    <result column="croom_addr" jdbcType="VARCHAR" property="croomAddr" />
+  </resultMap>
+</mapper>
