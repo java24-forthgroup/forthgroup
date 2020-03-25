@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniuxy.dao.EmpMapper">
+  <resultMap id="BaseResultMap" type="com.woniuxy.pojo.Emp">
+    <id column="emp_id" jdbcType="INTEGER" property="empId" />
+    <result column="aroom_id" jdbcType="INTEGER" property="aroomId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="emp_name" jdbcType="VARCHAR" property="empName" />
+    <result column="emp_birthday" jdbcType="DATE" property="empBirthday" />
+    <result column="emp_grade" jdbcType="VARCHAR" property="empGrade" />
+  </resultMap>
+  <select id="findAll" resultMap="BaseResultMap">
+    select * from emp
+  </select>
+</mapper>

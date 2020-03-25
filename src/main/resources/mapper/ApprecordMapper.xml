@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.ApprecordMapper">
+  <resultMap id="BaseResultMap" type="com.woniuxy.pojo.Apprecord">
+    <id column="apprecord_id" jdbcType="INTEGER" property="apprecordId" />
+    <result column="emp_id" jdbcType="INTEGER" property="empId" />
+    <result column="project_id" jdbcType="INTEGER" property="projectId" />
+    <result column="patient_id" jdbcType="INTEGER" property="patientId" />
+    <result column="attend_status" jdbcType="VARCHAR" property="attendStatus" />
+    <result column="cost_status" jdbcType="VARCHAR" property="costStatus" />
+  </resultMap>
+</mapper>

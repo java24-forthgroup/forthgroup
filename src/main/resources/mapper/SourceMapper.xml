@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.SourceMapper">
+  <resultMap id="BaseResultMap" type="com.woniuxy.pojo.Source">
+    <id column="source_id" jdbcType="INTEGER" property="sourceId" />
+    <result column="queue_id" jdbcType="INTEGER" property="queueId" />
+    <result column="skillgroup_id" jdbcType="INTEGER" property="skillgroupId" />
+    <result column="type_id" jdbcType="INTEGER" property="typeId" />
+    <result column="source_num" jdbcType="INTEGER" property="sourceNum" />
+  </resultMap>
+</mapper>

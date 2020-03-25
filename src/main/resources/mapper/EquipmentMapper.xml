@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.EquipmentMapper">
+  <resultMap id="BaseResultMap" type="com.woniuxy.pojo.Equipment">
+    <id column="equipment_id" jdbcType="INTEGER" property="equipmentId" />
+    <result column="aroom_id" jdbcType="INTEGER" property="aroomId" />
+    <result column="equipment_name" jdbcType="VARCHAR" property="equipmentName" />
+    <result column="equipment_status" jdbcType="VARCHAR" property="equipmentStatus" />
+  </resultMap>
+</mapper>
