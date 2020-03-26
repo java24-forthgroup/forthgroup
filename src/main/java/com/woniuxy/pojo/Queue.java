@@ -11,4 +11,6 @@ public class Queue {
     private Integer queueId;
     private Integer queueNum;
     private Integer aroomId;
+    private  Aroom aroom;
+
 }
