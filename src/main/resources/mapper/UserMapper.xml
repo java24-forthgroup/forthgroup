@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.UserMapper">
+<mapper namespace="com.woniuxy.dao.UserMapper">
   <resultMap id="BaseResultMap" type="com.woniuxy.pojo.User">
     <id column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="uname" jdbcType="VARCHAR" property="uname" />
     <result column="upwd" jdbcType="VARCHAR" property="upwd" />
   </resultMap>
+
+  <insert id="save" parameterType="user" useGeneratedKeys="true" keyProperty="userId">
+    insert into user (user_id,uname,upwd)
+    values (null,#{uname},#{upwd})
+  </insert>
+
 </mapper>

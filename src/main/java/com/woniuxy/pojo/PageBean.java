@@ -16,4 +16,5 @@ public class PageBean<T> {
 	private Integer countPage;
 	private List<T> list;
 	private String queryVal;
+	private String queryName;
 }

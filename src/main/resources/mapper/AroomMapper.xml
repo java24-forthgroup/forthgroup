@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.AroomMapper">
+<mapper namespace="com.woniuxy.dao.AroomMapper">
   <resultMap id="BaseResultMap" type="com.woniuxy.pojo.Aroom">
     <id column="aroom_id" jdbcType="INTEGER" property="aroomId" />
     <result column="aroom_name" jdbcType="VARCHAR" property="aroomName" />
     <result column="aroom_code" jdbcType="VARCHAR" property="aroomCode" />
     <result column="aroom_addr" jdbcType="VARCHAR" property="aroomAddr" />
   </resultMap>
+  <select id="findAll" resultMap="BaseResultMap">
+		select * from aroom
+	</select>
+
+  <select id="findOne" parameterType="int" resultMap="BaseResultMap">
+    select * from aroom where aroom_id = #{aroomId}
+  </select>
 </mapper>
