@@ -1,33 +1,14 @@
 package com.woniuxy.pojo;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     private Integer userId;
-
     private String uname;
-
     private String upwd;
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getUname() {
-        return uname;
-    }
-
-    public void setUname(String uname) {
-        this.uname = uname == null ? null : uname.trim();
-    }
-
-    public String getUpwd() {
-        return upwd;
-    }
-
-    public void setUpwd(String upwd) {
-        this.upwd = upwd == null ? null : upwd.trim();
-    }
 }

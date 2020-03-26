@@ -1,8 +1,10 @@
 package com.woniuxy.controller;
 
+import com.woniuxy.pojo.Aroom;
 import com.woniuxy.pojo.Message;
 import com.woniuxy.pojo.PageBean;
 import com.woniuxy.pojo.Queue;
+import com.woniuxy.service.AroomService;
 import com.woniuxy.service.QueueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,8 @@ import java.util.List;
 public class QueueController {
     @Autowired
     QueueService queueService;
+    @Autowired
+    AroomService aroomService;
 
     @RequestMapping("queueList")
     public String teacherList() {
@@ -28,7 +32,9 @@ public class QueueController {
     }
 
     @RequestMapping("addUI")
-    public String addUI() {
+    public String addUI(Model model) {
+        List<Aroom> aroomList = aroomService.findAll();
+        model.addAttribute("aroomList",aroomList);
         return "queue/addQueue";
     }
     //增加队列信息
@@ -38,6 +44,7 @@ public class QueueController {
         System.out.println(queue);
         Message message = new Message();
         try {
+            System.out.println(queue);
             queueService.save(queue);
             message.setFlag(true);
         }catch(Exception e) {
@@ -65,7 +72,9 @@ public class QueueController {
     @RequestMapping("updateUI")
     public String updateUI(Model model, Integer queueId) {
         Queue queue  = queueService.findOne(queueId);
-        System.out.println(queue);
+        System.out.println("==============="+queue);
+        List<Aroom> aroomList = aroomService.findAll();
+        model.addAttribute("aroomList",aroomList);
         model.addAttribute("queue", queue);
         return "queue/updateQueue";
     }
@@ -73,7 +82,6 @@ public class QueueController {
     @ResponseBody
     @RequestMapping("updateQueue")
     public Object updateQueue(Queue queue) {
-        System.out.println(queue);
         Message message = new Message();
         try {
             queueService.update(queue);
@@ -84,7 +92,7 @@ public class QueueController {
         }
         return message;
     }
-
+    //查询所有队列信息
     @RequestMapping("queryByPage")
     @ResponseBody
     public Object queryByPage(PageBean pageBean) {

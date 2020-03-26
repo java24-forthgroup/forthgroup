@@ -34,7 +34,7 @@
             <li style="padding-top:8px;">
 				<div class="btn-group">
 				  <button type="button" class="btn btn-default btn-success dropdown-toggle" data-toggle="dropdown">
-					<i class="glyphicon glyphicon-classRoom"></i> <span class="caret"></span>
+					<i class="glyphicon glyphicon-classRoom"></i>${loginUser.uname } <span class="caret"></span>
 				  </button>
 					  <ul class="dropdown-menu" role="menu">
 						<li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
@@ -83,14 +83,14 @@
 <form class="form-inline" role="form" style="float:left;">
   <div class="form-group has-feedback">
     <div class="input-group">
-      <div class="input-group-addon">查询条件</div>
-      <input class="form-control has-success" type="text" id="queryByQueueNum" placeholder="请输入查询条件">
+      <div class="input-group-addon">科室名称</div>
+      <input class="form-control has-success" type="text" id="queryByAroomName" placeholder="请输入查询条件">
     </div>
   </div>
   <button type="button" id="btnQuery" class="btn btn-warning"><i class="glyphicon glyphicon-search"></i> 查询</button>
 </form>
-<button type="button" class="btn btn-danger" style="float:right;margin-left:10px;" onclick="delQueues()"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
-<button type="button" class="btn btn-primary" style="float:right;" onclick="window.location.href='${ItemPath}/queue/addUI'"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+<%--<button type="button" class="btn btn-danger" style="float:right;margin-left:10px;" onclick="delQueues()"><i class=" glyphicon glyphicon-remove"></i> 删除</button>--%>
+<button type="button" class="btn btn-primary" style="float:right;" onclick="window.location.href='${pageContext.request.contextPath}/queue/addUI'"><i class="glyphicon glyphicon-plus"></i> 新增</button>
 <br>
  <hr style="clear:both;">
           <div class="table-responsive">
@@ -98,10 +98,9 @@
             <table class="table  table-bordered">
               <thead>
                 <tr >
-                  <th width="30">#</th>
-				  <th width="30"><input type="checkbox" id="checkAll"></th>
+                  <th width="30">序号</th>
                   <th>队列编号</th>
-                  <th>科室编号</th>
+                  <th>科室名称</th>
                   <th>队列序号</th>
                   <th width="100">操作</th>
                 </tr>
@@ -112,7 +111,7 @@
              </tbody>
 			  <tfoot>
 			     <tr >
-				     <td colspan="6" align="center">
+				     <td colspan="5" align="center">
 						<ul class="pagination" id="byPage">
 								
 					    </ul>
@@ -148,14 +147,14 @@
 				});
 			    <!--带查询条件-->
 			    $("#btnQuery").click(function(){
-			    	var queryVal = $("#queryByQueueNum").val();
+			    	var queryVal = $("#queryByAroomName").val();
 			    	if(queryVal!=""){
 			    		queryFlag = true;
 			    	}
 			    	queryByPage(1);
 			    });
 			    <!--批量删除-->
-			    $("#checkAll").click(function(){
+			   $("#checkAll").click(function(){
 			    	 var flag = $(this).prop("checked");
 			    	$.each($("#tableContent .delCheck"),function(index,obj){
 			    		obj.checked=flag;
@@ -214,7 +213,7 @@
             function queryByPage(nowPage){
             	var jsonData = {"nowPage":nowPage};
             	if(queryFlag){
-            		jsonData.queryVal= $("#queryByQueueNum").val();
+            		jsonData.queryVal= $("#queryByAroomName").val();
             	}
             	
             	$.ajax({
@@ -228,9 +227,8 @@
             					//生成jQuery对象，进行装配或者使用html方法拼字符串
 	            				tableStr+="<tr>";
 		                        tableStr+="<td>"+(index+1) +"</td>";
-		          				tableStr+="<td><input type='checkbox' class='delCheck' name='queueId' value='"+queue.queueId+"'></td>";
                                 tableStr+="<td>"+queue.queueId+"</td>";
-                                tableStr+="<td>"+queue.aroomId+"</td>";
+                                tableStr+="<td>"+queue.aroom.aroomName+"</td>";
                                 tableStr+="<td>"+queue.queueNum+"</td>";
 		                        tableStr+="<td>";
 		          				tableStr+="<button type='button' onclick='updateQueue("+queue.queueId+")' class='btn btn-primary btn-xs'><i class='glyphicon glyphicon-pencil'></i></button>";

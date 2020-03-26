@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.SkillgroupMapper">
+<mapper namespace="com.woniuxy.dao.SkillgroupMapper">
   <resultMap id="BaseResultMap" type="com.woniuxy.pojo.Skillgroup">
     <id column="skillgroup_id" jdbcType="INTEGER" property="skillgroupId" />
     <result column="aroom_id" jdbcType="INTEGER" property="aroomId" />

@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.woniuxy.dao.QueueMapper">
+  <sql id="base_col_list">
+		queue_id,queue_num,aroom_id
+  </sql>
   <resultMap id="BaseResultMap" type="com.woniuxy.pojo.Queue">
     <id column="queue_id" jdbcType="INTEGER" property="queueId" />
     <result column="queue_num" jdbcType="INTEGER" property="queueNum" />
     <result column="aroom_id" jdbcType="INTEGER" property="aroomId" />
+    <!--关联科室表信息-->
+    <association property="aroom" javaType="Aroom" column="aroom_id" select="findOneAroom" >
+        <id column="aroom_id" jdbcType="INTEGER" property="aroomId" />
+        <result column="aroom_name" jdbcType="VARCHAR" property="aroomName" />
+    </association>
   </resultMap>
-
-  <sql id="base_col_list">
-		queue_id,queue_num,aroom_id
-  </sql>
-  <!-- 全部-->
+  <resultMap id="AroomMap" type="com.woniuxy.pojo.Aroom">
+    <id column="aroom_id" jdbcType="INTEGER" property="aroomId" />
+    <result column="aroom_name" jdbcType="VARCHAR" property="aroomName" />
+    <result column="aroom_code" jdbcType="VARCHAR" property="aroomCode" />
+    <result column="aroom_addr" jdbcType="VARCHAR" property="aroomAddr" />
+  </resultMap>
+ <select id="findOneAroom" parameterType="int" resultMap="AroomMap">
+    select * from aroom
+    <where>
+        aroom_id=#{aroomId}
+    </where>
+  </select>
+  <!-- 查询全部-->
   <select id="findAll" parameterType="queue" resultMap="BaseResultMap" >
 		select
            <include refid="base_col_list"></include>
@@ -19,29 +35,37 @@
   <!-- 分页和查询 -->
   <select id="queryByPage" parameterType="pageBean" resultMap="BaseResultMap" >
     select
-    <include refid="base_col_list"></include>
+       <include refid="base_col_list"></include>
     from queue
     <!-- 模糊查询条件 -->
+    where aroom_id in (
+        select  aroom_id from aroom
     <where>
-      <if test="queryVal!=null">
 
+      <if test="queryVal!=null and queryVal!=''" >
+        aroom_name like concat('%',#{queryVal},'%')
       </if>
+
     </where>
+      )
     <!-- limit 起始位置,每页行数 -->
     limit ${(nowPage-1)*pageRow},${pageRow}
   </select>
   <select id="countByPage" parameterType="pageBean" resultType="int">
     select count(*) from queue
+    where
+       aroom_id in (select aroom_id from aroom
     <where>
-      <if test="queryVal!=null">
-
+      <if test="queryVal!=null and queryVal!=''">
+        aroom_name like concat('%',#{queryVal},'%')
       </if>
     </where>
+    )
   </select>
   <!-- 增加 -->
   <insert id="save" parameterType="queue">
-		insert into user
-		values(#{queue_id},#{queue_num},#{aroom_id})
+		insert into queue
+		values(null,#{queueNum},#{aroomId})
   </insert>
   <!--删除-->
    <delete id="delete" parameterType="java.lang.Integer" >

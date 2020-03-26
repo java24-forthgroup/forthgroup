@@ -8,8 +8,93 @@
     <result column="emp_name" jdbcType="VARCHAR" property="empName" />
     <result column="emp_birthday" jdbcType="DATE" property="empBirthday" />
     <result column="emp_grade" jdbcType="VARCHAR" property="empGrade" />
+    <!--关联用户表-->
+    <association property="user" javaType="user" column="cid" fetchType="lazy">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="uname" jdbcType="INTEGER" property="uname" />
+    <result column="upwd" jdbcType="INTEGER" property="upwd" />
+    </association>
+    <!--关联科室表-->
+    <association property="aroom" javaType="aroom" column="cid" fetchType="lazy">
+      <id column="aroom_id" jdbcType="INTEGER" property="aroomId" />
+      <result column="aroom_name" jdbcType="INTEGER" property="aroomName" />
+      <result column="aroom_code" jdbcType="INTEGER" property="aroomCode" />
+      <result column="aroom_addr" jdbcType="INTEGER" property="aroomAddr" />
+    </association>
   </resultMap>
   <select id="findAll" resultMap="BaseResultMap">
-    select * from emp
+		select * from emp
+	</select>
+
+
+  <select id="findOne" parameterType="int" resultMap="BaseResultMap">
+		select * from emp e,user u,aroom a where e.user_id=u.user_id and a.aroom_id=e.aroom_id and emp_id=#{empId}
+	</select>
+
+  <select id="selectByPage" parameterType="pageBean"
+          resultMap="BaseResultMap">
+    select
+    *
+    from emp e,user u,aroom a
+    <where>
+      e.user_id=u.user_id and  a.aroom_id=e.aroom_id
+      <if test="queryVal!=null and queryVal!=''">
+        and emp_name like concat('%',#{queryVal},'%')
+      </if>
+      <if test="queryName!=null and queryName!='' ">
+        and aroom_name like concat('%',#{queryName},'%')
+      </if>
+    </where>
+    <!-- limit 起始位置,每页行数 -->
+    <!-- sql拼接时候#{} 不能进行运算，应该使用${} -->
+    limit ${(nowPage-1)*pageRow},${pageRow}
   </select>
+
+  <select id="countAll" parameterType="pageBean" resultType="int">
+    select count(*) from  emp e,user u,aroom a
+    <where>
+      e.user_id=u.user_id and  a.aroom_id=e.aroom_id
+      <if test="queryVal!=null and queryVal!=''">
+        and emp_name like concat('%',#{queryVal},'%')
+      </if>
+      <if test="queryName!=null and queryName!=''">
+        and aroom_name like concat('%',#{queryName},'%')
+      </if>
+    </where>
+  </select>
+
+  <delete id="delete" parameterType="int">
+		delete from emp where
+		emp_id=#{empId}
+	</delete>
+
+  <insert id="save" parameterType="emp">
+		insert into emp
+		(emp_id,emp_name,emp_birthday,emp_grade,aroom_id,user_id)
+		values(null,#{empName},#{empBirthday},#{empGrade},#{aroomId},#{userId})
+	</insert>
+
+  <update id="update" parameterType="emp">
+    update emp
+    <set>
+      <if test="empName!=null">
+        emp_name=#{empName},
+      </if>
+      <if test="empBirthday!=null">
+        emp_birthday=#{empBirthday},
+      </if>
+      <if test="empGrade!=null">
+        emp_grade=#{empGrade},
+      </if>
+      <if test="aroomId!=null">
+        aroom_id=#{aroomId},
+      </if>
+      <if test="userId!=null">
+        user_id=#{userId},
+      </if>
+    </set>
+    <where>
+      eid=#{eid}
+    </where>
+  </update>
 </mapper>
