@@ -17,12 +17,13 @@ public interface SourceService {
 
     int countByPage(PageBean pageBean);
 
-    Source findOne(Integer SourceId);
+    Source findOne(Integer sourceId);
 
     void save(Source source);
 
-    void delete(Integer SourceId);
+    void delete(Integer sourceId);
 
     void update(Source source);
-    
+
+    void deleteSources(Integer[] sourceIds);
 }

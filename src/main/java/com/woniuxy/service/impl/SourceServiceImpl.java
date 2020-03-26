@@ -1,5 +1,6 @@
 package com.woniuxy.service.impl;
 
+import com.woniuxy.dao.SourceMapper;
 import com.woniuxy.pojo.PageBean;
 import com.woniuxy.pojo.Source;
 import com.woniuxy.service.SourceService;
@@ -16,41 +17,46 @@ import java.util.List;
 @Service
 @Transactional
 public class SourceServiceImpl implements SourceService {
-    @Autowired
-    SourceService sourceService;
+    @Autowired(required = false)
+    SourceMapper sourceMapper;
 
     @Override
     public List<Source> findAll() {
-        return sourceService.findAll();
+        return sourceMapper.findAll();
     }
 
     @Override
     public List<Source> queryByPage(PageBean pageBean) {
-        return sourceService.queryByPage(pageBean);
+        return sourceMapper.queryByPage(pageBean);
     }
 
     @Override
     public int countByPage(PageBean pageBean) {
-        return sourceService.countByPage(pageBean);
+        return sourceMapper.countByPage(pageBean);
     }
 
     @Override
-    public Source findOne(Integer SourceId) {
-        return sourceService.findOne(SourceId);
+    public Source findOne(Integer sourceId) {
+        return sourceMapper.findOne(sourceId);
     }
 
     @Override
     public void save(Source source) {
-        sourceService.save(source);
+        sourceMapper.save(source);
     }
 
     @Override
-    public void delete(Integer SourceId) {
-        sourceService.delete(SourceId);
+    public void delete(Integer sourceId) {
+        sourceMapper.delete(sourceId);
     }
 
     @Override
     public void update(Source source) {
-        sourceService.update(source);
+        sourceMapper.update(source);
+    }
+
+    @Override
+    public void deleteSources(Integer[] sourceIds) {
+        sourceMapper.deleteSources(sourceIds);
     }
 }

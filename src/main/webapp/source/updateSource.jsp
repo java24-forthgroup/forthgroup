@@ -79,24 +79,55 @@
 				<ol class="breadcrumb">
 				  <li><a href="#">首页</a></li>
 				  <li><a href="#">数据列表</a></li>
-				  <li class="active">新增</li>
+				  <li class="active">修改</li>
 				</ol>
 			<div class="panel panel-default">
               <div class="panel-heading">表单数据<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
 			  <div class="panel-body">
-				<form role="form" id="saveForm">
+				<form role="form" id="updateForm">
 				  <div class="form-group">
+					<input type="hidden" id="sourceId" name="sourceId"  value="${source.sourceId}"/>
 					<label for="exampleInputPassword1">队列序号</label>
-					<input type="text" class="form-control" id="queueNum" name="queueNum" placeholder="请输入队列序号">
-					<label for="exampleInputPassword1">所属科室</label>
-					  <select name="aroomId" class="form-control">
-						  <c:forEach items="${aroomList}" var="aroom">
-						  <option value="${aroom.aroomId}">${aroom.aroomName}</option>
+					 <select name="queueId" class="form-control">
+						  <c:forEach items="${queueList}" var="queue">
+							  <option value="${queue.queueId}"
+								<c:if test="${source.queue.queueId==queue.queueId}">
+									selected="selected"
+								</c:if>
+							  >
+								    ${queue.queueNum}
+							  </option>
 						  </c:forEach>
-					  </select><br/>
+					 </select>
+					 <label for="exampleInputPassword1">医技组名称</label>
+					  <select name="skillgroupId" class="form-control">
+						  <c:forEach items="${skillgroupList}" var="skillgroup">
+							  <option value="${skillgroup.skillgroupId}"
+								 <c:if test="${source.skillgroup.skillgroupId==skillgroup.skillgroupId}">
+									 selected="selected"
+								 </c:if>
+							  >
+									${skillgroup.skillgroupName}
+							  </option>
+						  </c:forEach>
+					  </select>
+					<label for="exampleInputPassword1">号源池类型</label>
+					  <select name="typeId"  class="form-control">
+						  <c:forEach items="${sourcetypeList}" var="sourcetype">
+						      <option value="${sourcetype.typeId}"
+								<c:if test="${source.sourcetype.typeId==sourcetype.typeId}">
+									selected="selected"
+								</c:if>
+							  >
+								 ${sourcetype.typeName}
+						      </option>
+						  </c:forEach>
+					  </select>
+					  <label for="exampleInputPassword1">号源池数量</label>
+					  <input type="text" class="form-control" id="sourceNum" name="sourceNum" value="${source.sourceNum}" placeholder="请输入号源池数量">
 				  </div>
 				  <button type="button" id="btnSave" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> 新增</button>
-				  <button type="button" id="btnReset"class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
+				  <button type="button" id="btnReset" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
 				</form>
 			  </div>
 			</div>
@@ -130,24 +161,24 @@
 					}
 				});
 				$("#btnReset").click(function(){
-					$("#queueNum").val("");
+					$("#sourceNum").val("");
 				});
 			    $("#btnSave").click(function(){
-			    	var queueNumVal = $("#queueNum").val();
-			    	if(queueNumVal==""){
-			    		layer.msg("排队队列序号不能为空!", {time:1000, icon:0, shift:5}, function(){});
+			    	var sourceNumVal = $("#sourceNum").val();
+			    	if(sourceNumVal==""){
+			    		layer.msg("号源池数量不能为空!", {time:1000, icon:0, shift:5}, function(){});
 			    		return;
 			    	}
 			    	$.ajax({
-			    		url:"${pageContext.request.contextPath}/queue/addQueue",
+			    		url:"${pageContext.request.contextPath}/source/updateSource",
 			    		type:"post",
-			    		data:$("#saveForm").serialize(),
+			    		data:$("#updateForm").serialize(),
 			    		success:function(result){
 			    			if(result.flag){
-			    				layer.msg("新增成功!", {time:1000, icon:0, shift:6}, function(){});
-								window.location.href='${pageContext.request.contextPath}/queue/queueList';
+			    				layer.msg("修改成功!", {time:1000, icon:0, shift:6}, function(){});
+								window.location.href='${pageContext.request.contextPath}/source/sourceList';
 			    			}else{
-			    				layer.msg("新增失败!", {time:1000, icon:0, shift:5}, function(){});
+			    				layer.msg("修改失败!", {time:1000, icon:0, shift:5}, function(){});
 			    			}
 			    		}
 			    	});

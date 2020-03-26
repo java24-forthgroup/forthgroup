@@ -1,7 +1,6 @@
 package com.woniuxy.dao;
 
 import com.woniuxy.pojo.PageBean;
-import com.woniuxy.pojo.Queue;
 import com.woniuxy.pojo.Source;
 
 import java.util.List;
@@ -18,7 +17,7 @@ public interface SourceMapper {
 
     int countByPage(PageBean pageBean);
 
-    Queue findOne(Integer sourceId);
+    Source findOne(Integer sourceId);
 
     void save(Source source);
 
@@ -26,4 +25,5 @@ public interface SourceMapper {
 
     void update(Source source);
 
+    void deleteSources(Integer[] sourceIds);
 }

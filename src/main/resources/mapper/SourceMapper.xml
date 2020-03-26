@@ -1,41 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.woniuxy.dao.SourceMapper">
-  <sql id="base_col_list">
+  <!--<sql id="base_col_list">
 		source_id,queue_id,skillgroup_id,type_id,source_num
 
-  </sql>
+  </sql>-->
   <resultMap id="BaseResultMap" type="com.woniuxy.pojo.Source">
     <id column="source_id" jdbcType="INTEGER" property="sourceId" />
     <result column="queue_id" jdbcType="INTEGER" property="queueId" />
     <result column="skillgroup_id" jdbcType="INTEGER" property="skillgroupId" />
     <result column="type_id" jdbcType="INTEGER" property="typeId" />
     <result column="source_num" jdbcType="INTEGER" property="sourceNum" />
+    <!--关联队列表-->
+    <association property="queue" javaType="Queue" column="queue_id" fetchType="lazy">
+      <id column="queue_id" jdbcType="INTEGER" property="queueId" />
+      <result column="queue_num" jdbcType="INTEGER" property="queueNum" />
+      <result column="aroom_id" jdbcType="INTEGER" property="aroomId" />
+    </association>
+    <!--关联医技组表-->
+     <association property="skillgroup" javaType="Skillgroup" column="skillgroup_id" fetchType="lazy">
+          <id column="skillgroup_id" jdbcType="INTEGER" property="skillgroupId" />
+          <result column="aroom_id" jdbcType="INTEGER" property="aroomId" />
+          <result column="source_id" jdbcType="INTEGER" property="sourceId" />
+          <result column="skillgroup_name" jdbcType="VARCHAR" property="skillgroupName" />
+     </association>
+      <!--关联号源池类型表-->
+      <association property="sourcetype" javaType="Sourcetype" column="skillgroup_id" fetchType="lazy">
+          <id column="type_id" jdbcType="INTEGER" property="typeId" />
+          <result column="type_name" jdbcType="VARCHAR" property="typeName" />
+      </association>
   </resultMap>
 
     <!-- 查询全部-->
   <select id="findAll" parameterType="source" resultMap="BaseResultMap" >
-    select
-      <include refid="base_col_list"></include>
-    from source
+    select * from source s,queue q,skillgroup sk,sourcetype st where q.queue_id=s.queue_id
+    and sk.skillgroup_id=s.skillgroup_id and st.type_id=s.type_id and source_id=#{sourceId}
   </select>
   <select id="queryByPage" parameterType="pageBean" resultMap="BaseResultMap" >
-    select
-        <include refid="base_col_list"></include>
-    from source
+    select *
+    from source s,queue q,skillgroup sk,sourcetype st
     <where>
+        q.queue_id=s.queue_id and sk.skillgroup_id=s.skillgroup_id and st.type_id=s.type_id
         <if test="queryVal!=null and queryVal!=''" >
-          source_id like concat('%',#{queryVal},'%')
+          and type_name like concat('%',#{queryVal},'%')
+        </if>
+        <if test="queryName!=null and queryName!=''" >
+            and skillgroup_name like concat('%',#{queryName},'%')
         </if>
     </where>
     <!-- limit 起始位置,每页行数 -->
     limit ${(nowPage-1)*pageRow},${pageRow}
   </select>
   <select id="countByPage" parameterType="pageBean" resultType="int">
- select count(*) from source
+    select count(*) from source s,queue q,skillgroup sk,sourcetype st
     <where>
+      q.queue_id=s.queue_id and sk.skillgroup_id=s.skillgroup_id and st.type_id=s.type_id
       <if test="queryVal!=null and queryVal!=''">
-        source_id like concat('%',#{queryVal},'%')
+          and type_name  like concat('%',#{queryVal},'%')
+      </if>
+      <if test="queryName!=null and queryName!=''" >
+           and skillgroup_name like concat('%',#{queryName},'%')
       </if>
     </where>
   </select>
@@ -51,12 +75,19 @@
       source_id=#{sourceId}
     </where>
   </delete>
+  <!--批量删除-->
+  <delete id="deleteSources">
+     delete from source
+     <where>
+        <foreach collection="array" item="sourceId" open="source_id in(" close=")" separator=",">
+        #{sourceId}
+      </foreach>
+     </where>
+    </delete>
   <!-- 修改 -->
   <select id="findOne" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-        <include refid="base_col_list"></include>
-    from source
-    where source_id=#{sourceId}
+    select * from source s,queue q,skillgroup sk,sourcetype st where q.queue_id=s.queue_id
+    and sk.skillgroup_id=s.skillgroup_id and st.type_id=s.type_id and s.source_id=#{sourceId}
   </select>
   <update id="update" parameterType="source">
     update source

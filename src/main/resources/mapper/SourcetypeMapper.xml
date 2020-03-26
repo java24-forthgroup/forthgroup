@@ -5,4 +5,11 @@
     <id column="type_id" jdbcType="INTEGER" property="typeId" />
     <result column="type_name" jdbcType="VARCHAR" property="typeName" />
   </resultMap>
+
+  <select id="findAll" resultMap="BaseResultMap">
+		select * from sourcetype
+	</select>
+  <select id="findOne" parameterType="int" resultMap="BaseResultMap">
+    select * from sourcetype where type_id = #{typeId}
+  </select>
 </mapper>
