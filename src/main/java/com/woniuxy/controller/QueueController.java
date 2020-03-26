@@ -37,6 +37,7 @@ public class QueueController {
         model.addAttribute("aroomList",aroomList);
         return "queue/addQueue";
     }
+
     //增加队列信息
     @ResponseBody
     @RequestMapping("addQueue")
