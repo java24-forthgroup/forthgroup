@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class MrrsApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(MrrsApplication.class, args);
     }
 
