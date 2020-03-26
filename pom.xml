@@ -58,7 +58,11 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+<<<<<<< HEAD
 
+=======
+            <version>5.1.38</version>
+>>>>>>> ebc632511a0b322b93df74f6ea0bd0b9dc690a6c
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

@@ -1,11 +1,11 @@
 package com.woniuxy.controller;
 
-import com.woniuxy.pojo.Aroom;
-import com.woniuxy.pojo.Emp;
-import com.woniuxy.pojo.Message;
-import com.woniuxy.pojo.PageBean;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import com.woniuxy.pojo.*;
 import com.woniuxy.service.AroomService;
-import com.woniuxy.service.EmpService;
 import com.woniuxy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
-import java.util.List;
+import com.woniuxy.service.EmpService;
 
 @Controller
 @RequestMapping("emp")
@@ -174,4 +173,3 @@ public class EmpController {
         return message;
     }
 }
-

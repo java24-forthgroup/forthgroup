@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.woniuxy.dao.SourcetypeMapper">
+<<<<<<< HEAD
 
+=======
+>>>>>>> ebc632511a0b322b93df74f6ea0bd0b9dc690a6c
   <resultMap id="BaseResultMap" type="com.woniuxy.pojo.Sourcetype">
     <id column="type_id" jdbcType="INTEGER" property="typeId" />
     <result column="type_name" jdbcType="VARCHAR" property="typeName" />

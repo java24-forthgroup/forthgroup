@@ -3,6 +3,8 @@ package com.woniuxy.dao;
 import com.woniuxy.pojo.PageBean;
 import com.woniuxy.pojo.Queue;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import java.util.List;
 
 /**
