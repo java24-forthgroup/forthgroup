@@ -45,4 +45,9 @@
       </foreach>
     </where>
   </delete>
+
+  <select id="findAll" resultMap="BaseResultMap">
+		select * from sourcetype
+	</select>
+
 </mapper>
