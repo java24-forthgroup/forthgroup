@@ -63,9 +63,12 @@ public class EmpController {
 
     @ResponseBody
     @RequestMapping("saveEmp")
-    public Object saveEmp(Emp emp) {
+    public Object saveEmp(Emp emp,User user) {
         Message message = new Message();
         try {
+            user.setUpwd("123");
+            userService.save(user);
+            emp.setUserId(user.getUserId());
             empService.save(emp);
             message.setFlag(true);
         } catch (Exception e) {
@@ -103,7 +106,9 @@ public class EmpController {
     public Object delete(Integer empId) {
         Message message = new Message();
         try {
+            int userId = empService.findOne(empId).getUserId();
             empService.delete(empId);
+            userService.delete(userId);
             message.setFlag(true);
         } catch (Exception e) {
             e.printStackTrace();
@@ -133,44 +138,6 @@ public class EmpController {
         emp = empService.findOne(emp.getEmpId());
         model.addAttribute("emp", emp);
         return "empinformation";
-    }
-
-    @RequestMapping("updateByOne")
-    public String updateByOne(Model model,Integer empId) {
-        Emp emp = empService.findOne(empId);
-        model.addAttribute("emp", emp);
-        return "emp/updateByOne";
-    }
-    @ResponseBody
-    @RequestMapping("updateOne")
-    public Object updateOne(Emp emp){
-        Message message = new Message();
-        try {
-            empService.updateOne(emp);
-            message.setFlag(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-            message.setFlag(false);
-        }
-        return message;
-    }
-
-    @RequestMapping("usernamepassword")
-    public String usernamepassword(Model model) {
-        return "emp/usernamepassword";
-    }
-    @ResponseBody
-    @RequestMapping("usernamepasswordUpdate")
-    public Object usernamepasswordUpdate(Emp emp){
-        Message message = new Message();
-        try {
-            empService.usernamepasswordUpdate(emp);
-            message.setFlag(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-            message.setFlag(false);
-        }
-        return message;
     }
 }
 

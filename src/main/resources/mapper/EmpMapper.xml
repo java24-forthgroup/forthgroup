@@ -94,7 +94,7 @@
       </if>
     </set>
     <where>
-      eid=#{eid}
+      emp_id=#{empId}
     </where>
   </update>
 </mapper>

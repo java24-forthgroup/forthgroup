@@ -1,5 +1,4 @@
 <%@ page language="java" pageEncoding="utf-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
@@ -8,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
 	<link rel="stylesheet" href="${APPPATH }/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="${APPPATH }/css/font-awesome.min.css">
 	<link rel="stylesheet" href="${APPPATH }/css/main.css">
@@ -39,7 +37,7 @@
 						<li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
 						<li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
 						<li class="divider"></li>
-						<li><a href="${APPPATH }/loginout"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
+						<li><a href="${APPPATH }/logout"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
 					  </ul>
 			    </div>
 			</li>
@@ -60,31 +58,7 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
 			<div class="tree">
-				<ul style="padding-left:0px;" class="list-group">
-					<li class="list-group-item tree-closed" >
-						<a href="main.html"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a> 
-					</li>
-					<li class="list-group-item tree-closed">
-						<span><i class="glyphicon glyphicon glyphicon-tasks"></i> 系统管理 <span class="badge" style="float:right">5</span></span> 
-						<ul style="margin-top:10px;display:none;">
-							<li style="height:30px;">
-								<a href="${APPPATH}/clazz/index"><i class="glyphicon glyphicon-user"></i> 班级管理</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="${APPPATH}/role/list"><i class="glyphicon glyphicon-king"></i> 角色管理</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="${APPPATH}/discipline/index"><i class="glyphicon glyphicon-lock"></i> 学科管理</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="${APPPATH}/course/list"><i class="glyphicon glyphicon-lock"></i> 课程表管理</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="${APPPATH}/classroom/index"><i class="glyphicon glyphicon-lock"></i> 教室管理</a> 
-							</li>
-						</ul>
-					</li>
-				</ul>
+				<%@ include file="../menu.jsp" %>
 			</div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -96,35 +70,19 @@
 			<div class="panel panel-default">
               <div class="panel-heading">表单数据<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
 			  <div class="panel-body">
-				<form role="form" id="saveForm">
-					<input type="hidden" id="empId" name="empId" value="${emp.empId}" />
+				<form role="form" id="updateForm">
 				  <div class="form-group">
-					<label for="exampleInputPassword1">员工姓名</label>
-					<input type="text" class="form-control" id="empName" name="empName" value="${emp.empName}">
-					<label for="exampleInputPassword1">员工等级</label>
-						<select name="empGrade" class="form-control">
-							  <option value="${emp.empGrade}" selected="selected">${emp.empGrade}</option>
-							  <option value="专家">专家</option>
-							  <option value="护士">护士</option>
-							  <option value="医生">医生</option>
-							  <option value="护工">护工</option>
-							  <option value="医护管理员">医护管理员</option>
-							  <option value="院长">院长</option>
-							  <option value="副院长">副院长</option>
-							  <option value="主任">主任</option>
-						</select>
-					<label for="exampleInputPassword1">所属科室</label>
-						  <select name="aroomId" class="form-control">
-							  <c:forEach items="${aroomList}" var="aroom">
-								  <option value="${aroom.aroomId}"
-										  <c:if test="${emp.aroom.aroomId==aroom.aroomId}">selected="selected"</c:if>
-								  >${aroom.aroomName}</option>
-							  </c:forEach>
-						  </select>
+					<label for="exampleInputPassword1">许可名称</label>
+					<input type="hidden" name="pid" id="pid" value="${permission.pid}" />
+					<input type="hidden" name="parentid" id="parentid" value="${permission.parentid}" />
+					<input type="text" class="form-control" id="name" name="name" value="${permission.name }" placeholder="请输入许可名称">
 				  </div>
-				
-				  <button type="button" id="btnUpdate" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i> 修改</button>
-				  <button type="button" id="btnReset" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
+				  <div class="form-group">
+					<label for="exampleInputPassword1">链接位置</label>
+					<input type="text" class="form-control" id="url" name="url" value="${permission.url }" placeholder="请输入链接位置">
+				  </div>
+				  <button type="button" id="btnSave" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i>修改</button>
+				  <button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
 				</form>
 			  </div>
 			</div>
@@ -173,27 +131,17 @@
 						}
 					}
 				});
-			    $("#btnUpdate").click(function(){
-			    	var empName = $("#empName").val();
-			    	if(empName==""){
-			    		layer.msg("员工名不能为空!", {time:1000, icon:0, shift:5}, function(){});
-			    		return;
-			    	}
-			    	var empGrade = $("#empGrade").val();
-			    	if(empGrade==""){
-			    		layer.msg("员工等级不能为空!", {time:1000, icon:0, shift:5}, function(){});
-			    		return;
-			    	}
+			    $("#btnSave").click(function(){
 			    	$.ajax({
-			    		url:"${APPPATH }/emp/updateEmp",
+			    		url:"${APPPATH}/permission/updatePermission",
 			    		type:"post",
-			    		data:$("#saveForm").serialize(),
+			    		data:$("#updateForm").serialize(),
 			    		success:function(result){
 			    			if(result.flag){
-			    				layer.msg("用户修改成功!", {time:1000, icon:0, shift:6}, function(){});
-			    				window.location.href='${APPPATH }/emp/index';
+			    				layer.msg("修改许可成功!", {time:1000, icon:6}, function(){});
+			    				window.location.href="${APPPATH}/permission/index";
 			    			}else{
-			    				layer.msg("用户修改失败!", {time:1000, icon:0, shift:5}, function(){});
+			    				layer.msg("修改许可失败!", {time:1000, icon:5, shift:5}, function(){});
 			    			}
 			    		}
 			    	});

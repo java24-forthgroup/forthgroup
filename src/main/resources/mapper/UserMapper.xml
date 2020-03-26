@@ -12,4 +12,9 @@
     values (null,#{uname},#{upwd})
   </insert>
 
+  <insert id="delete" parameterType="int">
+    delete from user
+    where user_id=#{userId}
+  </insert>
+
 </mapper>

@@ -52,13 +52,4 @@ public class EmpServiceImpl implements EmpService {
         mapper.delete(empId);
     }
 
-    @Override
-    public void updateOne(Emp emp) {
-
-    }
-
-    @Override
-    public void usernamepasswordUpdate(Emp emp) {
-
-    }
 }

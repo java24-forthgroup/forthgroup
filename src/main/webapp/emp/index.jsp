@@ -134,7 +134,7 @@
                                 </tbody>
                                 <tfoot>
                                 <tr >
-                                    <td colspan="6" align="center">
+                                    <td colspan="10" align="center">
                                         <ul class="pagination" id="byPage">
                                         </ul>
                                     </td>

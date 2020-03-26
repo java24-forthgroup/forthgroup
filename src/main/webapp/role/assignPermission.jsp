@@ -1,5 +1,5 @@
 <%@ page language="java" pageEncoding="utf-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
@@ -8,11 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
 	<link rel="stylesheet" href="${APPPATH }/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="${APPPATH }/css/font-awesome.min.css">
 	<link rel="stylesheet" href="${APPPATH }/css/main.css">
 	<link rel="stylesheet" href="${APPPATH }/css/doc.min.css">
+	<link rel="stylesheet" href="${APPPATH }/ztree/zTreeStyle.css">
 	<style>
 	.tree li {
         list-style-type: none;
@@ -39,7 +39,7 @@
 						<li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
 						<li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
 						<li class="divider"></li>
-						<li><a href="${APPPATH }/loginout"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
+						<li><a href="${APPPATH }/logout"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
 					  </ul>
 			    </div>
 			</li>
@@ -60,75 +60,26 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
 			<div class="tree">
-				<ul style="padding-left:0px;" class="list-group">
-					<li class="list-group-item tree-closed" >
-						<a href="main.html"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a> 
-					</li>
-					<li class="list-group-item tree-closed">
-						<span><i class="glyphicon glyphicon glyphicon-tasks"></i> 系统管理 <span class="badge" style="float:right">5</span></span> 
-						<ul style="margin-top:10px;display:none;">
-							<li style="height:30px;">
-								<a href="${APPPATH}/clazz/index"><i class="glyphicon glyphicon-user"></i> 班级管理</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="${APPPATH}/role/list"><i class="glyphicon glyphicon-king"></i> 角色管理</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="${APPPATH}/discipline/index"><i class="glyphicon glyphicon-lock"></i> 学科管理</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="${APPPATH}/course/list"><i class="glyphicon glyphicon-lock"></i> 课程表管理</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="${APPPATH}/classroom/index"><i class="glyphicon glyphicon-lock"></i> 教室管理</a> 
-							</li>
-						</ul>
-					</li>
-				</ul>
+				<%@ include file="../menu.jsp" %>
 			</div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<ol class="breadcrumb">
-				  <li><a href="#">首页</a></li>
-				  <li><a href="#">数据列表</a></li>
-				  <li class="active">修改</li>
+				  <li><a href="#">权限分配列表</a></li>
 				</ol>
 			<div class="panel panel-default">
-              <div class="panel-heading">表单数据<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
 			  <div class="panel-body">
-				<form role="form" id="saveForm">
-					<input type="hidden" id="empId" name="empId" value="${emp.empId}" />
-				  <div class="form-group">
-					<label for="exampleInputPassword1">员工姓名</label>
-					<input type="text" class="form-control" id="empName" name="empName" value="${emp.empName}">
-					<label for="exampleInputPassword1">员工等级</label>
-						<select name="empGrade" class="form-control">
-							  <option value="${emp.empGrade}" selected="selected">${emp.empGrade}</option>
-							  <option value="专家">专家</option>
-							  <option value="护士">护士</option>
-							  <option value="医生">医生</option>
-							  <option value="护工">护工</option>
-							  <option value="医护管理员">医护管理员</option>
-							  <option value="院长">院长</option>
-							  <option value="副院长">副院长</option>
-							  <option value="主任">主任</option>
-						</select>
-					<label for="exampleInputPassword1">所属科室</label>
-						  <select name="aroomId" class="form-control">
-							  <c:forEach items="${aroomList}" var="aroom">
-								  <option value="${aroom.aroomId}"
-										  <c:if test="${emp.aroom.aroomId==aroom.aroomId}">selected="selected"</c:if>
-								  >${aroom.aroomName}</option>
-							  </c:forEach>
-						  </select>
-				  </div>
-				
-				  <button type="button" id="btnUpdate" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i> 修改</button>
-				  <button type="button" id="btnReset" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
-				</form>
+			  <form id="assignPermissionForm">
+			  	  <input type="hidden" name="roleId" id="roleId" value="${roleId }" />
+				  <button class="btn btn-success" id="btnAssign">分配许可</button>
+                  <br><br>
+                  <ul id="permissionTree" class="ztree"></ul>
+                </form>
 			  </div>
 			</div>
         </div>
+      </div>
+    </div>
       </div>
     </div>
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -161,7 +112,21 @@
     <script src="${APPPATH }/bootstrap/js/bootstrap.min.js"></script>
 	<script src="${APPPATH }/script/docs.min.js"></script>
 	<script src="${APPPATH }/layer/layer.js"></script>
+	<script src="${APPPATH }/ztree/jquery.ztree.all-3.5.min.js"></script>
         <script type="text/javascript">
+        function queryZtree(){
+        	var setting = {
+    			async : {
+    				enable : true,
+    				url : "${APPPATH}/role/loadData?roleId=${param.roleId}",
+    				autoParam : [ "id", "name=n", "level=lv" ]
+    			},
+    			check: {
+    				enable: true
+    			}
+    		};
+        	 $.fn.zTree.init($("#permissionTree"), setting);
+        }
             $(function () {
 			    $(".list-group-item").click(function(){
 				    if ( $(this).find("ul") ) {
@@ -173,32 +138,39 @@
 						}
 					}
 				});
-			    $("#btnUpdate").click(function(){
-			    	var empName = $("#empName").val();
-			    	if(empName==""){
-			    		layer.msg("员工名不能为空!", {time:1000, icon:0, shift:5}, function(){});
-			    		return;
+			    queryZtree();
+			    $("#btnAssign").click(function(){
+			    	//获得树对象
+			    	var treeObj = $.fn.zTree.getZTreeObj("permissionTree");
+			    	//获得选中的项
+			    	var nodes = treeObj.getCheckedNodes(true);
+			    	//判断用户是否在树有选中项
+			    	if(nodes.length==0){
+			    		layer.msg("请选择需要分配的许可!", {time:1000, icon:6, shift:5}, function(){});
+			    	}else{
+			    		//先把角色id获得并拼接成字符串
+			    		var dataVal = "roleId=${param.roleId}";
+			    		//将选中的许可也拼接到这个字符串中
+			    		$.each(nodes,function(index,node){
+			    			dataVal+="&permissionIds="+node.permissionId;
+			    		});
+				    	$.ajax({
+				    		url:"${APPPATH}/role/assignPermissionDo",
+				    		type:"post",
+				    		data:dataVal,
+				    		success:function(result){
+				    			if(result.flag){
+				    				layer.msg("分配许可成功!", {time:1000, icon:6, shift:5}, function(){});
+				    				window.location.href="${APPPATH}/role/index";
+				    			}else{
+				    				layer.msg("分配许可失败!", {time:1000, icon:5, shift:5}, function(){});
+				    			}
+				    		}
+				    	});
 			    	}
-			    	var empGrade = $("#empGrade").val();
-			    	if(empGrade==""){
-			    		layer.msg("员工等级不能为空!", {time:1000, icon:0, shift:5}, function(){});
-			    		return;
-			    	}
-			    	$.ajax({
-			    		url:"${APPPATH }/emp/updateEmp",
-			    		type:"post",
-			    		data:$("#saveForm").serialize(),
-			    		success:function(result){
-			    			if(result.flag){
-			    				layer.msg("用户修改成功!", {time:1000, icon:0, shift:6}, function(){});
-			    				window.location.href='${APPPATH }/emp/index';
-			    			}else{
-			    				layer.msg("用户修改失败!", {time:1000, icon:0, shift:5}, function(){});
-			    			}
-			    		}
-			    	});
 			    });
             });
+            
         </script>
   </body>
 </html>
