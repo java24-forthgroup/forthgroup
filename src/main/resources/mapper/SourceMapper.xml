@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.woniuxy.dao.SourceMapper">
+  <sql id="base_col_list">
+		source_id,queue_id,skillgroup_id,type_id,source_num
+
+  </sql>
   <resultMap id="BaseResultMap" type="com.woniuxy.pojo.Source">
     <id column="source_id" jdbcType="INTEGER" property="sourceId" />
     <result column="queue_id" jdbcType="INTEGER" property="queueId" />
@@ -8,4 +12,71 @@
     <result column="type_id" jdbcType="INTEGER" property="typeId" />
     <result column="source_num" jdbcType="INTEGER" property="sourceNum" />
   </resultMap>
+
+    <!-- 查询全部-->
+  <select id="findAll" parameterType="source" resultMap="BaseResultMap" >
+    select
+      <include refid="base_col_list"></include>
+    from source
+  </select>
+  <select id="queryByPage" parameterType="pageBean" resultMap="BaseResultMap" >
+    select
+        <include refid="base_col_list"></include>
+    from source
+    <where>
+        <if test="queryVal!=null and queryVal!=''" >
+          source_id like concat('%',#{queryVal},'%')
+        </if>
+    </where>
+    <!-- limit 起始位置,每页行数 -->
+    limit ${(nowPage-1)*pageRow},${pageRow}
+  </select>
+  <select id="countByPage" parameterType="pageBean" resultType="int">
+ select count(*) from source
+    <where>
+      <if test="queryVal!=null and queryVal!=''">
+        source_id like concat('%',#{queryVal},'%')
+      </if>
+    </where>
+  </select>
+  <!-- 增加 -->
+  <insert id="save" parameterType="source">
+		insert into source
+		values(null,#{queueId},#{skillgroupId},#{typeId},#{sourceNum})
+  </insert>
+  <!--删除-->
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from source
+    <where>
+      source_id=#{sourceId}
+    </where>
+  </delete>
+  <!-- 修改 -->
+  <select id="findOne" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+        <include refid="base_col_list"></include>
+    from source
+    where source_id=#{sourceId}
+  </select>
+  <update id="update" parameterType="source">
+    update source
+    <set>
+      <if test="queueId=null">
+          queue_id=#{queueId},
+      </if>
+      <if test="skillgroupId!=null">
+          skillgroup_id=#{skillgroupId},
+      </if>
+      <if test="typeId!=null">
+          type_id=#{typeId},
+      </if>
+      <if test="sourceNum!=null">
+          source_num=#{sourceNum},
+      </if>
+    </set>
+    <where>
+      source_id=#{sourceId}
+    </where>
+  </update>
+
 </mapper>
