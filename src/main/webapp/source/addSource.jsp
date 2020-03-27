@@ -87,16 +87,28 @@
 				<form role="form" id="saveForm">
 				  <div class="form-group">
 					<label for="exampleInputPassword1">队列序号</label>
-					<input type="text" class="form-control" id="queueNum" name="queueNum" placeholder="请输入队列序号">
-					<label for="exampleInputPassword1">所属科室</label>
-					  <select name="aroomId" class="form-control">
-						  <c:forEach items="${aroomList}" var="aroom">
-						  <option value="${aroom.aroomId}">${aroom.aroomName}</option>
+					 <select name="queueId" class="form-control">
+						  <c:forEach items="${queueList}" var="queue">
+							  <option value="${queue.queueId}">${queue.queueNum}</option>
+						  </c:forEach>
+					 </select><br/>
+					 <label for="exampleInputPassword1">医技组名称</label>
+					  <select name="skillgroupId" class="form-control">
+						  <c:forEach items="${skillgroupList}" var="skillgroup">
+							  <option value="${skillgroup.skillgroupId}">${skillgroup.skillgroupName}</option>
 						  </c:forEach>
 					  </select><br/>
+					<label for="exampleInputPassword1">号源池类型</label>
+					  <select name="typeId"  class="form-control">
+						  <c:forEach items="${sourcetypeList}" var="sourcetype">
+						  <option value="${sourcetype.typeId}">${sourcetype.typeName}</option>
+						  </c:forEach>
+					  </select><br/>
+					  <label for="exampleInputPassword1">号源池数量</label>
+					  <input type="text" class="form-control" id="sourceNum" name="sourceNum" placeholder="请输入号源池数量">
 				  </div>
 				  <button type="button" id="btnSave" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> 新增</button>
-				  <button type="button" id="btnReset"class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
+				  <button type="button" id="btnReset" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
 				</form>
 			  </div>
 			</div>
@@ -130,22 +142,22 @@
 					}
 				});
 				$("#btnReset").click(function(){
-					$("#queueNum").val("");
+					$("#sourceNum").val("");
 				});
 			    $("#btnSave").click(function(){
-			    	var queueNumVal = $("#queueNum").val();
-			    	if(queueNumVal==""){
-			    		layer.msg("排队队列序号不能为空!", {time:1000, icon:0, shift:5}, function(){});
+			    	var sourceNumVal = $("#sourceNum").val();
+			    	if(sourceNumVal==""){
+			    		layer.msg("号源池数量不能为空!", {time:1000, icon:0, shift:5}, function(){});
 			    		return;
 			    	}
 			    	$.ajax({
-			    		url:"${pageContext.request.contextPath}/queue/addQueue",
+			    		url:"${pageContext.request.contextPath}/source/addSource",
 			    		type:"post",
 			    		data:$("#saveForm").serialize(),
 			    		success:function(result){
 			    			if(result.flag){
 			    				layer.msg("新增成功!", {time:1000, icon:0, shift:6}, function(){});
-								window.location.href='${pageContext.request.contextPath}/queue/queueList';
+								window.location.href='${pageContext.request.contextPath}/source/sourceList';
 			    			}else{
 			    				layer.msg("新增失败!", {time:1000, icon:0, shift:5}, function(){});
 			    			}

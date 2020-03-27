@@ -104,13 +104,13 @@ public class QueueController {
                 pageBean.setNowPage(1);
             }
             pageBean.setPageRow(2);
-            List<Queue> classRoomList = queueService.queryByPage(pageBean);
-            System.out.println(classRoomList);
+            List<Queue> queueList = queueService.queryByPage(pageBean);
+            System.out.println(queueList);
             System.out.println(pageBean);
             int countRow = queueService.countByPage(pageBean);
             pageBean.setCountRow(countRow);
             pageBean.setCountPage(countRow%pageBean.getPageRow()==0?countRow/pageBean.getPageRow():countRow/pageBean.getPageRow()+1);
-            pageBean.setList(classRoomList);
+            pageBean.setList(queueList);
             message.setObj(pageBean);
             message.setFlag(true);
         }catch(Exception e) {

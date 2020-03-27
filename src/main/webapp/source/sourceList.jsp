@@ -86,14 +86,18 @@
 <form class="form-inline" role="form" style="float:left;">
   <div class="form-group has-feedback">
     <div class="input-group">
-      <div class="input-group-addon">科室名称</div>
-      <input class="form-control has-success" type="text" id="queryByAroomName" placeholder="请输入查询条件">
+        <div class="input-group-addon">医技组名称</div>
+        <input class="form-control has-success" type="text" id="querySkillgroupName" name="querySkillgroupName" placeholder="请输入医技组名称">
+    </div>
+    <div class="input-group">
+      <div class="input-group-addon">号源池类型</div>
+      <input class="form-control has-success" type="text" id="queryBySourceTypeName" placeholder="请输入号源池类型">
     </div>
   </div>
   <button type="button" id="btnQuery" class="btn btn-warning"><i class="glyphicon glyphicon-search"></i> 查询</button>
 </form>
-<%--<button type="button" class="btn btn-danger" style="float:right;margin-left:10px;" onclick="delQueues()"><i class=" glyphicon glyphicon-remove"></i> 删除</button>--%>
-<button type="button" class="btn btn-primary" style="float:right;" onclick="window.location.href='${pageContext.request.contextPath}/queue/addUI'"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+<button type="button" class="btn btn-danger" style="float:right;margin-left:10px;" onclick="delSources()"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
+<button type="button" class="btn btn-primary" style="float:right;" onclick="window.location.href='${pageContext.request.contextPath}/source/addUI'"><i class="glyphicon glyphicon-plus"></i> 新增</button>
 <br>
  <hr style="clear:both;">
           <div class="table-responsive">
@@ -102,9 +106,11 @@
               <thead>
                 <tr >
                   <th width="80">序号</th>
-                  <th>队列编号</th>
-                  <th>科室名称</th>
+                  <th width="50"><input type="checkbox" id="checkAll"></th>
                   <th>队列序号</th>
+                  <th>医技组名称</th>
+                  <th>号源池类型</th>
+                  <th>号源池数量</th>
                   <th width="100">操作</th>
                 </tr>
               </thead>
@@ -114,7 +120,7 @@
              </tbody>
 			  <tfoot>
 			     <tr >
-				     <td colspan="5" align="center">
+				     <td colspan="7" align="center">
 						<ul class="pagination" id="byPage">
 								
 					    </ul>
@@ -150,8 +156,9 @@
 				});
 			    <!--带查询条件-->
 			    $("#btnQuery").click(function(){
-			    	var queryVal = $("#queryByAroomName").val();
-			    	if(queryVal!=""){
+			    	var queryVal = $("#queryBySourceTypeName").val();
+                    var queryName = $("#querySkillgroupName").val();
+			    	if(queryVal!=""||queryName!=""){
 			    		queryFlag = true;
 			    	}
 			    	queryByPage(1);
@@ -166,17 +173,17 @@
 			    
 			    queryByPage(1);
             });
-            function delQueues(){
-            	layer.confirm("是否删除选中的用户?",  {icon: 3, title:'提示'}, function(cindex){
+            function delSources(){
+            	layer.confirm("是否删除选中的号源池?",  {icon: 3, title:'提示'}, function(cindex){
     			    layer.close(cindex);
     			    $.ajax({
-    			    	url:"${pageContext.request.contextPath}/queue/deleteQueues",
+    			    	url:"${pageContext.request.contextPath}/source/deleteSources",
     			    	type:"post",
     			    	data:$("#delForm").serialize(),
     			    	success:function(result){
     			    		if(result.flag){
     			    			layer.msg("删除成功!", {time:1000, icon:0, shift:6}, function(){});
-    			    			window.location.href="${pageContext.request.contextPath}/queue/queueList";
+    			    			window.location.href="${pageContext.request.contextPath}/source/sourceList";
     			    		}else{
     			    			layer.msg("删除失败!", {time:1000, icon:0, shift:5}, function(){});
     			    		}
@@ -187,22 +194,22 @@
     			    layer.close(cindex);
     			});
             }
-            function updateQueue(queueId){
-            	window.location.href="${pageContext.request.contextPath}/queue/updateUI?queueId="+queueId;
+            function updateSource(sourceId){
+            	window.location.href="${pageContext.request.contextPath}/source/updateUI?sourceId="+sourceId;
             }
 
             <!--删除-->
-            function deletequeue(queueId){
-            	layer.confirm("是否删除该队列信息?",  {icon: 3, title:'提示'}, function(cindex){
+            function deleteSource(sourceId){
+            	layer.confirm("是否删除该号源池信息？",  {icon: 3, title:'提示'}, function(cindex){
     			    layer.close(cindex);
     			    $.ajax({
-    			    	url:"${pageContext.request.contextPath}/queue/delete",
+    			    	url:"${pageContext.request.contextPath}/source/delete",
     			    	type:"post",
-    			    	data:{"queueId":queueId},
+    			    	data:{"sourceId":sourceId},
     			    	success:function(result){
     			    		if(result.flag){
     			    			layer.msg("删除成功!", {time:1000, icon:0, shift:6}, function(){});
-    			    			window.location.href="${pageContext.request.contextPath}/queue/queueList";
+    			    			window.location.href="${pageContext.request.contextPath}/source/sourceList";
     			    		}else{
     			    			layer.msg("删除失败!", {time:1000, icon:0, shift:5}, function(){});
     			    		}
@@ -216,26 +223,29 @@
             function queryByPage(nowPage){
             	var jsonData = {"nowPage":nowPage};
             	if(queryFlag){
-            		jsonData.queryVal= $("#queryByAroomName").val();
+            		jsonData.queryVal= $("#queryBySourceTypeName").val();
+                    jsonData.queryName= $("#querySkillgroupName").val();
             	}
             	
             	$.ajax({
-            		url:"${pageContext.request.contextPath}/queue/queryByPage",
+            		url:"${pageContext.request.contextPath}/source/queryByPage",
             		type:"post",
             		data:jsonData,
             		success:function(result){
             			if(result.flag){
             				var tableStr = "";
-            				$.each(result.obj.list,function(index,queue){
+            				$.each(result.obj.list,function(index,source){
             					//生成jQuery对象，进行装配或者使用html方法拼字符串
 	            				tableStr+="<tr>";
 		                        tableStr+="<td>"+(index+1) +"</td>";
-                                tableStr+="<td>"+queue.queueId+"</td>";
-                                tableStr+="<td>"+queue.aroom.aroomName+"</td>";
-                                tableStr+="<td>"+queue.queueNum+"</td>";
+                                tableStr+="<td><input type='checkbox' class='delCheck' name='sourceIds' value='"+source.sourceId+"'></td>";
+                                tableStr+="<td>"+source.queue.queueNum+"</td>";
+                                tableStr+="<td>"+source.skillgroup.skillgroupName+"</td>";
+                                tableStr+="<td>"+source.sourcetype.typeName+"</td>";;
+                                tableStr+="<td>"+source.sourceNum+"</td>";
 		                        tableStr+="<td>";
-		          				tableStr+="<button type='button' onclick='updateQueue("+queue.queueId+")' class='btn btn-primary btn-xs'><i class='glyphicon glyphicon-pencil'></i></button>";
-		          				tableStr+="<button type='button' onclick='deletequeue("+queue.queueId+")' class='btn btn-danger btn-xs'><i class='glyphicon glyphicon-remove'></i></button>";
+		          				tableStr+="<button type='button' onclick='updateSource("+source.sourceId+")' class='btn btn-success btn-xs'><i class='glyphicon glyphicon-pencil'></i></button>";
+		          				tableStr+="<button type='button' onclick='deleteSource("+source.sourceId+")' class='btn btn-danger btn-xs'><i class='glyphicon glyphicon-remove'></i></button>";
 		          				tableStr+="</td>";
 	                          	tableStr+="</tr>";
             					
