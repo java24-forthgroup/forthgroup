@@ -26,13 +26,13 @@ public class PermissionController {
 		return "permission/index";
 	}
 	@RequestMapping("save")
-	public String save(Integer pid,Model model) {
-		model.addAttribute("pid",pid);
+	public String save(Integer permissionId,Model model) {
+		model.addAttribute("permissionId",permissionId);
 		return "permission/save";
 	}
 	@RequestMapping("update")
-	public String update(Integer pid,Model model) {
-		Permission permission = permissionService.findOne(pid);
+	public String update(Integer permissionId,Model model) {
+		Permission permission = permissionService.findOne(permissionId);
 		model.addAttribute("permission", permission);
 		return "permission/update";
 	}
@@ -52,10 +52,10 @@ public class PermissionController {
 	}
 	@ResponseBody
 	@RequestMapping("delete")
-	public Object delete(Integer pid) {
+	public Object delete(Integer permissionId) {
 		Message message = new Message();
 		try {
-			permissionService.delete(pid);
+			permissionService.delete(permissionId);
 			message.setFlag(true);
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -68,6 +68,7 @@ public class PermissionController {
 	public Object updateePermission(Permission permission) {
 		Message message = new Message();
 		try {
+			System.out.println(permission);
 			permissionService.update(permission);
 			message.setFlag(true);
 		}catch(Exception e) {

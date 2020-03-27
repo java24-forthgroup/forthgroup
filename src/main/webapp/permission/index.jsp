@@ -133,29 +133,29 @@ table tbody td:nth-child(even) {
 					if (treeNode.level == 0) {
 						s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" onclick="permissionSave('
 								+ treeNode.permissionId
-								+ ')"  >&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>';
+								+ ')"  href="#" title="添加权限">&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>';
 					} else if (treeNode.level == 1) {
 						s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;"  onclick="permissionUpdate('
 								+ treeNode.permissionId
-								+ ')" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>';
+								+ ') " title="修改权限信息" href="#">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>';
 						if (treeNode.children.length == 0) {
 							s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;" onclick="permissionDelete('
 									+ treeNode.permissionId
-									+ ')" href="#" >&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>';
+									+ ')" href="#" title="删除权限">&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>';
 						}
 						s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;"  onclick="permissionSave('
 								+ treeNode.permissionId
-								+ ')" >&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>';
+								+ ')" href="#" title="添加权限">&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>';
 					} else if (treeNode.level == 2) {
 						s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;"    onclick="permissionUpdate('
 								+ treeNode.permissionId
-								+ ')" title="修改权限信息">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>';
+								+ ')" title="修改权限信息" href="#">&nbsp;&nbsp;<i class="fa fa-fw fa-edit rbg "></i></a>';
 						s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;"  onclick="permissionDelete('
 								+ treeNode.permissionId
-								+ ')"  href="#">&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>';
+								+ ')"  href="#" title="删除权限">&nbsp;&nbsp;<i class="fa fa-fw fa-times rbg "></i></a>';
 						s += '<a class="btn btn-info dropdown-toggle btn-xs" style="margin-left:10px;padding-top:0px;"  onclick="permissionSave('
 								+ treeNode.permissionId
-								+ ')" >&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>';
+								+ ')" href="#" title="添加权限">&nbsp;&nbsp;<i class="fa fa-fw fa-plus rbg "></i></a>';
 					}
 
 					s += '</span>';
@@ -166,22 +166,24 @@ table tbody td:nth-child(even) {
 					$("#btnGroup" + treeNode.tId).remove();
 				}
 			},
-
 			async : {
 				enable : true,
 				url : "${APPPATH}/permission/loadData",
 				autoParam : [ "id", "name=n", "level=lv" ]
+			},
+			check: {
+				enable: true
 			}
 		};
 		$.fn.zTree.init($("#treeDemo"), setting);
 		}
-		function permissionSave(pid) {
-			window.location.href = "${APPPATH}/permission/save?permissionId=" + pid;
+		function permissionSave(permissionId) {
+			window.location.href = "${APPPATH}/permission/save?permissionId=" + permissionId;
 		}
-		function permissionUpdate(pid) {
-			window.location.href = "${APPPATH}/permission/update?permissionId=" + pid;
+		function permissionUpdate(permissionId) {
+			window.location.href = "${APPPATH}/permission/update?permissionId=" + permissionId;
 		}
-		function permissionDelete(pid) {
+		function permissionDelete(permissionId) {
 			layer.confirm("是否删除选中的许可?", {
 				icon : 3,
 				title : '提示'
@@ -190,7 +192,7 @@ table tbody td:nth-child(even) {
 				$.ajax({
 					url : "${APPPATH}/permission/delete",
 					type : "post",
-					data : {"permissionId":pid},
+					data : {"permissionId":permissionId},
 					success : function(result) {
 						if (result.flag) {
 							layer.msg("删除许可成功!", {

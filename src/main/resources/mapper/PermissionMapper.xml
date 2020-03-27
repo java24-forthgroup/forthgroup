@@ -18,7 +18,7 @@
     select
     *
     from permission
-    where parentid is null
+    where parent_id is null
   </select>
 
   <select id="findOne" resultMap="BaseResultMap">
@@ -32,7 +32,7 @@
     select
     *
     from permission
-    where parentid = #{permissionId}
+    where parent_id = #{permissionId}
   </select>
 
   <insert id="save" parameterType="permission">
@@ -45,7 +45,7 @@
       <if test="name!=null">
         name=#{name},
       </if>
-      <if test="parentid!=null">
+      <if test="parentId!=null">
         parent_id=#{parentId},
       </if>
       <if test="url!=null">

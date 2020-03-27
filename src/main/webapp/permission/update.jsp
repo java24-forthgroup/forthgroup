@@ -73,8 +73,8 @@
 				<form role="form" id="updateForm">
 				  <div class="form-group">
 					<label for="exampleInputPassword1">许可名称</label>
-					<input type="hidden" name="pid" id="pid" value="${permission.pid}" />
-					<input type="hidden" name="parentid" id="parentid" value="${permission.parentid}" />
+					<input type="hidden" name="permissionId" id="permissionId" value="${permission.permissionId}" />
+					<input type="hidden" name="parentId" id="parentId" value="${permission.parentId}" />
 					<input type="text" class="form-control" id="name" name="name" value="${permission.name }" placeholder="请输入许可名称">
 				  </div>
 				  <div class="form-group">
