@@ -72,31 +72,21 @@
 			<div class="panel panel-default">
               <div class="panel-heading">表单数据<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
 			  <div class="panel-body">
-				<form role="form" id="saveForm">
-					<input type="hidden" id="empId" name="empId" value="${emp.empId}" />
+				<form role="form">
+						<input type="hidden" id="empId" value="${emp.empId }" />
 				  <div class="form-group">
 					<label for="exampleInputPassword1">员工姓名</label>
 					<input type="text" class="form-control" id="empName" name="empName" value="${emp.empName}">
 					<label for="exampleInputPassword1">员工等级</label>
-						<select name="empGrade" class="form-control">
-							  <option value="${emp.empGrade}" selected="selected">${emp.empGrade}</option>
-							  <option value="专家">专家</option>
-							  <option value="护士">护士</option>
-							  <option value="医生">医生</option>
-							  <option value="护工">护工</option>
-							  <option value="医护管理员">医护管理员</option>
-							  <option value="院长">院长</option>
-							  <option value="副院长">副院长</option>
-							  <option value="主任">主任</option>
-						</select>
+					<input type="text" class="form-control" id="empGrade" name="empGrade" value="${emp.empGrade}">
 					<label for="exampleInputPassword1">所属科室</label>
-						  <select name="aroomId" class="form-control">
-							  <c:forEach items="${aroomList}" var="aroom">
-								  <option value="${aroom.aroomId}"
-										  <c:if test="${emp.aroom.aroomId==aroom.aroomId}">selected="selected"</c:if>
-								  >${aroom.aroomName}</option>
-							  </c:forEach>
-						  </select>
+					  <select name="aroomId">
+						  <c:forEach items="${aroomList}" var="aroom">
+							  <option value="${aroom.aroomId}"
+									  <c:if test="${emp.aroom.aroomId==aroom.aroomId}">selected="selected"</c:if>
+							  >${aroom.aroomName}</option>
+						  </c:forEach>
+					  </select>
 				  </div>
 				
 				  <button type="button" id="btnUpdate" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i> 修改</button>
@@ -150,24 +140,31 @@
 					}
 				});
 			    $("#btnUpdate").click(function(){
-			    	var empName = $("#empName").val();
-			    	if(empName==""){
-			    		layer.msg("员工名不能为空!", {time:1000, icon:0, shift:5}, function(){});
+			    	var rnameVal = $("#rname").val();			   
+			    	if(rnameVal==""){
+			    		layer.msg("角色名不能为空!", {time:1000, icon:0, shift:5}, function(){});
 			    		return;
 			    	}
-			    	var empGrade = $("#empGrade").val();
-			    	if(empGrade==""){
-			    		layer.msg("员工等级不能为空!", {time:1000, icon:0, shift:5}, function(){});
+			    	var rdepictVal = $("#rdepict").val();			   
+			    	if(rdepictVal==""){
+			    		layer.msg("角色描述不能为空!", {time:1000, icon:0, shift:5}, function(){});
 			    		return;
 			    	}
+			    	var rstatusVal = $("#rstatus").val();			   
+			    	if(rstatusVal==""){
+			    		layer.msg("角色状态不能为空!", {time:1000, icon:0, shift:5}, function(){});
+			    		return;
+			    	}
+			    	
+			    
 			    	$.ajax({
-			    		url:"${APPPATH }/emp/updateEmp",
+			    		url:"${APPPATH }/role/updateRole",
 			    		type:"post",
-			    		data:$("#saveForm").serialize(),
+			    		data:{"rname":$("#rname").val(),"rdepict":$("#rdepict").val(),"rstatus":$("#rstatus").val(),"rid":$("#rid").val()},
 			    		success:function(result){
 			    			if(result.flag){
 			    				layer.msg("用户修改成功!", {time:1000, icon:0, shift:6}, function(){});
-			    				window.location.href='${APPPATH }/emp/index';
+			    				window.location.href='${APPPATH }/role/list';
 			    			}else{
 			    				layer.msg("用户修改失败!", {time:1000, icon:0, shift:5}, function(){});
 			    			}

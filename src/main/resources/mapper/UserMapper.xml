@@ -6,6 +6,7 @@
     <result column="uname" jdbcType="VARCHAR" property="uname" />
     <result column="upwd" jdbcType="VARCHAR" property="upwd" />
   </resultMap>
+
   <select id="login" parameterType="user" resultMap="BaseResultMap">
     select * from user where upwd=#{upwd} and uname=#{uname}
   </select>
@@ -55,5 +56,10 @@
 		(select role_id from userrole where
 		user_id=#{userId}))
 	</select>
+
+  <select id="findOneByUname" parameterType="String" resultMap="BaseResultMap">
+    select * from user
+    <where>uname = #{uname}</where>
+  </select>
 
 </mapper>

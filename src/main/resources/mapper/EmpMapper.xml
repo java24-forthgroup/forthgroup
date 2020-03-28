@@ -94,7 +94,7 @@
       </if>
     </set>
     <where>
-      emp_id=#{empId}
+      eid=#{eid}
     </where>
   </update>
 

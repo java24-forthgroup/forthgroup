@@ -66,7 +66,7 @@
 				<ol class="breadcrumb">
 				  <li><a href="#">首页</a></li>
 				  <li><a href="#">数据列表</a></li>
-				  <li class="active">修改</li>
+				  <li class="active">新增</li>
 				</ol>
 			<div class="panel panel-default">
               <div class="panel-heading">表单数据<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
@@ -77,7 +77,7 @@
 					<label for="exampleInputPassword1">队列序号</label>
 					<input type="text" class="form-control" id="queueNum" name="queueNum" value="${queue.queueNum}" placeholder="请输入队列序号">
 					<label for="exampleInputPassword1">所属科室</label>
-					  <select name="aroomId" id="aroomId" class="form-control">
+					  <select name="aroomId" id="aroomId">
 						  <c:forEach items="${aroomList}" var="aroom">
 							  <option value="${aroom.aroomId}"
 									  <c:if test="${queue.aroom.aroomId==aroom.aroomId}">
@@ -89,8 +89,8 @@
 						  </c:forEach>
 					  </select>
 				  </div>
-				  <button type="button" id="btnUpdate" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> 修改</button>
-				  <button type="button" id="btnReset" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
+				  <button type="button" id="btnUpdate" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+				  <button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
 				</form>
 			  </div>
 			</div>
@@ -122,9 +122,6 @@
 							$("ul", this).show("fast");
 						}
 					}
-				});
-				$("#btnReset").click(function(){
-					$("#queueNum").val("");
 				});
 			    $("#btnUpdate").click(function(){
 			    	var queueNumVal = $("#queueNum").val();

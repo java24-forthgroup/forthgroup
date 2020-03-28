@@ -72,7 +72,7 @@
 			  <div class="panel-body">
 				<form role="form" id="saveForm">
 				  <div class="form-group">
-					<label ></label>
+					<label >类型名称</label>
 					<input type="text" class="form-control" id="typeName" name="typeName" placeholder="请输入类型名称">
 				  </div>
 

@@ -7,11 +7,4 @@
     <result column="source_id" jdbcType="INTEGER" property="sourceId" />
     <result column="skillgroup_name" jdbcType="VARCHAR" property="skillgroupName" />
   </resultMap>
-  <select id="findAll" resultMap="BaseResultMap">
-		select * from skillgroup
-	</select>
-
-  <select id="findOne" parameterType="int" resultMap="BaseResultMap">
-    select * from aroom where skillgroup_id = #{skillgroupId}
-  </select>
 </mapper>

@@ -1,7 +1,6 @@
 package com.woniuxy.dao;
 
 import com.woniuxy.pojo.PageBean;
-
 import com.woniuxy.pojo.Sourcetype;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -20,5 +19,4 @@ public interface SourcetypeMapper {
     int countAll(PageBean page);
 
     void delSourcetypes(Integer[] typeId);
-
 }

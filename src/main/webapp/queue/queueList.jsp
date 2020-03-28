@@ -88,7 +88,7 @@
             <table class="table  table-bordered">
               <thead>
                 <tr >
-                  <th width="80">序号</th>
+                  <th width="30">序号</th>
                   <th>队列编号</th>
                   <th>科室名称</th>
                   <th>队列序号</th>
@@ -180,7 +180,7 @@
 
             <!--删除-->
             function deletequeue(queueId){
-            	layer.confirm("是否删除该队列信息?",  {icon: 3, title:'提示'}, function(cindex){
+            	layer.confirm("是否删除该队列信息",  {icon: 3, title:'提示'}, function(cindex){
     			    layer.close(cindex);
     			    $.ajax({
     			    	url:"${pageContext.request.contextPath}/queue/delete",
@@ -189,7 +189,7 @@
     			    	success:function(result){
     			    		if(result.flag){
     			    			layer.msg("删除成功!", {time:1000, icon:0, shift:6}, function(){});
-    			    			window.location.href="${pageContext.request.contextPath}/queue/queueList";
+    			    			window.location.href="${ItemPath}/queue/queueList";
     			    		}else{
     			    			layer.msg("删除失败!", {time:1000, icon:0, shift:5}, function(){});
     			    		}

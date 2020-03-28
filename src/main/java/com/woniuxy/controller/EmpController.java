@@ -66,12 +66,9 @@ public class EmpController {
 
     @ResponseBody
     @RequestMapping("saveEmp")
-    public Object saveEmp(Emp emp, User user) {
+    public Object saveEmp(Emp emp) {
         Message message = new Message();
         try {
-            user.setUpwd("123");
-            userService.save(user);
-            emp.setUserId(user.getUserId());
             empService.save(emp);
             message.setFlag(true);
         } catch (Exception e) {
@@ -109,9 +106,7 @@ public class EmpController {
     public Object delete(Integer empId) {
         Message message = new Message();
         try {
-            int userId = empService.findOne(empId).getUserId();
             empService.delete(empId);
-            userService.delete(userId);
             message.setFlag(true);
         } catch (Exception e) {
             e.printStackTrace();
@@ -200,4 +195,3 @@ public class EmpController {
         return message;
     }
 }
-
