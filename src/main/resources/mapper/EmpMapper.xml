@@ -97,4 +97,8 @@
       emp_id=#{empId}
     </where>
   </update>
+
+  <select id="findUserIdByempId" parameterType="int" resultType="int">
+        select user_id from emp where emp_id = #{empId}
+  </select>
 </mapper>

@@ -72,4 +72,23 @@
   <update id="update" parameterType="role">
     update role set role_name=#{roleName} where role_id=#{roleId}
   </update>
+
+  <select id="findAssignRolesByUserId" parameterType="int" resultMap="BaseResultMap">
+		select *
+		from role where role_id in
+		(select role_id from userrole where user_id=#{userId})
+	</select>
+
+  <!-- select * from role where rid not in (1,2) -->
+  <select id="findUnAssignRolesByUserId" parameterType="int" resultMap="BaseResultMap">
+    select * from role
+    <if test="array!=null and array.length > 0">
+      <where>
+        role_id not in
+        <foreach collection="array" item="roleId" open="(" close=")" separator=",">
+          #{roleId}
+        </foreach>
+      </where>
+    </if>
+  </select>
 </mapper>

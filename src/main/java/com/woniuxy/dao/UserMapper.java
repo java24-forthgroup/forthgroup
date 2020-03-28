@@ -17,8 +17,9 @@ public interface UserMapper {
 
     void assignRoles(Map<String, Object> map);
 
-    void unAssignRoles(Map<String, Object> map);
-
     List<Permission> selectPermissionByUser(User loginUser);
 
+    User login(User user);
+
+    void removeRoles(Map<String, Object> map);
 }

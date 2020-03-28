@@ -1,5 +1,5 @@
 <%@ page language="java" pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
@@ -64,35 +64,35 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<ol class="breadcrumb">
-				  <li><a href="#">首页</a></li>
-				  <li><a href="#">数据列表</a></li>
+				  <li><a href="${APPPATH}/main">首页</a></li>
+				  <li><a href="${APPPATH }/user/index">数据列表</a></li>
 				  <li class="active">分配角色</li>
 				</ol>
 			<div class="panel panel-default">
 			  <div class="panel-body">
 				<form role="form" class="form-inline" id="assignRoleForm">
-					<input type="hidden" id="uid" name="uid" value="${uid }" />
+					<input type="hidden" id="userId" name="userId" value="${userId }" />
 				  <div class="form-group">
 					<label for="exampleInputPassword1">未分配角色列表</label><br>
 					<select id="left" name="leftRids" class="form-control" multiple size="10" style="width:100px;overflow-y:auto;">
-                        <c:forEach items="${unAssignRoleList }" var="role">
-                        	<option value="${role.rid }">${role.rname }</option>
+                        <c:forEach items="${unAssignRoles}" var="role">
+                        	<option value="${role.roleId}">${role.roleName }</option>
                         </c:forEach>
                     </select>
-				  </div>
+				  </div> 
 				  <div class="form-group">
                         <ul>
-                            <li class="btn btn-default glyphicon glyphicon-chevron-right" onclick="leftToRight()"></li>
-                            <br>
-                            <li class="btn btn-default glyphicon glyphicon-chevron-left"  onclick="rightToLeft()" style="margin-top:20px;"></li>
+                            <li class="btn btn-default glyphicon glyphicon-chevron-right" onclick="leftToRight()" ></li>
+                            </br>
+                            <li class="btn btn-default glyphicon glyphicon-chevron-left"  onclick="rightToLeft()" style="margin-top: 50px;"></li>
                         </ul>
 				  </div>
 				  <div class="form-group" style="margin-left:40px;">
 					<label for="exampleInputPassword1">已分配角色列表</label><br>
 					<select id="right" name="rightRids" class="form-control" multiple size="10" style="width:100px;overflow-y:auto;">
-                    	<c:forEach items="${assignRoleList }" var="role">
-                    		<option value="${role.rid }">${role.rname }</option>
-                    	</c:forEach>
+	                     <c:forEach items="${assignRoles}" var="role">
+	                        	<option value="${role.roleId }">${role.roleName}</option>
+	                     </c:forEach>
                     </select>
 				  </div>
 				</form>
@@ -101,8 +101,7 @@
         </div>
       </div>
     </div>
-      </div>
-    </div>
+    
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 		<div class="modal-content">
@@ -120,12 +119,6 @@
 				<p>测试内容2，测试内容2，测试内容2，测试内容2，测试内容2，测试内容2</p>
 			  </div>
 		  </div>
-		  <!--
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			<button type="button" class="btn btn-primary">Save changes</button>
-		  </div>
-		  -->
 		</div>
 	  </div>
 	</div>
@@ -143,14 +136,14 @@
 	        	}
 	        	
 	        	$.ajax({
-		    		url:"${APPPATH}/user/assignRoleDo",
+		    		url:"${APPPATH}/emp/assignRoleDo",
 		    		type:"post",
 		    		data:$("#assignRoleForm").serialize(),
 		    		success:function(result){
 		    			if(result.flag){
-		    				layer.msg("分配角色成功!", {time:1000, icon:6, shift:5}, function(){});
+		    				layer.msg("新增成功!", {time:1000, icon:6, shift:6}, function(){});
 		    			}else{
-		    				layer.msg("分配角色失败!", {time:1000, icon:5, shift:5}, function(){});
+		    				layer.msg("新增失败!", {time:1000, icon:5, shift:5}, function(){});
 		    			}
 		    		}
 		    	});
@@ -162,19 +155,21 @@
 	        			$("#left").append(rightOption.eq(i));
 	        		}
 	        	}
+	        	
 	        	$.ajax({
-		    		url:"${APPPATH}/user/unAssignRoleDo",
+		    		url:"${APPPATH}/emp/removeRole",
 		    		type:"post",
 		    		data:$("#assignRoleForm").serialize(),
 		    		success:function(result){
 		    			if(result.flag){
-		    				layer.msg("取消角色成功!", {time:1000, icon:6, shift:5}, function(){});
+		    				layer.msg("取消成功!", {time:1000, icon:6, shift:6}, function(){});
 		    			}else{
-		    				layer.msg("取消角色失败!", {time:1000, icon:5, shift:5}, function(){});
+		    				layer.msg("取消失败!", {time:1000, icon:5, shift:5}, function(){});
 		    			}
 		    		}
 		    	});
 	        }
+	        
             $(function () {
 			    $(".list-group-item").click(function(){
 				    if ( $(this).find("ul") ) {

@@ -52,4 +52,9 @@ public class EmpServiceImpl implements EmpService {
         mapper.delete(empId);
     }
 
+    @Override
+    public int findUserIdByempId(Integer empId) {
+        return mapper.findUserIdByempId(empId);
+    }
+
 }

@@ -3,6 +3,7 @@ package com.woniuxy.controller;
 import com.woniuxy.pojo.*;
 import com.woniuxy.service.AroomService;
 import com.woniuxy.service.EmpService;
+import com.woniuxy.service.RoleService;
 import com.woniuxy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("emp")
@@ -22,6 +25,8 @@ public class EmpController {
     AroomService aroomService;
     @Autowired
     UserService userService;
+    @Autowired
+    RoleService roleService;
 
     @RequestMapping("index")
     public String list(Model model) {
@@ -136,6 +141,63 @@ public class EmpController {
         emp = empService.findOne(emp.getEmpId());
         model.addAttribute("emp", emp);
         return "empinformation";
+    }
+
+    @RequestMapping("assignRole")
+    public String assignRole(Integer empId, Model model) {
+        // 通过员工I获得对应的userId
+        int userId = empService.findUserIdByempId(empId);
+        // 获得已分配角色
+        List<Role> assignRoles = roleService.findAssignRolesByUserId(userId);
+        // 声明长度为已分配角色数量长度的数组
+        Integer[] rids = new Integer[assignRoles.size()];
+        // 声明存放位置
+        int i = 0;
+        // 遍历所有已分配角色,将对应的rid存放在rids[]中
+        for (Role role : assignRoles) {
+            rids[i++] = role.getRoleId();
+        }
+        // 获得未分配角色
+        List<Role> unAssignRoles = roleService.findUnAssignRolesByUserId(rids);
+
+        model.addAttribute("unAssignRoles", unAssignRoles);
+        model.addAttribute("assignRoles", assignRoles);
+        model.addAttribute("userId", userId);
+        return "emp/assignRole";
+    }
+
+    @ResponseBody
+    @RequestMapping("assignRoleDo")
+    public Object assignRoleDo(Integer userId, Integer[] rightRids) {
+        Message message = new Message();
+        try {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("userId", userId);
+            map.put("rids", rightRids);
+            userService.assignRoles(map);
+            message.setFlag(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            message.setFlag(false);
+        }
+        return message;
+    }
+
+    @ResponseBody
+    @RequestMapping("removeRole")
+    public Object removeRole(Integer userId, Integer[] leftRids) {
+        Message message = new Message();
+        try {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("userId", userId);
+            map.put("rids", leftRids);
+            userService.removeRoles(map);
+            message.setFlag(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            message.setFlag(false);
+        }
+        return message;
     }
 }
 

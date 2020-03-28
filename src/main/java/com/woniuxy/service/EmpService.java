@@ -20,4 +20,5 @@ public interface EmpService {
 
     void delete(Integer eid);
 
+    int findUserIdByempId(Integer empId);
 }

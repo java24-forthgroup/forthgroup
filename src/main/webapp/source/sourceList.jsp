@@ -46,7 +46,7 @@
 			</li>
             <li style="margin-left:10px;padding-top:8px;">
 				<button type="button" class="btn btn-default btn-danger">
-				  <span class="glyphicon glyphicon-question-sign"></span> 帮助
+                    <a href="${APPPATH}/help.jsp" style="color: white"> <span class="glyphicon glyphicon-question-sign"></span> 帮助</a>
 				</button>
 			</li>
           </ul>
@@ -61,20 +61,7 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
 			<div class="tree">
-                <ul style="padding-left:0px;" class="list-group">
-                    <li class="list-group-item tree-closed">
-                        <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 医护管理 <span class="badge" style="float:right">2</span></span>
-                        <ul style="margin-top:10px;display:none;">
-                            <li style="height:30px;">
-                                <a href="${pageContext.request.contextPath}/source/sourceList"><i class="glyphicon glyphicon-user"></i>号源池管理</a>
-                            </li>
-                            <li style="height:30px;">
-                                <a href="${pageContext.request.contextPath}/queue/queueList"><i class="glyphicon glyphicon-user"></i>队列管理</a>
-                            </li>
-                        </ul>
-                    </li>
-
-                </ul>
+                <%@ include file="../menu.jsp" %>
             </div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
