@@ -74,9 +74,15 @@
 				<form role="form">
 
 				  <div class="form-group">
-					<label 类型名称></label>
+					<label 患者名称></label>
+					  <input type="hidden" id="typeId" name="typeId" value="${sourcetype.typeId}">
 					<input type="text" class="form-control" id="typeName" name="typeName" value="${sourcetype.typeName}">
 				  </div>
+					<div class="form-group">
+					<label 患者年龄></label>
+					<input type="hidden" id="typeId" name="typeId" value="${sourcetype.typeId}">
+					<input type="text" class="form-control" id="typeName" name="typeName" value="${sourcetype.typeName}">
+				</div>
 
 				  <button type="button" id="btnUpdate" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i> 修改</button>
 				  <button type="button" id="btnReset" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
@@ -138,7 +144,7 @@
 			    	$.ajax({
 			    		url:"${APPPATH}/sourceType/update",
 			    		type:"post",
-			    		data:{"typeName":$("#typeName").val()},
+			    		data:{"typeId":$("#typeId").val(),"typeName":$("#typeName").val()},
 			    		success:function(result){
 			    			if(result.flag){
 			    				layer.msg("类型修改成功!", {time:1000, icon:0, shift:6}, function(){});

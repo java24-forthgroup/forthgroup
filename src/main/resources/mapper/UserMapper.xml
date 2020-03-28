@@ -11,5 +11,8 @@
     insert into user (user_id,uname,upwd)
     values (null,#{uname},#{upwd})
   </insert>
-
+  <select id="findOneByUname" parameterType="String" resultMap="BaseResultMap">
+    select * from user
+    <where>uname = #{uname}</where>
+  </select>
 </mapper>

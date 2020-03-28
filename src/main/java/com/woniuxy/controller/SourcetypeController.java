@@ -32,14 +32,14 @@ public class SourcetypeController {
     @ResponseBody
     public Message findAllByPage(PageBean page){
         Message message = new Message();
-        System.out.println(page);
+
         try {
             if(page.getNowPage()==null) {
                 page.setNowPage(1);
             }
             page.setPageRow(5);
             int CountRow = sourcetypeService.countAll(page);
-            System.out.println(CountRow);
+
             page.setCountRow(CountRow);
 
             int countPage = page.getCountRow()%page.getPageRow()==0?page.getCountRow()/page.getPageRow():page.getCountRow()/page.getPageRow()+1;

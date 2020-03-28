@@ -11,4 +11,50 @@
     <result column="patient_count" jdbcType="INTEGER" property="patientCount" />
     <result column="patient_status" jdbcType="VARCHAR" property="patientStatus" />
   </resultMap>
+  <select id="findAllByPageBean" resultMap="BaseResultMap">
+    select * from  Patient
+    <where>
+      <if test="queryVal!=null">
+        patientName like CONCAT('%',#{queryVal},'%')
+      </if>
+
+    </where>
+    limit ${(nowPage-1)*pageRow},${pageRow}
+  </select>
+  <select id="countAll"  resultType="int">
+    select count(*) from Patient
+  </select>
+  <delete id="delete" parameterType="int">
+    delete from Patient where patient_id =#{patientId}
+  </delete>
+  <update id="update" parameterType="patient">
+    update patient
+    <set>
+      <if test="patientName!=null">
+        patient_name=#{patientName},
+      </if>
+      <if test="patientAge!=null">
+        patient_age=#{patientAge},
+      </if>
+      <if test="patientSex!=null">
+        patient_sex=#{patientSex},
+      </if>
+      <if test="patientCount!=null">
+        patient_count=#{patientCount},
+      </if>
+      <if test="patientStatus!=null">
+        patient_status=#{patientStatus},
+      </if>
+    </set>
+    <where>
+      patient_id =#{patientId}
+    </where>
+  </update>
+  <select id="findOne" parameterType="int" resultMap="BaseResultMap">
+    select * from patient
+    <where>patient_id=#{patientId}</where>
+  </select>
+  <insert id="save" parameterType="patient">
+    insert into patient values (null,#{roleId},#{userId},#{patientName},#{patientAge},#{patientSex},#{patientCount},#{patientStatus})
+  </insert>
 </mapper>

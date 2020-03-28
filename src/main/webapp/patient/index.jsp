@@ -76,13 +76,13 @@
   <div class="form-group has-feedback">
     <div class="input-group">
       <div class="input-group-addon">查询条件</div>
-      <input class="form-control has-success" type="text" id="queryTypeName" name="queryTypeName" placeholder="请输入查询条件">
+      <input class="form-control has-success" type="text" id="queryPatientName" name="queryPatientName" placeholder="请输入查询条件">
     </div>
   </div>
   <button type="button" class="btn btn-warning" id="btnQuery"><i class="glyphicon glyphicon-search"></i> 查询</button>
 </form>
 <button type="button" onclick="delSourcetypes()" class="btn btn-danger" style="float:right;margin-left:10px;"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
-<button type="button" class="btn btn-primary" style="float:right;" onclick="window.location.href='${APPPATH}/patient/goSave'"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+
 <br>
  <hr style="clear:both;">
           <div class="table-responsive">
@@ -93,9 +93,12 @@
                   <th width="30">#</th>
 				  <th width="30"><input type="checkbox" id="checkAll"></th>
 
-                  <th>名称</th>
-
-                  <th width="100">操作</th>
+                    <th>患者名称</th>
+                    <th>患者年龄</th>
+                    <th>患者性别</th>
+                    <th>患者爽约次数</th>
+                    <th>是否拉黑</th>
+                    <th width="100">操作</th>
                 </tr>
               </thead>
               
@@ -105,7 +108,7 @@
              
 			  <tfoot>
 			     <tr >
-				     <td colspan="6" align="center">
+				     <td colspan="8" align="center">
 						<ul class="pagination" id="byPage">
 								
 							 </ul>
@@ -140,7 +143,7 @@
 					}
 				});
 			    $("#btnQuery").click(function(){
-			    	var queryVal = $("#queryTypeName").val();
+			    	var queryVal = $("#queryPatientName").val();
 			    	if(queryVal!=""){
 			    		queryFlag = true;
 			    	}
@@ -181,18 +184,18 @@
     			    layer.close(cindex);
     			});
             }
-            function updateSourcetype(typeId){
-            	window.location.href="${APPPATH}/patient/findOne?typeId="+typeId;
+            function updatePatient(patientId){
+            	window.location.href="${APPPATH}/patient/findOne?patientId="+patientId;
             }
 
-            function deleteSourcetype(typeId){
+            function deletePatient(patientId){
             	layer.confirm("是否删除该类型?",  {icon: 3, title:'提示'}, function(cindex){
     			    layer.close(cindex);
 
     			    $.ajax({
     			    	url:"${APPPATH}/patient/delete",
     			    	type:"post",
-    			    	data:{"typeId":typeId},
+    			    	data:{"patientId":patientId},
     			    	success:function(result){
     			    		if(result.flag){
     			    			layer.msg("删除成功!", {time:1000, icon:0, shift:6}, function(){});
@@ -210,7 +213,7 @@
             function queryByPage(nowPage){
             	var jsonData = {"nowPage":nowPage};
             	if(queryFlag){
-            		jsonData.queryVal= $("#queryTypeName").val();
+            		jsonData.queryVal= $("#queryPatientName").val();
             	}
             	$.ajax({
             		url:"${APPPATH }/patient/findAllByPage",
@@ -221,16 +224,20 @@
             				//result.pageBean
             				//result.pageBean.list
             				var tableStr = "";
-            				$.each(result.obj.list,function(index,sourcetype){
+            				$.each(result.obj.list,function(index,patient){
             					//生成jQuery对象，进行装配或者使用html方法拼字符串
 	            				tableStr+="<tr>";
 		                        tableStr+="<td>"+(index+1)+"</td>";
-		          				tableStr+="<td><input type='checkbox' class='abc' name='typeId' value='"+sourcetype.typeId+"'></td>";
-		                        tableStr+="<td>"+sourcetype.typeName+"</td>";
+		          				tableStr+="<td><input type='checkbox' class='abc' name='patientId' value='"+patient.patientId+"'></td>";
+		                        tableStr+="<td>"+patient.patientName+"</td>";
+                                tableStr+="<td>"+patient.patientAge+"</td>";
+                                tableStr+="<td>"+patient.patientSex+"</td>";
+                                tableStr+="<td>"+patient.patientCount+"</td>";
+                                tableStr+="<td>"+patient.patientStatus+"</td>";
 		                        tableStr+="<td>";
 
-		          				tableStr+="<button type='button' onclick='updateSourcetype("+sourcetype.typeId+")' class='btn btn-primary btn-xs'><i class='glyphicon glyphicon-pencil'></i></button>";
-		          				tableStr+="<button type='button' onclick='deleteSourcetype("+sourcetype.typeId+")' class='btn btn-danger btn-xs'><i class='glyphicon glyphicon-remove'></i></button>";
+		          				tableStr+="<button type='button' onclick='updatePatient("+patient.patientId+")' class='btn btn-primary btn-xs'><i class='glyphicon glyphicon-pencil'></i></button>";
+		          				tableStr+="<button type='button' onclick='deletePatient("+patient.patientId+")' class='btn btn-danger btn-xs'><i class='glyphicon glyphicon-remove'></i></button>";
 		          				tableStr+="</td>";
 	                          	tableStr+="</tr>";
             					

@@ -1,6 +1,5 @@
 package com.woniuxy.dao;
 
-import com.woniuxy.pojo.Aroom;
 import com.woniuxy.pojo.PageBean;
 import com.woniuxy.pojo.User;
 
@@ -19,4 +18,6 @@ public interface UserMapper {
     void update(User User);
 
     void delete(Integer User);
+
+    User findOneByUname(String uname);
 }
