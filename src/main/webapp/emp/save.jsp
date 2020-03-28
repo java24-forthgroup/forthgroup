@@ -78,15 +78,24 @@
 					<label for="exampleInputPassword1">员工生日</label>
 					<input type="date" class="form-control" id="empBirthday" name="empBirthday" placeholder="请输入员工生日">
 					<label for="exampleInputPassword1">员工等级</label>
-					<input type="text" class="form-control" id="empGrade" name="empGrade" placeholder="请输入员工等级">
-					<label for="exampleInputPassword1">分配科室</label>
-					  <select name="aroomId">
+					  <select name="empGrade" class="form-control">
+						  <option value="专家">专家</option>
+						  <option value="护士">护士</option>
+						  <option value="医生" selected="selected">医生</option>
+						  <option value="护工">护工</option>
+						  <option value="医护管理员">医护管理员</option>
+						  <option value="院长">院长</option>
+						  <option value="副院长">副院长</option>
+						  <option value="主任">主任</option>
+					  </select>
+					<label for="exampleInputPassword1" >分配科室</label>
+					  <select name="aroomId" class="form-control">
 						  <c:forEach items="${aroomList}" var="aroom">
 						  <option value="${aroom.aroomId}">${aroom.aroomName}</option>
 						  </c:forEach>
-					  </select><br/>
-					  <label for="exampleInputPassword1">员工用户id</label>
-					  <input type="text" class="form-control" id="userId" name="userId" placeholder="请输入数字">
+					  </select>
+					  <label for="exampleInputPassword1">员工账户名</label>
+					  <input type="text" class="form-control" id="uname" name="uname" placeholder="请输入员工账户名">
 				  </div>
 				  <button type="button" id="btnSave" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> 新增</button>
 				  <button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
@@ -154,6 +163,11 @@
 			    		layer.msg("员工等级不能为空!", {time:1000, icon:0, shift:5}, function(){});
 			    		return;
 			    	}
+					var uname = $("#uname").val();
+					if(uname==""){
+						layer.msg("员工账户名不能为空!", {time:1000, icon:0, shift:5}, function(){});
+						return;
+					}
 			    	$.ajax({
 			    		url:"${APPPATH }/emp/saveEmp",
 			    		type:"post",

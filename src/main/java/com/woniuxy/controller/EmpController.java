@@ -66,9 +66,12 @@ public class EmpController {
 
     @ResponseBody
     @RequestMapping("saveEmp")
-    public Object saveEmp(Emp emp) {
+    public Object saveEmp(Emp emp,User user) {
         Message message = new Message();
         try {
+            user.setUpwd("123");
+            userService.save(user);
+            emp.setUserId(user.getUserId());
             empService.save(emp);
             message.setFlag(true);
         } catch (Exception e) {
