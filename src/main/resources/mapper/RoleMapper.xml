@@ -5,4 +5,71 @@
     <id column="role_id" jdbcType="INTEGER" property="roleId" />
     <result column="role_name" jdbcType="VARCHAR" property="roleName" />
   </resultMap>
+
+  <sql id="base_col_list">
+		role_id,role_name
+	</sql>
+
+  <select id="selectByPage" parameterType="pageBean" resultMap="BaseResultMap">
+    select
+    <include refid="base_col_list"></include>
+    from role
+    limit ${(nowPage-1)*pageRow},${pageRow}
+  </select>
+
+  <select id="countByPage" parameterType="pageBean" resultType="int">
+ 		select count(*)
+ 		from role
+ 	</select>
+
+  <insert id="save" parameterType="role">
+ 		insert into role(role_id,role_name) values(#{roleId},#{roleName})
+ 	</insert>
+
+  <select id="findAll" resultType="role">
+    select
+    <include refid="base_col_list"></include>
+    from role
+  </select>
+
+  <select id="selectRolesByUid" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="base_col_list"></include>
+    from role
+    where role_id in
+    (select role_id from userrole where user_id=#{userId})
+  </select>
+
+  <select id="findByRid" parameterType="int" resultType="int">
+    <!-- 因为查询时，只使用pid的值，所以这里不能写*，如果写*，就会将第一列封装进去 -->
+    select permission_id
+    from rolePermission
+    where role_id =#{roleId}
+  </select>
+
+  <insert id="assignPermission">
+    insert into rolePermission values
+    <foreach collection="permissionIds" separator="," item="permissionId">
+      (#{rpId},#{roleId},#{permissionId})
+    </foreach>
+  </insert>
+
+  <delete id="deleteAssignPermissionByRid" parameterType="int">
+ 		delete from rolepermission where role_id=#{roleId}
+ 	</delete>
+
+  <select id="findOne" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="base_col_list"></include>
+    from role
+    where role_id=#{roleId}
+  </select>
+
+  <delete id="delete" parameterType="int">
+    delete from role where role_id=#{roleId}
+  </delete>
+
+  <update id="update" parameterType="role">
+    update role set role_name=#{roleName} where role_id=#{roleId}
+  </update>
 </mapper>

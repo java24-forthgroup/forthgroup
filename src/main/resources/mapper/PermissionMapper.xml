@@ -7,4 +7,58 @@
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
     <result column="url" jdbcType="VARCHAR" property="url" />
   </resultMap>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    *
+    from permission
+  </select>
+
+  <select id="findRoot" resultMap="BaseResultMap">
+    select
+    *
+    from permission
+    where parentid is null
+  </select>
+
+  <select id="findOne" resultMap="BaseResultMap">
+    select
+    *
+    from permission
+    where permission_id=#{permissionId}
+  </select>
+
+  <select id="selectByParentid" parameterType="int" resultMap="BaseResultMap">
+    select
+    *
+    from permission
+    where parentid = #{permissionId}
+  </select>
+
+  <insert id="save" parameterType="permission">
+  	insert into permission values(#{permissionId},#{name},#{parentId},#{url})
+  </insert>
+
+  <update id="update" parameterType="permission">
+    update permission
+    <set>
+      <if test="name!=null">
+        name=#{name},
+      </if>
+      <if test="parentid!=null">
+        parent_id=#{parentId},
+      </if>
+      <if test="url!=null">
+        url=#{url},
+      </if>
+    </set>
+    <where>
+      permission_id=#{permissionId}
+    </where>
+  </update>
+
+  <delete id="delete" parameterType="int">
+  	delete from permission where permission_id=#{permissionId}
+  </delete>
+
 </mapper>
