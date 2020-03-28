@@ -39,12 +39,16 @@
 		  </div>
 		  
         <a class="btn btn-lg btn-success btn-block" onclick="dologin()" > 登录</a>
+          <a class="btn btn-lg btn-success btn-block" onclick="doReg()" > 注册</a>
       </form>
     </div>
     <script src="jquery/jquery-2.1.1.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="layer/layer.js"></script>
     <script>
+        function doReg() {
+            window.location.href='${APPPATH }/patient/reg.jsp';
+        }
     function dologin() {
         //window.location.href = "main.html";
         //先判断用户名密码不为空

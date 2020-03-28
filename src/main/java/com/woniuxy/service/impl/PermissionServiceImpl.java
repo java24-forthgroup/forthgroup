@@ -1,7 +1,5 @@
 package com.woniuxy.service.impl;
 
-import java.util.List;
-
 import com.woniuxy.dao.PermissionMapper;
 import com.woniuxy.pojo.Permission;
 import com.woniuxy.service.PermissionService;
@@ -9,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Service
 @Transactional
 public class PermissionServiceImpl implements PermissionService {
-	@Autowired
+	@Autowired(required = false)
 	PermissionMapper mapper;
 
 	@Override
@@ -29,9 +29,9 @@ public class PermissionServiceImpl implements PermissionService {
 	}
 
 	@Override
-	public List<Permission> selectByParentid(Integer pid) {
+	public List<Permission> selectByParentid(Integer parentId) {
 		// TODO Auto-generated method stub
-		return mapper.selectByParentid(pid);
+		return mapper.selectByParentid(parentId);
 	}
 
 	@Override
@@ -41,9 +41,9 @@ public class PermissionServiceImpl implements PermissionService {
 	}
 
 	@Override
-	public Permission findOne(Integer pid) {
+	public Permission findOne(Integer parentId) {
 		// TODO Auto-generated method stub
-		return mapper.findOne(pid);
+		return mapper.findOne(parentId);
 	}
 
 	@Override
@@ -53,8 +53,8 @@ public class PermissionServiceImpl implements PermissionService {
 	}
 
 	@Override
-	public void delete(Integer pid) {
+	public void delete(Integer parentId) {
 		// TODO Auto-generated method stub
-		mapper.delete(pid);
+		mapper.delete(parentId);
 	}
 }

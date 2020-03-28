@@ -98,7 +98,7 @@
                             <input type="text" class="form-control" id="patientAge" name="patientAge" value="${patient.patientAge}"placeholder="请输入年龄">
                         </div>
 
-                        <button type="button" id="btnSave" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+                        <button type="button" id="btnSave" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> 注册</button>
                         <button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
                     </form>
                 </div>
