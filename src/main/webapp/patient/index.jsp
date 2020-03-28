@@ -189,7 +189,7 @@
             }
 
             function deletePatient(patientId){
-            	layer.confirm("是否删除该类型?",  {icon: 3, title:'提示'}, function(cindex){
+            	layer.confirm("是否删除该患者?",  {icon: 3, title:'提示'}, function(cindex){
     			    layer.close(cindex);
 
     			    $.ajax({
