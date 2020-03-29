@@ -239,17 +239,17 @@
             					
             				});
             				$("#tableContent").html(tableStr);
-            				var byPageStr="";
-            				byPageStr+="<li class='"+(result.obj.nowPage==1?'disabled':'')+"'><a onclick='queryByPage("+(result.obj.nowPage-1)+")'>上一页</a></li>";
-							for(var i=1;i<=result.obj.countPage;i++){
-								if(i==result.obj.nowPage){
-	            					byPageStr+="<li class='active'><a onclick='queryByPage("+(i)+")'>"+i+"<span class='sr-only'>(current)</span></a></li>";
-								}else{
-	            					byPageStr+="<li><a onclick='queryByPage("+(i)+")'>"+i+"</a></li>";
-								}
-							}
-							byPageStr+="<li class='"+(result.obj.nowPage==result.obj.countPage?'disabled':'')+"'><a onclick='queryByPage("+(result.obj.nowPage+1)+")'>下一页</a></li>";
-            				$("#byPage").html(byPageStr);
+                            var byPageStr="";
+                            byPageStr+="<li class='"+(result.obj.nowPage==1?'disabled':'')+"'><a href='#' onclick='queryByPage("+(result.obj.nowPage==1?1:(result.obj.nowPage-1))+")'>上一页</a></li>";
+                            for(var i=1;i<=result.obj.countPage;i++){
+                                if(i==result.obj.nowPage){
+                                    byPageStr+="<li class='active'><a href='#'  onclick='queryByPage("+(i)+")'>"+i+"<span class='sr-only'>(current)</span></a></li>";
+                                }else{
+                                    byPageStr+="<li><a href='#' onclick='queryByPage("+(i)+")'>"+i+"</a></li>";
+                                }
+                            }
+                            byPageStr+="<li class='"+(result.obj.nowPage==result.obj.countPage?'disabled':'')+"'><a href='#'  onclick='queryByPage("+(result.obj.nowPage==result.obj.countPage?result.obj.countPage:(result.obj.nowPage+1))+")'>下一页</a></li>";
+                            $("#byPage").html(byPageStr);
             			}else{
             				layer.msg("查询失败!", {time:1000, icon:0, shift:5}, function(){});
             			}
