@@ -33,9 +33,6 @@ public class LoginController {
             session.setAttribute("loginUser", loginUser);
 //             获得该用户的的许可
             List<Permission> permissionList = userService.selectPermissionByUser(loginUser);
-            for (Permission p:permissionList){
-                System.out.println(p);
-            }
             Permission root = null;
             Map<Integer, Permission> map = new HashMap<Integer, Permission>();
             for (Permission permission : permissionList) {

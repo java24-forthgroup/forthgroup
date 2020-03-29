@@ -40,11 +40,11 @@
 						<li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
 						<li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
 						<li class="divider"></li>
-						<li><a href="${pageContext.request.contextPath}/loginOut"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
+						<li><a href="${pageContext.request.contextPath}/logut"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
 					  </ul>
 			    </div>
 			</li>
-            <li style="margin-left:10px;padding-top:8px;">
+            <li style="margin-left:10px;padding-top:8px;">o
 				<button type="button" class="btn btn-default btn-danger">
                     <a href="${APPPATH}/help.jsp" style="color: white"> <span class="glyphicon glyphicon-question-sign"></span> 帮助</a>
 				</button>
