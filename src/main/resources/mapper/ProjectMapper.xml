@@ -9,4 +9,7 @@
     <result column="project_cost" jdbcType="DECIMAL" property="projectCost" />
     <result column="project_comment" jdbcType="VARCHAR" property="projectComment" />
   </resultMap>
+  <select id="findAll" resultMap="BaseResultMap">
+    select * from project
+  </select>
 </mapper>

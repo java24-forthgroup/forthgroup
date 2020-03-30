@@ -36,7 +36,7 @@
             <li style="padding-top:8px;">
 				<div class="btn-group">
 				  <button type="button" class="btn btn-default btn-success dropdown-toggle" data-toggle="dropdown">
-					<i class="glyphicon glyphicon-sourceType"></i> ${loginUser.uname }<span class="caret"></span>
+					<i class="glyphicon glyphicon-apprecord"></i> ${loginUser.uname }<span class="caret"></span>
 				  </button>
 					  <ul class="dropdown-menu" role="menu">
 						<li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
@@ -76,13 +76,13 @@
   <div class="form-group has-feedback">
     <div class="input-group">
       <div class="input-group-addon">查询条件</div>
-      <input class="form-control has-success" type="text" id="queryTypeName" name="queryTypeName" placeholder="请输入查询条件">
+      <input class="form-control has-success" type="text" id="queryPatientName" name="queryPatientName" placeholder="请输入患者姓名">
     </div>
   </div>
   <button type="button" class="btn btn-warning" id="btnQuery"><i class="glyphicon glyphicon-search"></i> 查询</button>
 </form>
 <button type="button" onclick="delSourcetypes()" class="btn btn-danger" style="float:right;margin-left:10px;"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
-<button type="button" class="btn btn-primary" style="float:right;" onclick="window.location.href='${APPPATH}/sourceType/goSave'"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+
 <br>
  <hr style="clear:both;">
           <div class="table-responsive">
@@ -93,9 +93,13 @@
                   <th width="30">#</th>
 				  <th width="30"><input type="checkbox" id="checkAll"></th>
 
-                  <th>名称</th>
 
-                  <th width="100">操作</th>
+                    <th>医生姓名</th>
+                    <th>医技项目</th>
+                    <th>患者名字</th>
+                    <th>是否签到</th>
+                    <th>是否缴费</th>
+                    <th width="100">操作</th>
                 </tr>
               </thead>
               
@@ -105,7 +109,7 @@
              
 			  <tfoot>
 			     <tr >
-				     <td colspan="6" align="center">
+				     <td colspan="9" align="center">
 						<ul class="pagination" id="byPage">
 								
 							 </ul>
@@ -140,7 +144,7 @@
 					}
 				});
 			    $("#btnQuery").click(function(){
-			    	var queryVal = $("#queryTypeName").val();
+			    	var queryVal = $("#queryPatientName").val();
 			    	if(queryVal!=""){
 			    		queryFlag = true;
 			    	}
@@ -164,13 +168,13 @@
             	layer.confirm("是否删除选中的用户?",  {icon: 3, title:'提示'}, function(cindex){
     			    layer.close(cindex);
     			    $.ajax({
-    			    	url:"${APPPATH}/sourceType/delSourcetypes",
+    			    	url:"${APPPATH}/apprecord/delSourcetypes",
     			    	type:"post",
     			    	data:$("#delForm").serialize(),
     			    	success:function(result){
     			    		if(result.flag){
     			    			layer.msg("删除成功!", {time:1000, icon:0, shift:6}, function(){});
-    			    			window.location.href="${APPPATH}/sourceType/index";
+    			    			window.location.href="${APPPATH}/apprecord/index";
     			    		}else{
     			    			layer.msg("删除失败!", {time:1000, icon:0, shift:5}, function(){});
     			    		}
@@ -181,22 +185,22 @@
     			    layer.close(cindex);
     			});
             }
-            function updateSourcetype(typeId){
-            	window.location.href="${APPPATH}/sourceType/findOne?typeId="+typeId;
+            function updatePatient(apprecordId){
+            	window.location.href="${APPPATH}/apprecord/findOne?apprecordId="+apprecordId;
             }
 
-            function deleteSourcetype(typeId){
-            	layer.confirm("是否删除该类型?",  {icon: 3, title:'提示'}, function(cindex){
+            function deletePatient(apprecordId){
+            	layer.confirm("是否删除该患者?",  {icon: 3, title:'提示'}, function(cindex){
     			    layer.close(cindex);
 
     			    $.ajax({
-    			    	url:"${APPPATH}/sourceType/delete",
+    			    	url:"${APPPATH}/apprecord/delete",
     			    	type:"post",
-    			    	data:{"typeId":typeId},
+    			    	data:{"apprecordId":apprecordId},
     			    	success:function(result){
     			    		if(result.flag){
     			    			layer.msg("删除成功!", {time:1000, icon:0, shift:6}, function(){});
-    			    			window.location.href="${APPPATH}/sourceType/index";
+    			    			window.location.href="${APPPATH}/apprecord/index";
     			    		}else{
     			    			layer.msg("删除失败!", {time:1000, icon:0, shift:5}, function(){});
     			    		}
@@ -210,10 +214,10 @@
             function queryByPage(nowPage){
             	var jsonData = {"nowPage":nowPage};
             	if(queryFlag){
-            		jsonData.queryVal= $("#queryTypeName").val();
+            		jsonData.queryVal= $("#queryPatientName").val();
             	}
             	$.ajax({
-            		url:"${APPPATH }/sourceType/findAllByPage",
+            		url:"${APPPATH }/apprecord/findAllByPage",
             		type:"post",
             		data:jsonData,
             		success:function(result){
@@ -221,16 +225,20 @@
             				//result.pageBean
             				//result.pageBean.list
             				var tableStr = "";
-            				$.each(result.obj.list,function(index,sourcetype){
+            				$.each(result.obj.list,function(index,apprecord){
             					//生成jQuery对象，进行装配或者使用html方法拼字符串
 	            				tableStr+="<tr>";
 		                        tableStr+="<td>"+(index+1)+"</td>";
-		          				tableStr+="<td><input type='checkbox' class='abc' name='typeId' value='"+sourcetype.typeId+"'></td>";
-		                        tableStr+="<td>"+sourcetype.typeName+"</td>";
+		          				tableStr+="<td><input type='checkbox' class='abc' name='apprecordId' value='"+apprecord.apprecordId+"'></td>";
+		                        tableStr+="<td>"+apprecord.emp.empName+"</td>";
+                                tableStr+="<td>"+apprecord.project.projectName+"</td>";
+                                tableStr+="<td>"+apprecord.patient.patientName+"</td>";
+                                tableStr+="<td>"+apprecord.attendStatus+"</td>";
+                                tableStr+="<td>"+apprecord.costStatus+"</td>";
 		                        tableStr+="<td>";
 
-		          				tableStr+="<button type='button' onclick='updateSourcetype("+sourcetype.typeId+")' class='btn btn-primary btn-xs'><i class='glyphicon glyphicon-pencil'></i></button>";
-		          				tableStr+="<button type='button' onclick='deleteSourcetype("+sourcetype.typeId+")' class='btn btn-danger btn-xs'><i class='glyphicon glyphicon-remove'></i></button>";
+		          				tableStr+="<button type='button' onclick='updatePatient("+apprecord.apprecordId+")' class='btn btn-primary btn-xs'><i class='glyphicon glyphicon-pencil'></i></button>";
+		          				tableStr+="<button type='button' onclick='deletePatient("+apprecord.apprecordId+")' class='btn btn-danger btn-xs'><i class='glyphicon glyphicon-remove'></i></button>";
 		          				tableStr+="</td>";
 	                          	tableStr+="</tr>";
             					

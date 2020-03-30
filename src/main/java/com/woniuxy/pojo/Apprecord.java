@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Apprecord {
     private Integer apprecordId;
-    private Integer empId;
-    private Integer projectId;
-    private Integer patientId;
+    private Emp emp;
+    private Project project;
+    private Patient patient;
     private String attendStatus;
     private String costStatus;
 
