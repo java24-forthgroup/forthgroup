@@ -19,4 +19,6 @@ public interface EmpMapper {
     void update(Emp emp);
 
     void delete(Integer empId);
+
+    int findUserIdByempId(Integer empId);
 }

@@ -1,5 +1,5 @@
 <%@ page language="java" pageEncoding="utf-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
@@ -25,7 +25,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
-            <div><a class="navbar-brand" style="font-size:32px;" href="user.html">用户维护</a></div>
+            <div><a class="navbar-brand" style="font-size:32px;" href="user.html">医疗预约平台</a></div>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -38,13 +38,13 @@
 						<li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
 						<li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
 						<li class="divider"></li>
-						<li><a href="${APPPATH }/loginout"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
+						<li><a href="${APPPATH }/logout"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
 					  </ul>
 			    </div>
 			</li>
             <li style="margin-left:10px;padding-top:8px;">
 				<button type="button" class="btn btn-default btn-danger">
-				  <span class="glyphicon glyphicon-question-sign"></span> 帮助
+					<a href="${APPPATH}/help.jsp" style="color: white"> <span class="glyphicon glyphicon-question-sign"></span> 帮助</a>
 				</button>
 			</li>
           </ul>
@@ -59,32 +59,7 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
 			<div class="tree">
-				<ul style="padding-left:0px;" class="list-group">
-					<li class="list-group-item tree-closed" >
-						<a href="main.html"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a> 
-					</li>
-					<li class="list-group-item tree-closed">
-						<span><i class="glyphicon glyphicon glyphicon-tasks"></i> 系统管理 <span class="badge" style="float:right">5</span></span> 
-						<ul style="margin-top:10px;display:none;">
-							<li style="height:30px;">
-								<a href="${APPPATH}/clazz/index"><i class="glyphicon glyphicon-user"></i> 班级管理</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="${APPPATH}/role/list"><i class="glyphicon glyphicon-king"></i> 角色管理</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="${APPPATH}/discipline/index"><i class="glyphicon glyphicon-lock"></i> 学科管理</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="${APPPATH}/course/list"><i class="glyphicon glyphicon-lock"></i> 课程表管理</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="${APPPATH}/classroom/index"><i class="glyphicon glyphicon-lock"></i> 教室管理</a> 
-							</li>
-						</ul>
-					</li>
-					
-				</ul>
+				<%@ include file="../menu.jsp" %>
 			</div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -103,15 +78,24 @@
 					<label for="exampleInputPassword1">员工生日</label>
 					<input type="date" class="form-control" id="empBirthday" name="empBirthday" placeholder="请输入员工生日">
 					<label for="exampleInputPassword1">员工等级</label>
-					<input type="text" class="form-control" id="empGrade" name="empGrade" placeholder="请输入员工等级">
-					<label for="exampleInputPassword1">分配科室</label>
-					  <select name="aroomId">
+					  <select name="empGrade" class="form-control">
+						  <option value="专家">专家</option>
+						  <option value="护士">护士</option>
+						  <option value="医生" selected="selected">医生</option>
+						  <option value="护工">护工</option>
+						  <option value="医护管理员">医护管理员</option>
+						  <option value="院长">院长</option>
+						  <option value="副院长">副院长</option>
+						  <option value="主任">主任</option>
+					  </select>
+					<label for="exampleInputPassword1" >分配科室</label>
+					  <select name="aroomId" class="form-control">
 						  <c:forEach items="${aroomList}" var="aroom">
 						  <option value="${aroom.aroomId}">${aroom.aroomName}</option>
 						  </c:forEach>
-					  </select><br/>
-					  <label for="exampleInputPassword1">员工用户id</label>
-					  <input type="text" class="form-control" id="userId" name="userId" placeholder="请输入数字">
+					  </select>
+					  <label for="exampleInputPassword1">员工账户名</label>
+					  <input type="text" class="form-control" id="uname" name="uname" placeholder="请输入员工账户名">
 				  </div>
 				  <button type="button" id="btnSave" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> 新增</button>
 				  <button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
@@ -179,6 +163,11 @@
 			    		layer.msg("员工等级不能为空!", {time:1000, icon:0, shift:5}, function(){});
 			    		return;
 			    	}
+					var uname = $("#uname").val();
+					if(uname==""){
+						layer.msg("员工账户名不能为空!", {time:1000, icon:0, shift:5}, function(){});
+						return;
+					}
 			    	$.ajax({
 			    		url:"${APPPATH }/emp/saveEmp",
 			    		type:"post",

@@ -3,46 +3,51 @@
 <mapper namespace="com.woniuxy.dao.SourcetypeMapper">
 
 
-  <resultMap id="BaseResultMap" type="com.woniuxy.pojo.Sourcetype">
-    <id column="type_id" jdbcType="INTEGER" property="typeId" />
-    <result column="type_name" jdbcType="VARCHAR" property="typeName" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.woniuxy.pojo.Sourcetype">
+        <id column="type_id" jdbcType="INTEGER" property="typeId" />
+        <result column="type_name" jdbcType="VARCHAR" property="typeName" />
+    </resultMap>
 
-  <select id="findAllByPageBean" parameterType="pageBean" resultMap="BaseResultMap">
-    select * from Sourcetype
-    <where>
-      <if test="queryVal!=null">
-        type_name like CONCAT('%',#{queryVal},'%')
-      </if>
-    </where>
-    limit ${(nowPage-1)*pageRow},${pageRow}
-  </select>
-  <select id="countAll"  resultType="int">
+    <select id="findAllByPageBean" parameterType="pageBean" resultMap="BaseResultMap">
+        select * from Sourcetype
+        <where>
+            <if test="queryVal!=null">
+                type_name like CONCAT('%',#{queryVal},'%')
+            </if>
+        </where>
+        limit ${(nowPage-1)*pageRow},${pageRow}
+    </select>
+    <select id="countAll"  resultType="int">
     select count(*) from Sourcetype
   </select>
-  <delete id="delete" parameterType="int">
+    <delete id="delete" parameterType="int">
     delete from Sourcetype where type_id = #{typeId}
   </delete>
-  <select id="findOne" parameterType="int" resultMap="BaseResultMap">
-    select * from Sourcetype
-    <where>type_id = #{typeId}</where>
+    <select id="findOne" parameterType="int" resultMap="BaseResultMap">
+        select * from Sourcetype
+        <where>type_id = #{typeId}</where>
 
-  </select>
-  <update id="update" parameterType="Sourcetype">
-    update Sourcetype
-    <set>type_name=#{typeName}</set>
-    <where>type_id=#{typeId}</where>
-  </update>
-  <insert id="save" parameterType="Sourcetype">
+    </select>
+    <update id="update" parameterType="Sourcetype">
+        update Sourcetype
+        <set>type_name=#{typeName}</set>
+        <where>type_id=#{typeId}</where>
+    </update>
+    <insert id="save" parameterType="Sourcetype">
     insert into Sourcetype values (null,#{typeName})
   </insert>
-  <delete id="delSourcetypes" >
-    delete from Sourcetype
-    <where>
-      type_id in
-      <foreach collection="array" item="typeId" open="(" close=")" separator=",">
-        #{typeId}
-      </foreach>
-    </where>
-  </delete>
+    <delete id="delSourcetypes" >
+        delete from Sourcetype
+        <where>
+            type_id in
+            <foreach collection="array" item="typeId" open="(" close=")" separator=",">
+                #{typeId}
+            </foreach>
+        </where>
+    </delete>
+
+    <select id="findAll" resultMap="BaseResultMap">
+		select * from sourcetype
+	</select>
+
 </mapper>

@@ -1,5 +1,5 @@
 <%@ page language="java" pageEncoding="utf-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
@@ -25,7 +25,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
-            <div><a class="navbar-brand" style="font-size:32px;" href="user.html">用户维护</a></div>
+            <div><a class="navbar-brand" style="font-size:32px;" href="user.html">医疗预约平台</a></div>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -38,13 +38,13 @@
 						<li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
 						<li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
 						<li class="divider"></li>
-						<li><a href="${pageContext.request.contextPath}/loginout"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
+						<li><a href="${pageContext.request.contextPath}/logout"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
 					  </ul>
 			    </div>
 			</li>
             <li style="margin-left:10px;padding-top:8px;">
 				<button type="button" class="btn btn-default btn-danger">
-				  <span class="glyphicon glyphicon-question-sign"></span> 帮助
+					<a href="${APPPATH}/help.jsp" style="color: white"> <span class="glyphicon glyphicon-question-sign"></span> 帮助</a>
 				</button>
 			</li>
           </ul>
@@ -59,17 +59,7 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
 			<div class="tree">
-				<ul style="padding-left:0px;" class="list-group">
-					<li class="list-group-item tree-closed">
-						<span><i class="glyphicon glyphicon glyphicon-tasks"></i> 医护管理 <span class="badge" style="float:right">1</span></span>
-						<ul style="margin-top:10px;display:none;">
-							<li style="height:30px;">
-								<a href="${pageContext.request.contextPath}/queue/queueList"><i class="glyphicon glyphicon-user"></i>队列管理</a>
-							</li>
-						</ul>
-					</li>
-
-				</ul>
+				<%@ include file="../menu.jsp" %>
 			</div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -86,14 +76,14 @@
 					<label for="exampleInputPassword1">队列序号</label>
 					<input type="text" class="form-control" id="queueNum" name="queueNum" placeholder="请输入队列序号">
 					<label for="exampleInputPassword1">所属科室</label>
-					  <select name="aroomId">
+					  <select name="aroomId" class="form-control">
 						  <c:forEach items="${aroomList}" var="aroom">
 						  <option value="${aroom.aroomId}">${aroom.aroomName}</option>
 						  </c:forEach>
 					  </select><br/>
 				  </div>
 				  <button type="button" id="btnSave" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> 新增</button>
-				  <button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
+				  <button type="button" id="btnReset"class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
 				</form>
 			  </div>
 			</div>
@@ -125,6 +115,9 @@
 							$("ul", this).show("fast");
 						}
 					}
+				});
+				$("#btnReset").click(function(){
+					$("#queueNum").val("");
 				});
 			    $("#btnSave").click(function(){
 			    	var queueNumVal = $("#queueNum").val();

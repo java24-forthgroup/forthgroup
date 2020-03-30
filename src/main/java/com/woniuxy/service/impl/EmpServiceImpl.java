@@ -53,12 +53,9 @@ public class EmpServiceImpl implements EmpService {
     }
 
     @Override
-    public void updateOne(Emp emp) {
 
+    public int findUserIdByempId(Integer empId) {
+        return mapper.findUserIdByempId(empId);
     }
 
-    @Override
-    public void usernamepasswordUpdate(Emp emp) {
-
-    }
 }

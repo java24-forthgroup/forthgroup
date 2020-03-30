@@ -43,12 +43,6 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public List<Role> selectRolesByUid(Integer uid) {
-		// TODO Auto-generated method stub
-		return mapper.selectRolesByUid(uid);
-	}
-
-	@Override
 	public void assignPermission(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		mapper.deleteAssignPermissionByRid(map.get("roleId"));
@@ -77,4 +71,16 @@ public class RoleServiceImpl implements RoleService {
 	public void delete(Integer rid) {
         mapper.delete(rid);
 	}
+
+	@Override
+	public List<Role> findAssignRolesByUserId(Integer userId) {
+		return mapper.findAssignRolesByUserId(userId);
+	}
+
+	@Override
+	public List<Role> findUnAssignRolesByUserId(Integer[] rids) {
+		return mapper.findUnAssignRolesByUserId(rids);
+	}
+
+
 }

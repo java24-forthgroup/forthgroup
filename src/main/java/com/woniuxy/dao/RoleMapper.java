@@ -18,4 +18,7 @@ public interface RoleMapper {
     Role findOne(Integer rid);
 	void update(Role role);
 	void delete(Integer rid);
+
+	List<Role> findAssignRolesByUserId(Integer userId);
+	List<Role> findUnAssignRolesByUserId(Integer[] rids);
 }

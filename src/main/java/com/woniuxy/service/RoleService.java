@@ -16,8 +16,6 @@ public interface RoleService {
 
 	List<Role> findAll();
 
-	List<Role> selectRolesByUid(Integer uid);
-
 	void assignPermission(Map<String, Object> map);
 
 	List<Integer> findByRid(Integer rid);
@@ -28,4 +26,7 @@ public interface RoleService {
 
 	void delete(Integer rid);
 
+	List<Role> findAssignRolesByUserId(Integer userId);
+
+	List<Role> findUnAssignRolesByUserId(Integer[] rids);
 }

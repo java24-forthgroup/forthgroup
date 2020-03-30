@@ -40,13 +40,13 @@
 						<li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
 						<li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
 						<li class="divider"></li>
-						<li><a href="${pageContext.request.contextPath}/loginOut"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
+						<li><a href="${pageContext.request.contextPath}/logout"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
 					  </ul>
 			    </div>
 			</li>
-            <li style="margin-left:10px;padding-top:8px;">
+            <li style="margin-left:10px;padding-top:8px;">o
 				<button type="button" class="btn btn-default btn-danger">
-				  <span class="glyphicon glyphicon-question-sign"></span> 帮助
+                    <a href="${APPPATH}/help.jsp" style="color: white"> <span class="glyphicon glyphicon-question-sign"></span> 帮助</a>
 				</button>
 			</li>
           </ul>
@@ -61,20 +61,7 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
 			<div class="tree">
-                <ul style="padding-left:0px;" class="list-group">
-                    <li class="list-group-item tree-closed">
-                        <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 医护管理 <span class="badge" style="float:right">2</span></span>
-                        <ul style="margin-top:10px;display:none;">
-                            <li style="height:30px;">
-                                <a href="${pageContext.request.contextPath}/source/sourceList"><i class="glyphicon glyphicon-user"></i>号源池管理</a>
-                            </li>
-                            <li style="height:30px;">
-                                <a href="${pageContext.request.contextPath}/queue/queueList"><i class="glyphicon glyphicon-user"></i>队列管理</a>
-                            </li>
-                        </ul>
-                    </li>
-
-                </ul>
+                <%@ include file="../menu.jsp" %>
             </div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -251,17 +238,17 @@
             					
             				});
             				$("#tableContent").html(tableStr);
-            				var byPageStr="";
-            				byPageStr+="<li class='"+(result.obj.nowPage==1?'disabled':'')+"'><a href='#' onclick='queryByPage("+(result.obj.nowPage-1)+")'>上一页</a></li>";
-							for(var i=1;i<=result.obj.countPage;i++){
-								if(i==result.obj.nowPage){
-	            					byPageStr+="<li class='active'><a href='#'  onclick='queryByPage("+(i)+")'>"+i+"<span class='sr-only'>(current)</span></a></li>";
-								}else{
-	            					byPageStr+="<li><a href='#' onclick='queryByPage("+(i)+")'>"+i+"</a></li>";
-								}
-							}
-							byPageStr+="<li class='"+(result.obj.nowPage==result.obj.countPage?'disabled':'')+"'><a href='#'  onclick='queryByPage("+(result.obj.nowPage+1)+")'>下一页</a></li>";
-            				$("#byPage").html(byPageStr);
+                            var byPageStr="";
+                            byPageStr+="<li class='"+(result.obj.nowPage==1?'disabled':'')+"'><a href='#' onclick='queryByPage("+(result.obj.nowPage==1?1:(result.obj.nowPage-1))+")'>上一页</a></li>";
+                            for(var i=1;i<=result.obj.countPage;i++){
+                                if(i==result.obj.nowPage){
+                                    byPageStr+="<li class='active'><a href='#'  onclick='queryByPage("+(i)+")'>"+i+"<span class='sr-only'>(current)</span></a></li>";
+                                }else{
+                                    byPageStr+="<li><a href='#' onclick='queryByPage("+(i)+")'>"+i+"</a></li>";
+                                }
+                            }
+                            byPageStr+="<li class='"+(result.obj.nowPage==result.obj.countPage?'disabled':'')+"'><a href='#'  onclick='queryByPage("+(result.obj.nowPage==result.obj.countPage?result.obj.countPage:(result.obj.nowPage+1))+")'>下一页</a></li>";
+                            $("#byPage").html(byPageStr);
             			}else{
             				layer.msg("查询失败!", {time:1000, icon:0, shift:5}, function(){});
             			}

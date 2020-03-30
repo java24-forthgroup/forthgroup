@@ -20,7 +20,6 @@ public interface EmpService {
 
     void delete(Integer eid);
 
-    void updateOne(Emp emp);
+    int findUserIdByempId(Integer empId);
 
-    void usernamepasswordUpdate(Emp emp);
 }

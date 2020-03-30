@@ -1,5 +1,5 @@
 <%@ page language="java" pageEncoding="utf-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
@@ -26,7 +26,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
-            <div><a class="navbar-brand" style="font-size:32px;" href="user.html">用户维护</a></div>
+            <div><a class="navbar-brand" style="font-size:32px;" href="user.html">医疗预约平台</a></div>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -39,13 +39,13 @@
 						<li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
 						<li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
 						<li class="divider"></li>
-						<li><a href="${APPPATH }/loginout"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
+						<li><a href="${APPPATH }/logout"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
 					  </ul>
 			    </div>
 			</li>
             <li style="margin-left:10px;padding-top:8px;">
 				<button type="button" class="btn btn-default btn-danger">
-				  <span class="glyphicon glyphicon-question-sign"></span> 帮助
+					<a href="${APPPATH}/help.jsp" style="color: white"> <span class="glyphicon glyphicon-question-sign"></span> 帮助</a>
 				</button>
 			</li>
           </ul>
@@ -60,31 +60,7 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
 			<div class="tree">
-				<ul style="padding-left:0px;" class="list-group">
-					<li class="list-group-item tree-closed" >
-						<a href="main.html"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a> 
-					</li>
-					<li class="list-group-item tree-closed">
-						<span><i class="glyphicon glyphicon glyphicon-tasks"></i> 系统管理 <span class="badge" style="float:right">5</span></span> 
-						<ul style="margin-top:10px;display:none;">
-							<li style="height:30px;">
-								<a href="${APPPATH}/clazz/index"><i class="glyphicon glyphicon-user"></i> 班级管理</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="${APPPATH}/role/list"><i class="glyphicon glyphicon-king"></i> 角色管理</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="${APPPATH}/discipline/index"><i class="glyphicon glyphicon-lock"></i> 学科管理</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="${APPPATH}/course/list"><i class="glyphicon glyphicon-lock"></i> 课程表管理</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="${APPPATH}/classroom/index"><i class="glyphicon glyphicon-lock"></i> 教室管理</a> 
-							</li>
-						</ul>
-					</li>
-				</ul>
+				<%@ include file="../menu.jsp" %>
 			</div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -96,21 +72,31 @@
 			<div class="panel panel-default">
               <div class="panel-heading">表单数据<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
 			  <div class="panel-body">
-				<form role="form">
-						<input type="hidden" id="empId" value="${emp.empId }" />
+				<form role="form" id="saveForm">
+					<input type="hidden" id="empId" name="empId" value="${emp.empId}" />
 				  <div class="form-group">
 					<label for="exampleInputPassword1">员工姓名</label>
 					<input type="text" class="form-control" id="empName" name="empName" value="${emp.empName}">
 					<label for="exampleInputPassword1">员工等级</label>
-					<input type="text" class="form-control" id="empGrade" name="empGrade" value="${emp.empGrade}">
+						<select name="empGrade" class="form-control">
+							  <option value="${emp.empGrade}" selected="selected">${emp.empGrade}</option>
+							  <option value="专家">专家</option>
+							  <option value="护士">护士</option>
+							  <option value="医生">医生</option>
+							  <option value="护工">护工</option>
+							  <option value="医护管理员">医护管理员</option>
+							  <option value="院长">院长</option>
+							  <option value="副院长">副院长</option>
+							  <option value="主任">主任</option>
+						</select>
 					<label for="exampleInputPassword1">所属科室</label>
-					  <select name="aroomId">
-						  <c:forEach items="${aroomList}" var="aroom">
-							  <option value="${aroom.aroomId}"
-									  <c:if test="${emp.aroom.aroomId==aroom.aroomId}">selected="selected"</c:if>
-							  >${aroom.aroomName}</option>
-						  </c:forEach>
-					  </select>
+						  <select name="aroomId" class="form-control">
+							  <c:forEach items="${aroomList}" var="aroom">
+								  <option value="${aroom.aroomId}"
+										  <c:if test="${emp.aroom.aroomId==aroom.aroomId}">selected="selected"</c:if>
+								  >${aroom.aroomName}</option>
+							  </c:forEach>
+						  </select>
 				  </div>
 				
 				  <button type="button" id="btnUpdate" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i> 修改</button>
@@ -164,31 +150,24 @@
 					}
 				});
 			    $("#btnUpdate").click(function(){
-			    	var rnameVal = $("#rname").val();			   
-			    	if(rnameVal==""){
-			    		layer.msg("角色名不能为空!", {time:1000, icon:0, shift:5}, function(){});
+			    	var empName = $("#empName").val();
+			    	if(empName==""){
+			    		layer.msg("员工名不能为空!", {time:1000, icon:0, shift:5}, function(){});
 			    		return;
 			    	}
-			    	var rdepictVal = $("#rdepict").val();			   
-			    	if(rdepictVal==""){
-			    		layer.msg("角色描述不能为空!", {time:1000, icon:0, shift:5}, function(){});
+			    	var empGrade = $("#empGrade").val();
+			    	if(empGrade==""){
+			    		layer.msg("员工等级不能为空!", {time:1000, icon:0, shift:5}, function(){});
 			    		return;
 			    	}
-			    	var rstatusVal = $("#rstatus").val();			   
-			    	if(rstatusVal==""){
-			    		layer.msg("角色状态不能为空!", {time:1000, icon:0, shift:5}, function(){});
-			    		return;
-			    	}
-			    	
-			    
 			    	$.ajax({
-			    		url:"${APPPATH }/role/updateRole",
+			    		url:"${APPPATH }/emp/updateEmp",
 			    		type:"post",
-			    		data:{"rname":$("#rname").val(),"rdepict":$("#rdepict").val(),"rstatus":$("#rstatus").val(),"rid":$("#rid").val()},
+			    		data:$("#saveForm").serialize(),
 			    		success:function(result){
 			    			if(result.flag){
 			    				layer.msg("用户修改成功!", {time:1000, icon:0, shift:6}, function(){});
-			    				window.location.href='${APPPATH }/role/list';
+			    				window.location.href='${APPPATH }/emp/index';
 			    			}else{
 			    				layer.msg("用户修改失败!", {time:1000, icon:0, shift:5}, function(){});
 			    			}
