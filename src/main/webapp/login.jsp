@@ -30,7 +30,7 @@
       <form class="form-signin" role="form" id="form1" action="login" method="post">
         <h2 class="form-signin-heading"><i class="glyphicon glyphicon-user"></i>${message } 用户登录</h2>
 		  <div class="form-group has-success has-feedback">
-			<input type="text" class="form-control" id="uname" name="uname" placeholder="请输入登录账号" autofocus>
+			<input type="text" class="form-control" id="uname" name="uname" value="${cookie.uname.value}" placeholder="请输入登录账号" autofocus>
 			<span class="glyphicon glyphicon-user form-control-feedback"></span>
 		  </div>
 		  <div class="form-group has-success has-feedback">
