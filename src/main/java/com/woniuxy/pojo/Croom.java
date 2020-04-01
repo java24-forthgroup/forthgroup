@@ -12,4 +12,5 @@ public class Croom {
     private Integer aroomId;
     private String croomCode;
     private String croomAddr;
+    private Aroom aroom;
 }
