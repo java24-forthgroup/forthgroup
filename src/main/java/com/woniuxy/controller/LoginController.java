@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +28,7 @@ public class LoginController {
     }
     @ResponseBody
     @RequestMapping("loginAjax")
-    public Object loginAjax(User user, HttpSession session) {
+    public Object loginAjax(User user, HttpSession session, HttpServletResponse response, HttpServletRequest request) {
         Message message = new Message();
         // 调用Service中的登录方法，返回登录用户的对象
         User loginUser = userService.login(user);
@@ -49,6 +52,15 @@ public class LoginController {
             }
             // 将登录用户的菜单存入session
             session.setAttribute("root", root);
+
+            // cookie
+            String uname = request.getParameter("uname");
+            System.out.println(uname);
+            Cookie cookie = new Cookie("uname", uname);
+            // 设置cookie过期时间
+            cookie.setMaxAge(3600);
+            response.addCookie(cookie);
+
             message.setFlag(true);
         } else {
             message.setFlag(false);

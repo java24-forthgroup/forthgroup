@@ -71,7 +71,6 @@
 			<div class="panel panel-default">
               <div class="panel-heading">表单数据<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
 			  <div class="panel-body">
-
 				  <form role="form" id="updForm">
 					  <div class="form-group">
 						  <label >医技组</label>
@@ -127,7 +126,6 @@
 				  <button type="button" id="btnCroomEdit" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i>确定修改</button>
 				  <button type="button" class="btn btn-danger" id="reset"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
 				</form>
-
 			  </div>
 			</div>
         </div>

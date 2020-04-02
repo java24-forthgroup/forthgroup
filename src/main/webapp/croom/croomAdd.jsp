@@ -11,10 +11,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-	<link rel="stylesheet" href="${ItemPath}/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="${ItemPath}/css/font-awesome.min.css">
-	<link rel="stylesheet" href="${ItemPath}/css/main.css">
-	<link rel="stylesheet" href="${ItemPath}/css/doc.min.css">
+	<link rel="stylesheet" href="${APPPATH}/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="${APPPATH}/css/font-awesome.min.css">
+	<link rel="stylesheet" href="${APPPATH}/css/main.css">
+	<link rel="stylesheet" href="${APPPATH}/css/doc.min.css">
 	<style>
 	.tree li {
         list-style-type: none;
@@ -28,23 +28,20 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
-            <div><a class="navbar-brand" style="font-size:32px;" href="sourceType.html">医疗预约平台</a></div>
+            <div><a class="navbar-brand" style="font-size:32px;" href="user.html">课程维护</a></div>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li style="padding-top:8px;">
 				<div class="btn-group">
 				  <button type="button" class="btn btn-default btn-success dropdown-toggle" data-toggle="dropdown">
-					<i class="glyphicon glyphicon-sourceType"></i> ${loginUser.uname } <span class="caret"></span>
-
 					<i class="glyphicon glyphicon-user">${loginUser.uname}</i><span class="caret"></span>
-
 				  </button>
 					  <ul class="dropdown-menu" role="menu">
 						<li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
 						<li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
 						<li class="divider"></li>
-						<li><a href="${ItemPath}/logout"><i class="glyphicon glyphicon-off"></i>退出系统</a></li>
+						<li><a href="${APPPATH}/logout"><i class="glyphicon glyphicon-off"></i>退出系统</a></li>
 					  </ul>
 			    </div>
 			</li>
@@ -69,53 +66,32 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<ol class="breadcrumb">
 				  <li><a href="#">首页</a></li>
-				  <li><a href="#">科室信息</a></li>
-				  <li class="active">新增科室</li>
+				  <li><a href="#">诊室列表</a></li>
+				  <li class="active">新增诊室</li>
 				</ol>
 			<div class="panel panel-default">
-              <div class="panel-heading">科室数据<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
+              <div class="panel-heading">表单数据<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
 			  <div class="panel-body">
 				<form role="form">
 				  <div class="form-group">
-
-					<label >医技组</label>
-					  <SELECT name="skillgroup.skillgroupId">
-						  <c:forEach items="${skillgroupList }" var="skillgroup">
-							  <option value='${skillgroup.skillgroupId }'>
-									  ${skillgroup.skillgroupName }</option>
-						  </c:forEach>
-					  </SELECT>
+					<label for="exampleInputPassword1">所属科室</label>
+					<!-- <input type="text" id="aroomId" name="aroomId" class="form-control"  placeholder="请输入所属科室"> -->
+					<select class="form-control" id="aroomId" >
+						<c:forEach items="${aroomList}" var="aroom" varStatus="i">
+							<option value="${aroom.aroomId}">${aroom.aroomName}</option>
+						</c:forEach>
+					</select>
 				  </div>
 				  <div class="form-group">
-					  <label >日期</label>
-					<input type="date"  date-date-format="yyyy-mm-dd" id="date" name="date">
-				  </div>
-					<div class="form-group">
-					  	<label >开始时间</label>
-						<input type="String" class="form-control" date-date-format="yyyy-mm-dd" id="datestart" name="datestart">
-					</div>
-					<div class="form-group">
-					  <label >结束时间</label>
-					  <input type="String" class="form-control" date-date-format="yyyy-mm-dd" id="datelast" name="datelast">
-					</div>
-
-
-				  <button type="button" id="btnSave" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> 新增</button>
-					<div class="form-group">
-					<label >科室名称</label>
-					<input type="text" id="aroomName" name="aroomName" class="form-control"  placeholder="请输入科室名称">
+					<label for="exampleInputPassword1">诊室编号</label>
+					<input type="text" id="croomCode" name="croomCode" class="form-control"  placeholder="请输入诊室编号">
 				  </div>
 				  <div class="form-group">
-					<label >科室编号</label>
-					<input type="text" id="aroomCode" name="aroomCode" class="form-control"  placeholder="请输入科室编号">
+					<label for="exampleInputEmail1">诊室地址</label>
+					<input type="email" id="croomAddr" name="croomAddr" class="form-control" placeholder="请输入诊室地址">
 				  </div>
-				  <div class="form-group">
-					<label >科室地址</label>
-					<input type="email" id="aroomAddr" name="aroomAddr" class="form-control" placeholder="请输入科室地址">
-				  </div>
-				  <button type="button" id="btnAroomAdd" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i>确定新增</button>
+				  <button type="button" id="btnCroomAdd" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i>确定新增</button>
 				  <button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
-
 				</form>
 			  </div>
 			</div>
@@ -148,9 +124,9 @@
 		</div>
 	  </div>
 	</div>
-    <script src="${ItemPath}/jquery/jquery-2.1.1.min.js"></script>
-    <script src="${ItemPath}/bootstrap/js/bootstrap.min.js"></script>
-	<script src="${ItemPath}/script/docs.min.js"></script>
+    <script src="${APPPATH}/jquery/jquery-2.1.1.min.js"></script>
+    <script src="${APPPATH}/bootstrap/js/bootstrap.min.js"></script>
+	<script src="${APPPATH}/script/docs.min.js"></script>
         <script type="text/javascript">
             $(function () {
 			    $(".list-group-item").click(function(){
@@ -163,43 +139,13 @@
 						}
 					}
 				});
-			    $("#btnSave").click(function(){
-			    	var datelast = $("#datelast").val();
-
-			    	if(datelast==""){
-			    		layer.msg("开始时间不能为空!", {time:1000, icon:0, shift:5}, function(){});
-			    		return;
-			    	}
-					var datestart = $("#datestart").val();
-
-					if(datestart==""){
-						layer.msg("结束时间不能为空!", {time:1000, icon:0, shift:5}, function(){});
-						return;
-					}
-
-			    	$.ajax({
-
-			    		url:"${APPPATH}/schedule/save",
-			    		type:"post",
-			    		data:$("#saveForm").serialize(),
-			    		success:function(result){
-			    			if(result.flag){
-			    				layer.msg("新增成功!", {time:1000, icon:0, shift:6}, function(){});
-			    				window.location.href="${APPPATH}/schedule/index";
-			    			}else{
-			    				layer.msg("新增失败!", {time:1000, icon:0, shift:5}, function(){});
-			    			}
-			    		}
-			    	});
-			    });
-				$("#btnAroomAdd").click(function() {
-					//alert("1222");
+				$("#btnCroomAdd").click(function() {
 					$.ajax({
-						url:"${APPPATH}/aroom/aroomAdd",
+						url:"${APPPATH}/croom/croomAdd",
 						type:"post",
-						data:{"aroomName":$("#aroomName").val(),"aroomCode":$("#aroomCode").val(),"aroomAddr":$("#aroomAddr").val()},
+						data:{"aroomId":$("#aroomId").val(),"croomCode":$("#croomCode").val(),"croomAddr":$("#croomAddr").val()},
 						success:function(result){
-							window.location.href = "${APPPATH}/aroom/aroomListByPage";
+							window.location.href = "${APPPATH}/croom/croomListByPage";
 						}
 					});
 				});

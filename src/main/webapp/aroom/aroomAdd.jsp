@@ -35,6 +35,7 @@
             <li style="padding-top:8px;">
 				<div class="btn-group">
 				  <button type="button" class="btn btn-default btn-success dropdown-toggle" data-toggle="dropdown">
+
 					<i class="glyphicon glyphicon-sourceType"></i> ${loginUser.uname } <span class="caret"></span>
 
 					<i class="glyphicon glyphicon-user">${loginUser.uname}</i><span class="caret"></span>
@@ -101,16 +102,17 @@
 
 
 				  <button type="button" id="btnSave" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+
 					<div class="form-group">
-					<label >科室名称</label>
+					<label for="exampleInputPassword1">科室名称</label>
 					<input type="text" id="aroomName" name="aroomName" class="form-control"  placeholder="请输入科室名称">
 				  </div>
 				  <div class="form-group">
-					<label >科室编号</label>
+					<label for="exampleInputPassword1">科室编号</label>
 					<input type="text" id="aroomCode" name="aroomCode" class="form-control"  placeholder="请输入科室编号">
 				  </div>
 				  <div class="form-group">
-					<label >科室地址</label>
+					<label for="exampleInputEmail1">科室地址</label>
 					<input type="email" id="aroomAddr" name="aroomAddr" class="form-control" placeholder="请输入科室地址">
 				  </div>
 				  <button type="button" id="btnAroomAdd" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i>确定新增</button>
@@ -163,6 +165,7 @@
 						}
 					}
 				});
+
 			    $("#btnSave").click(function(){
 			    	var datelast = $("#datelast").val();
 
@@ -192,6 +195,7 @@
 			    		}
 			    	});
 			    });
+
 				$("#btnAroomAdd").click(function() {
 					//alert("1222");
 					$.ajax({
@@ -203,6 +207,7 @@
 						}
 					});
 				});
+
             });
         </script>
   </body>
