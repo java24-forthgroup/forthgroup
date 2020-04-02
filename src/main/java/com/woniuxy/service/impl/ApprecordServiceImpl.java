@@ -51,8 +51,10 @@ public class ApprecordServiceImpl implements ApprecordService {
     }
 
     @Override
-    public void save(Apprecord apprecord) {
-        apprecordMapper.save(apprecord);
+    public void book(Apprecord apprecord) {
+        apprecord.setAttendStatus("否");
+        apprecord.setCostStatus("否");
+        apprecordMapper.book(apprecord);
     }
 
     @Override

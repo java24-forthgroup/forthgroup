@@ -17,4 +17,6 @@ public interface PatientMapper {
     int countAll(PageBean page);
 
     void delPatients(Integer[] typeId);
+
+    Patient findPatientByUserId(Integer userId);
 }

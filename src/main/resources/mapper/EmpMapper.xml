@@ -101,7 +101,7 @@
       eid=#{eid}
     </where>
   </update>
-
+  <!--通过员工id查用户id-->
   <select id="findUserIdByempId" parameterType="int" resultType="int">
         select user_id from emp where emp_id = #{empId}
   </select>

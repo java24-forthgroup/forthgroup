@@ -71,24 +71,35 @@
 			<div class="panel panel-default">
               <div class="panel-heading">表单数据<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
 			  <div class="panel-body">
-				<form role="form">
-				  <div class="form-group">
-					<label for="exampleInputPassword1">登陆账号</label>
-					<input type="hidden" id="uid" value="${user.uid }" />
-					<input type="text" class="form-control" id="uaccount" name="uaccount" value="${user.uaccount }">
-				  </div>
-				  <div class="form-group">
-					<label for="exampleInputPassword1">用户名称</label>
-					<input type="text" class="form-control" id="uname" name="uname" value="${user.uname}">
-				  </div>
-				  <div class="form-group">
-					<label for="exampleInputEmail1">邮箱地址</label>
-					<input type="email" class="form-control" id="uemail" name="uemail" value="${user.uemail }">
-					<p class="help-block label label-warning">请输入合法的邮箱地址, 格式为： xxxx@xxxx.com</p>
-				  </div>
-				  <button type="button" id="btnUpdate" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i> 修改</button>
-				  <button type="button" id="btnReset" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
-				</form>
+				  <form role="form" id="updForm">
+					  <div class="form-group">
+						  <label >医技组</label>
+						  <input type="hidden"  id="scheduleId" name="scheduleId" value="${schedule.scheduleId}">
+						  <SELECT name="skillgroup.skillgroupId">
+							  <c:forEach items="${skillgroupList }" var="skillgroup">
+								  <option value='${skillgroup.skillgroupId }'
+										  <c:if test="${skillgroup.skillgroupId==schedule.skillgroup.skillgroupId }"> selected="selected" </c:if>>
+										  ${skillgroup.skillgroupName }</option>
+							  </c:forEach>
+						  </SELECT>
+					  </div>
+					  <div class="form-group">
+						  <label >日期</label>
+						  <input type="date"  date-date-format="yyyy-mm-dd" id="date" name="date" value="${schedule.date}">
+					  </div>
+					  <div class="form-group">
+						  <label >开始时间</label>
+						  <input type="String" class="form-control" date-date-format="yyyy-mm-dd" id="datestart" name="datestart" value="${schedule.datestart}">
+					  </div>
+					  <div class="form-group">
+						  <label >结束时间</label>
+						  <input type="String" class="form-control" date-date-format="yyyy-mm-dd" id="datelast" name="datelast" value="${schedule.datelast}">
+					  </div>
+
+
+					  <button type="button" id="btnUpdate" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> 修改</button>
+
+				  </form>
 			  </div>
 			</div>
         </div>
@@ -137,31 +148,22 @@
 					}
 				});
 			    $("#btnUpdate").click(function(){
-			    	var uaccountVal = $("#uaccount").val();
-			    	if(uaccountVal==""){
-			    		layer.msg("账户不能为空!", {time:1000, icon:0, shift:5}, function(){});
+			    	var typeNameVal = $("#typeName").val();
+			    	if(typeNameVal==""){
+			    		layer.msg("类型名称不能为空!", {time:1000, icon:0, shift:5}, function(){});
 			    		return;
 			    	}
-			    	var unameVal = $("#uname").val();
-			    	if(unameVal==""){
-			    		layer.msg("用户名不能为空!", {time:1000, icon:0, shift:5}, function(){});
-			    		return;
-			    	}
-			    	var uemailVal = $("#uemail").val();
-			    	if(uemailVal==""){
-			    		layer.msg("邮箱不能为空!", {time:1000, icon:0, shift:5}, function(){});
-			    		return;
-			    	}
+
 			    	$.ajax({
-			    		url:"${APPPATH}/user/updateUser",
+			    		url:"${APPPATH}/schedule/update",
 			    		type:"post",
-			    		data:{"uid":$("#uid").val(),"uaccount":$("#uaccount").val(),"uname":$("#uname").val(),"uemail":$("#uemail").val()},
+			    		data:$("#updForm").serialize(),
 			    		success:function(result){
 			    			if(result.flag){
-			    				layer.msg("用户修改成功!", {time:1000, icon:0, shift:6}, function(){});
-			    				window.location.href='${APPPATH}/user/index';
+			    				layer.msg("排班修改成功!", {time:1000, icon:0, shift:6}, function(){});
+			    				window.location.href='${APPPATH}/schedule/index';
 			    			}else{
-			    				layer.msg("用户修改失败!", {time:1000, icon:0, shift:5}, function(){});
+			    				layer.msg("排班修改失败!", {time:1000, icon:0, shift:5}, function(){});
 			    			}
 			    		}
 			    	});

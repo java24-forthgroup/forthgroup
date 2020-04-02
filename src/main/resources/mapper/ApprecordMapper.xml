@@ -98,7 +98,7 @@
     select * from apprecord
     <where>patient_id=#{patientId}</where>
   </select>
-  <insert id="save" parameterType="apprecord">
-    insert into apprecord values (null,#{roleId},#{userId},#{patientName},#{patientAge},#{patientSex},#{patientCount},#{patientStatus})
+  <insert id="book" parameterType="apprecord">
+    insert into apprecord values (null,#{emp.empId},#{project.projectId},#{patient.patientId},#{attendStatus},#{costStatus})
   </insert>
 </mapper>

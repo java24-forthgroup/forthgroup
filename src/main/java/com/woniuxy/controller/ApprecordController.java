@@ -4,6 +4,7 @@ import com.woniuxy.pojo.Apprecord;
 import com.woniuxy.pojo.Message;
 import com.woniuxy.pojo.PageBean;
 import com.woniuxy.service.ApprecordService;
+import com.woniuxy.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,14 +23,20 @@ import java.util.Map;
 public class ApprecordController {
     @Autowired
     ApprecordService apprecordService;
+    @Autowired
+    PatientService patientService;
     //查询全部
     @RequestMapping("index")
     public String index(){
         return "apprecord/index";
     }
-    @RequestMapping("goSave")
-    public String goSave(){
-        return "apprecord/save";
+    //去预约
+    @RequestMapping("goBook")
+    public String goBook(Model model,Integer userId){
+        Map map = patientService.findPatientByUserId(userId);
+
+        model.addAttribute("map",map);
+        return "apprecord/book";
     }
     @RequestMapping("findAllByPage")
     @ResponseBody
@@ -101,12 +108,14 @@ public class ApprecordController {
         }
         return message;
     }
+    //预约
     @ResponseBody
-    @RequestMapping("save")
-    public Message save(Apprecord apprecord){
+    @RequestMapping("book")
+    public Message book(Apprecord apprecord){
         Message message = new Message();
         try {
-            apprecordService.save(apprecord);
+
+            apprecordService.book(apprecord);
 
             message.setFlag(true);
         }catch(Exception e) {

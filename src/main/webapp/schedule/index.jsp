@@ -1,4 +1,5 @@
 <%@ page language="java" pageEncoding="utf-8"%>
+
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
@@ -36,7 +37,7 @@
             <li style="padding-top:8px;">
 				<div class="btn-group">
 				  <button type="button" class="btn btn-default btn-success dropdown-toggle" data-toggle="dropdown">
-					<i class="glyphicon glyphicon-user"></i> ${loginUser.uname }<span class="caret"></span>
+					<i class="glyphicon glyphicon-schedule"></i> ${loginUser.uname }<span class="caret"></span>
 				  </button>
 					  <ul class="dropdown-menu" role="menu">
 						<li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
@@ -63,7 +64,7 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
 			<div class="tree">
-				<%@ include file="../menu.jsp" %>
+                <%@ include file="../menu.jsp" %>
 			</div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -76,13 +77,13 @@
   <div class="form-group has-feedback">
     <div class="input-group">
       <div class="input-group-addon">查询条件</div>
-      <input class="form-control has-success" type="text" id="queryUname" name="queryUname" placeholder="请输入查询条件">
+      <input class="form-control has-success" type="text" id="queryName" name="queryName" placeholder="请输入查询条件">
     </div>
   </div>
   <button type="button" class="btn btn-warning" id="btnQuery"><i class="glyphicon glyphicon-search"></i> 查询</button>
 </form>
-<button type="button" onclick="delUsers()" class="btn btn-danger" style="float:right;margin-left:10px;"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
-<button type="button" class="btn btn-primary" style="float:right;" onclick="window.location.href='${APPPATH}/user/save'"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+<button type="button" onclick="delSourcetypes()" class="btn btn-danger" style="float:right;margin-left:10px;"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
+<button type="button" class="btn btn-primary" style="float:right;" onclick="window.location.href='${APPPATH}/schedule/goSave'"><i class="glyphicon glyphicon-plus"></i> 新增</button>
 <br>
  <hr style="clear:both;">
           <div class="table-responsive">
@@ -92,9 +93,11 @@
                 <tr >
                   <th width="30">#</th>
 				  <th width="30"><input type="checkbox" id="checkAll"></th>
-                  <th>账号</th>
-                  <th>名称</th>
-                  <th>邮箱地址</th>
+
+                  <th>医技组</th>
+                  <th>日期</th>
+                  <th>开始时间</th>
+                  <th>结束时间</th>
                   <th width="100">操作</th>
                 </tr>
               </thead>
@@ -105,7 +108,7 @@
              
 			  <tfoot>
 			     <tr >
-				     <td colspan="6" align="center">
+				     <td colspan="7" align="center">
 						<ul class="pagination" id="byPage">
 								
 							 </ul>
@@ -140,7 +143,7 @@
 					}
 				});
 			    $("#btnQuery").click(function(){
-			    	var queryVal = $("#queryUname").val();
+			    	var queryVal = $("#queryTypeName").val();
 			    	if(queryVal!=""){
 			    		queryFlag = true;
 			    	}
@@ -160,17 +163,17 @@
             $("tbody .btn-primary").click(function(){
                 window.location.href = "edit.html";
             });
-            function delUsers(){
+            function delSourcetypes(){
             	layer.confirm("是否删除选中的用户?",  {icon: 3, title:'提示'}, function(cindex){
     			    layer.close(cindex);
     			    $.ajax({
-    			    	url:"${APPPATH}/user/deleteUsers",
+    			    	url:"${APPPATH}/schedule/delSourcetypes",
     			    	type:"post",
     			    	data:$("#delForm").serialize(),
     			    	success:function(result){
     			    		if(result.flag){
     			    			layer.msg("删除成功!", {time:1000, icon:0, shift:6}, function(){});
-    			    			window.location.href="${APPPATH}/user/index";
+    			    			window.location.href="${APPPATH}/schedule/index";
     			    		}else{
     			    			layer.msg("删除失败!", {time:1000, icon:0, shift:5}, function(){});
     			    		}
@@ -181,23 +184,22 @@
     			    layer.close(cindex);
     			});
             }
-            function updateUser(uid){
-            	window.location.href="${APPPATH}/user/update?uid="+uid;
+            function updateSchedule(scheduleId){
+            	window.location.href="${APPPATH}/schedule/goUpdate?scheduleId="+scheduleId;
             }
-            function assignRole(uid){
-            	window.location.href="${APPPATH}/user/assignRole?uid="+uid;
-            }
-            function deleteUser(uid){
-            	layer.confirm("是否删除该用户?",  {icon: 3, title:'提示'}, function(cindex){
+
+            function deleteSchedule(scheduleId){
+            	layer.confirm("是否删除该类型?",  {icon: 3, title:'提示'}, function(cindex){
     			    layer.close(cindex);
+
     			    $.ajax({
-    			    	url:"${APPPATH}/user/delete",
+    			    	url:"${APPPATH}/schedule/delete",
     			    	type:"post",
-    			    	data:{"uid":uid},
+    			    	data:{"scheduleId":scheduleId},
     			    	success:function(result){
     			    		if(result.flag){
     			    			layer.msg("删除成功!", {time:1000, icon:0, shift:6}, function(){});
-    			    			window.location.href="${APPPATH}/user/index";
+    			    			window.location.href="${APPPATH}/schedule/index";
     			    		}else{
     			    			layer.msg("删除失败!", {time:1000, icon:0, shift:5}, function(){});
     			    		}
@@ -211,10 +213,10 @@
             function queryByPage(nowPage){
             	var jsonData = {"nowPage":nowPage};
             	if(queryFlag){
-            		jsonData.queryVal= $("#queryUname").val();
+            		jsonData.queryVal= $("#queryName").val();
             	}
             	$.ajax({
-            		url:"${APPPATH }/user/indexByPage",
+            		url:"${APPPATH }/schedule/findAllByPage",
             		type:"post",
             		data:jsonData,
             		success:function(result){
@@ -222,18 +224,19 @@
             				//result.pageBean
             				//result.pageBean.list
             				var tableStr = "";
-            				$.each(result.obj.list,function(index,user){
+            				$.each(result.obj.list,function(index,schedule){
             					//生成jQuery对象，进行装配或者使用html方法拼字符串
 	            				tableStr+="<tr>";
 		                        tableStr+="<td>"+(index+1)+"</td>";
-		          				tableStr+="<td><input type='checkbox' class='abc' name='uids' value='"+user.uid+"'></td>";
-		                        tableStr+="<td>"+user.uaccount+"</td>";
-		                        tableStr+="<td>"+user.uname+"</td>";
-		                        tableStr+="<td>"+user.uemail +"</td>";
+		          				tableStr+="<td><input type='checkbox' class='abc' name='typeId' value='"+schedule.scheduleId+"'></td>";
+                                tableStr+="<td>"+schedule.skillgroup.skillgroupName+"</td>";
+                                tableStr+="<td>"+schedule.date+"</td>";
+                                tableStr+="<td>"+schedule.datestart+"</td>";
+                                tableStr+="<td>"+schedule.datelast+"</td>";
 		                        tableStr+="<td>";
-		          				tableStr+="<button type='button' onclick='assignRole("+user.uid+")' class='btn btn-success btn-xs'><i class='glyphicon glyphicon-check'></i></button>";
-		          				tableStr+="<button type='button' onclick='updateUser("+user.uid+")' class='btn btn-primary btn-xs'><i class='glyphicon glyphicon-pencil'></i></button>";
-		          				tableStr+="<button type='button' onclick='deleteUser("+user.uid+")' class='btn btn-danger btn-xs'><i class='glyphicon glyphicon-remove'></i></button>";
+
+		          				tableStr+="<button type='button' onclick='updateSchedule("+schedule.scheduleId+")' class='btn btn-primary btn-xs'><i class='glyphicon glyphicon-pencil'></i></button>";
+		          				tableStr+="<button type='button' onclick='deleteSchedule("+schedule.scheduleId+")' class='btn btn-danger btn-xs'><i class='glyphicon glyphicon-remove'></i></button>";
 		          				tableStr+="</td>";
 	                          	tableStr+="</tr>";
             					

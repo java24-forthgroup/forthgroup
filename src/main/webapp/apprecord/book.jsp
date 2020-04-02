@@ -72,7 +72,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">表单数据<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
 				<div class="panel-body">
-					<form role="form" id="updateForm">
+					<form role="form" id="bookForm">
 
 						<div class="form-group">
 
@@ -101,21 +101,14 @@
 						</div>
 
 						<div class="form-group">
-							<label >患者姓名</label>
-							<input type="hidden" class="form-control" id="patientId" name="patient.patientId" value="${map.apprecord.patient.patientId}">
-							<input type="text" class="form-control" id="patientName" name="patient.patientName" value="${map.apprecord.patient.patientName}">
-						</div>
-						<div class="form-group">
-							<label >是否签到</label>
-							<input type="text" class="form-control" id="attendStatus" name="attendStatus" value="${map.apprecord.attendStatus}">
-						</div>
-						<div class="form-group">
-							<label>是否缴费</label>
-							<input type="text" class="form-control" id="costStatus" name="costStatus" value="${map.apprecord.costStatus}">
+
+							<input type="hidden" class="form-control" id="patientId" name="patient.patientId" value="${map.patient.patientId}">
+
 						</div>
 
-						<button type="button" id="btnUpdate" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i> 修改</button>
-						<button type="button" id="btnReset" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
+
+						<button type="button" id="btnSave" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i> 预约</button>
+
 					</form>
 				</div>
 			</div>
@@ -164,31 +157,16 @@
 				}
 			}
 		});
-		$("#btnUpdate").click(function(){
+		$("#btnSave").click(function(){
 
-			var patientName = $("#patientName").val();
-			if(patientName==""){
-				layer.msg("患者名称不能为空!", {time:1000, icon:0, shift:5}, function(){});
-				return;
-			}
-			var attendStatus = $("#attendStatus").val();
-			if(attendStatus==""){
-				layer.msg("是否签到不能为空!", {time:1000, icon:0, shift:5}, function(){});
-				return;
-			}
-			var costStatus = $("#costStatus").val();
-			if(costStatus==""){
-				layer.msg("是否缴费不能为空!", {time:1000, icon:0, shift:5}, function(){});
-				return;
-			}
 			$.ajax({
-				url:"${APPPATH}/apprecord/update",
+				url:"${APPPATH}/apprecord/book",
 				type:"post",
-				data:$("#updateForm").serialize(),
+				data:$("#bookForm").serialize(),
 				success:function(result){
 					if(result.flag){
-						layer.msg("类型修改成功!", {time:1000, icon:0, shift:6}, function(){});
-						window.location.href='${APPPATH}/apprecord/index';
+						layer.msg("预约成功!", {time:1000, icon:0, shift:6}, function(){});
+						window.location.href='${APPPATH}/main';
 					}else{
 						layer.msg("类型修改失败!", {time:1000, icon:0, shift:5}, function(){});
 					}

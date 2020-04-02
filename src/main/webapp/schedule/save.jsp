@@ -1,5 +1,4 @@
 <%@ page language="java" pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
@@ -25,14 +24,14 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
-            <div><a class="navbar-brand" style="font-size:32px;" href="user.html">医疗预约平台</a></div>
+            <div><a class="navbar-brand" style="font-size:32px;" href="sourceType.html">医疗预约平台</a></div>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li style="padding-top:8px;">
 				<div class="btn-group">
 				  <button type="button" class="btn btn-default btn-success dropdown-toggle" data-toggle="dropdown">
-					<i class="glyphicon glyphicon-user"></i> ${loginUser.uname } <span class="caret"></span>
+					<i class="glyphicon glyphicon-sourceType"></i> ${loginUser.uname } <span class="caret"></span>
 				  </button>
 					  <ul class="dropdown-menu" role="menu">
 						<li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
@@ -66,41 +65,41 @@
 				<ol class="breadcrumb">
 				  <li><a href="#">首页</a></li>
 				  <li><a href="#">数据列表</a></li>
-				  <li class="active">分配角色</li>
+				  <li class="active">新增</li>
 				</ol>
 			<div class="panel panel-default">
+              <div class="panel-heading">表单数据<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
 			  <div class="panel-body">
-				<form role="form" class="form-inline" id="assignRoleForm">
-					<input type="hidden" id="uid" name="uid" value="${uid }" />
+				<form role="form" id="saveForm">
 				  <div class="form-group">
-					<label for="exampleInputPassword1">未分配角色列表</label><br>
-					<select id="left" name="leftRids" class="form-control" multiple size="10" style="width:100px;overflow-y:auto;">
-                        <c:forEach items="${unAssignRoleList }" var="role">
-                        	<option value="${role.rid }">${role.rname }</option>
-                        </c:forEach>
-                    </select>
+					<label >医技组</label>
+					  <SELECT name="skillgroup.skillgroupId">
+						  <c:forEach items="${skillgroupList }" var="skillgroup">
+							  <option value='${skillgroup.skillgroupId }'>
+									  ${skillgroup.skillgroupName }</option>
+						  </c:forEach>
+					  </SELECT>
 				  </div>
 				  <div class="form-group">
-                        <ul>
-                            <li class="btn btn-default glyphicon glyphicon-chevron-right" onclick="leftToRight()"></li>
-                            <br>
-                            <li class="btn btn-default glyphicon glyphicon-chevron-left"  onclick="rightToLeft()" style="margin-top:20px;"></li>
-                        </ul>
+					  <label >日期</label>
+					<input type="date"  date-date-format="yyyy-mm-dd" id="date" name="date">
 				  </div>
-				  <div class="form-group" style="margin-left:40px;">
-					<label for="exampleInputPassword1">已分配角色列表</label><br>
-					<select id="right" name="rightRids" class="form-control" multiple size="10" style="width:100px;overflow-y:auto;">
-                    	<c:forEach items="${assignRoleList }" var="role">
-                    		<option value="${role.rid }">${role.rname }</option>
-                    	</c:forEach>
-                    </select>
-				  </div>
+					<div class="form-group">
+					  	<label >开始时间</label>
+						<input type="String" class="form-control" date-date-format="yyyy-mm-dd" id="datestart" name="datestart">
+					</div>
+					<div class="form-group">
+					  <label >结束时间</label>
+					  <input type="String" class="form-control" date-date-format="yyyy-mm-dd" id="datelast" name="datelast">
+					</div>
+
+
+				  <button type="button" id="btnSave" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+
 				</form>
 			  </div>
 			</div>
         </div>
-      </div>
-    </div>
       </div>
     </div>
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -134,47 +133,6 @@
 	<script src="${APPPATH }/script/docs.min.js"></script>
 	<script src="${APPPATH }/layer/layer.js"></script>
         <script type="text/javascript">
-	        function leftToRight(){
-	        	var leftOption = $("#left option");
-	        	for(var i=0;i<leftOption.length;i++){
-	        		if(leftOption.eq(i).prop("selected")){
-	        			$("#right").append(leftOption.eq(i));
-	        		}
-	        	}
-	        	
-	        	$.ajax({
-		    		url:"${APPPATH}/user/assignRoleDo",
-		    		type:"post",
-		    		data:$("#assignRoleForm").serialize(),
-		    		success:function(result){
-		    			if(result.flag){
-		    				layer.msg("分配角色成功!", {time:1000, icon:6, shift:5}, function(){});
-		    			}else{
-		    				layer.msg("分配角色失败!", {time:1000, icon:5, shift:5}, function(){});
-		    			}
-		    		}
-		    	});
-	        }
-	        function rightToLeft(){
-	        	var rightOption = $("#right option");
-	        	for(var i=0;i<rightOption.length;i++){
-	        		if(rightOption.eq(i).prop("selected")){
-	        			$("#left").append(rightOption.eq(i));
-	        		}
-	        	}
-	        	$.ajax({
-		    		url:"${APPPATH}/user/unAssignRoleDo",
-		    		type:"post",
-		    		data:$("#assignRoleForm").serialize(),
-		    		success:function(result){
-		    			if(result.flag){
-		    				layer.msg("取消角色成功!", {time:1000, icon:6, shift:5}, function(){});
-		    			}else{
-		    				layer.msg("取消角色失败!", {time:1000, icon:5, shift:5}, function(){});
-		    			}
-		    		}
-		    	});
-	        }
             $(function () {
 			    $(".list-group-item").click(function(){
 				    if ( $(this).find("ul") ) {
@@ -186,9 +144,36 @@
 						}
 					}
 				});
-			    
+			    $("#btnSave").click(function(){
+			    	var datelast = $("#datelast").val();
+
+			    	if(datelast==""){
+			    		layer.msg("开始时间不能为空!", {time:1000, icon:0, shift:5}, function(){});
+			    		return;
+			    	}
+					var datestart = $("#datestart").val();
+
+					if(datestart==""){
+						layer.msg("结束时间不能为空!", {time:1000, icon:0, shift:5}, function(){});
+						return;
+					}
+
+			    	$.ajax({
+
+			    		url:"${APPPATH}/schedule/save",
+			    		type:"post",
+			    		data:$("#saveForm").serialize(),
+			    		success:function(result){
+			    			if(result.flag){
+			    				layer.msg("新增成功!", {time:1000, icon:0, shift:6}, function(){});
+			    				window.location.href="${APPPATH}/schedule/index";
+			    			}else{
+			    				layer.msg("新增失败!", {time:1000, icon:0, shift:5}, function(){});
+			    			}
+			    		}
+			    	});
+			    });
             });
-            
         </script>
   </body>
 </html>
