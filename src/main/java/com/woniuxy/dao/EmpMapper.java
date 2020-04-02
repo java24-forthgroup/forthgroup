@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface EmpMapper {
     List<Emp> findAll();
-
+    List<Emp> findAllDoctor();
     List<Emp> selectByPage(PageBean<Emp> pageBean);
 
     int countAll(PageBean<Emp> pageBean);

@@ -1,4 +1,5 @@
 <%@ page language="java" pageEncoding="utf-8"%>
+
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
@@ -36,7 +37,7 @@
             <li style="padding-top:8px;">
 				<div class="btn-group">
 				  <button type="button" class="btn btn-default btn-success dropdown-toggle" data-toggle="dropdown">
-					<i class="glyphicon glyphicon-sourceType"></i> ${loginUser.uname }<span class="caret"></span>
+					<i class="glyphicon glyphicon-schedule"></i> ${loginUser.uname }<span class="caret"></span>
 				  </button>
 					  <ul class="dropdown-menu" role="menu">
 						<li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
@@ -82,7 +83,7 @@
   <button type="button" class="btn btn-warning" id="btnQuery"><i class="glyphicon glyphicon-search"></i> 查询</button>
 </form>
 <button type="button" onclick="delSourcetypes()" class="btn btn-danger" style="float:right;margin-left:10px;"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
-<button type="button" class="btn btn-primary" style="float:right;" onclick="window.location.href='${APPPATH}/sourceType/goSave'"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+<button type="button" class="btn btn-primary" style="float:right;" onclick="window.location.href='${APPPATH}/schedule/goSave'"><i class="glyphicon glyphicon-plus"></i> 新增</button>
 <br>
  <hr style="clear:both;">
           <div class="table-responsive">
@@ -93,8 +94,10 @@
                   <th width="30">#</th>
 				  <th width="30"><input type="checkbox" id="checkAll"></th>
 
-                  <th>名称</th>
-
+                  <th>医技组</th>
+                  <th>日期</th>
+                  <th>开始时间</th>
+                  <th>结束时间</th>
                   <th width="100">操作</th>
                 </tr>
               </thead>
@@ -105,7 +108,7 @@
              
 			  <tfoot>
 			     <tr >
-				     <td colspan="6" align="center">
+				     <td colspan="7" align="center">
 						<ul class="pagination" id="byPage">
 								
 							 </ul>
@@ -164,13 +167,13 @@
             	layer.confirm("是否删除选中的用户?",  {icon: 3, title:'提示'}, function(cindex){
     			    layer.close(cindex);
     			    $.ajax({
-    			    	url:"${APPPATH}/sourceType/delSourcetypes",
+    			    	url:"${APPPATH}/schedule/delSourcetypes",
     			    	type:"post",
     			    	data:$("#delForm").serialize(),
     			    	success:function(result){
     			    		if(result.flag){
     			    			layer.msg("删除成功!", {time:1000, icon:0, shift:6}, function(){});
-    			    			window.location.href="${APPPATH}/sourceType/index";
+    			    			window.location.href="${APPPATH}/schedule/index";
     			    		}else{
     			    			layer.msg("删除失败!", {time:1000, icon:0, shift:5}, function(){});
     			    		}
@@ -181,22 +184,22 @@
     			    layer.close(cindex);
     			});
             }
-            function updateSourcetype(typeId){
-            	window.location.href="${APPPATH}/sourceType/findOne?typeId="+typeId;
+            function updateSchedule(scheduleId){
+            	window.location.href="${APPPATH}/schedule/goUpdate?scheduleId="+scheduleId;
             }
 
-            function deleteSourcetype(typeId){
+            function deleteSchedule(scheduleId){
             	layer.confirm("是否删除该类型?",  {icon: 3, title:'提示'}, function(cindex){
     			    layer.close(cindex);
 
     			    $.ajax({
-    			    	url:"${APPPATH}/sourceType/delete",
+    			    	url:"${APPPATH}/schedule/delete",
     			    	type:"post",
-    			    	data:{"typeId":typeId},
+    			    	data:{"scheduleId":scheduleId},
     			    	success:function(result){
     			    		if(result.flag){
     			    			layer.msg("删除成功!", {time:1000, icon:0, shift:6}, function(){});
-    			    			window.location.href="${APPPATH}/sourceType/index";
+    			    			window.location.href="${APPPATH}/schedule/index";
     			    		}else{
     			    			layer.msg("删除失败!", {time:1000, icon:0, shift:5}, function(){});
     			    		}
@@ -213,7 +216,7 @@
             		jsonData.queryVal= $("#queryName").val();
             	}
             	$.ajax({
-            		url:"${APPPATH }/sourceType/findAllByPage",
+            		url:"${APPPATH }/schedule/findAllByPage",
             		type:"post",
             		data:jsonData,
             		success:function(result){
@@ -221,16 +224,19 @@
             				//result.pageBean
             				//result.pageBean.list
             				var tableStr = "";
-            				$.each(result.obj.list,function(index,sourcetype){
+            				$.each(result.obj.list,function(index,schedule){
             					//生成jQuery对象，进行装配或者使用html方法拼字符串
 	            				tableStr+="<tr>";
 		                        tableStr+="<td>"+(index+1)+"</td>";
-		          				tableStr+="<td><input type='checkbox' class='abc' name='typeId' value='"+sourcetype.typeId+"'></td>";
-		                        tableStr+="<td>"+sourcetype.typeName+"</td>";
+		          				tableStr+="<td><input type='checkbox' class='abc' name='typeId' value='"+schedule.scheduleId+"'></td>";
+                                tableStr+="<td>"+schedule.skillgroup.skillgroupName+"</td>";
+                                tableStr+="<td>"+schedule.date+"</td>";
+                                tableStr+="<td>"+schedule.datestart+"</td>";
+                                tableStr+="<td>"+schedule.datelast+"</td>";
 		                        tableStr+="<td>";
 
-		          				tableStr+="<button type='button' onclick='updateSourcetype("+sourcetype.typeId+")' class='btn btn-primary btn-xs'><i class='glyphicon glyphicon-pencil'></i></button>";
-		          				tableStr+="<button type='button' onclick='deleteSourcetype("+sourcetype.typeId+")' class='btn btn-danger btn-xs'><i class='glyphicon glyphicon-remove'></i></button>";
+		          				tableStr+="<button type='button' onclick='updateSchedule("+schedule.scheduleId+")' class='btn btn-primary btn-xs'><i class='glyphicon glyphicon-pencil'></i></button>";
+		          				tableStr+="<button type='button' onclick='deleteSchedule("+schedule.scheduleId+")' class='btn btn-danger btn-xs'><i class='glyphicon glyphicon-remove'></i></button>";
 		          				tableStr+="</td>";
 	                          	tableStr+="</tr>";
             					

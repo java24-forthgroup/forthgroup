@@ -18,7 +18,7 @@ public class AroomServiceImpl implements AroomService {
 
     @Override
     public List<Aroom> findAll() {
-        return mapper.findAll();
+        return mapper.selectByExample(null);
     }
 
     @Override
@@ -32,23 +32,23 @@ public class AroomServiceImpl implements AroomService {
     }
 
     @Override
-    public void save(Aroom Aroom) {
-        mapper.save(Aroom);
+    public void save(Aroom aroom) {
+        mapper.insert(aroom);
     }
 
     @Override
-    public Aroom findOne(Integer AroomId) {
-        return mapper.findOne(AroomId);
+    public Aroom findOne(Integer aroomId) {
+        return mapper.selectByPrimaryKey(aroomId);
     }
 
     @Override
-    public void update(Aroom Aroom) {
-        mapper.update(Aroom);
+    public void update(Aroom aroom) {
+        mapper.updateByPrimaryKey(aroom);
     }
 
     @Override
-    public void delete(Integer AroomId) {
-        mapper.delete(AroomId);
+    public void delete(Integer aroomId) {
+        mapper.deleteByPrimaryKey(aroomId);
     }
 
 }

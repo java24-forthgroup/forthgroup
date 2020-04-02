@@ -3,9 +3,56 @@
 <mapper namespace="com.woniuxy.dao.ScheduleMapper">
   <resultMap id="BaseResultMap" type="com.woniuxy.pojo.Schedule">
     <id column="schedule_id" jdbcType="INTEGER" property="scheduleId" />
-    <result column="source_id" jdbcType="INTEGER" property="sourceId" />
+
     <result column="date" jdbcType="DATE" property="date" />
     <result column="datestart" jdbcType="TIME" property="datestart" />
     <result column="datelast" jdbcType="TIME" property="datelast" />
+    <association property="skillgroup" column="schedule_id" javaType="skillgroup" >
+      <id column="skillgroup_id" jdbcType="INTEGER" property="skillgroupId" />
+      <result column="aroom_id" jdbcType="INTEGER" property="aroomId" />
+      <result column="source_id" jdbcType="INTEGER" property="sourceId" />
+      <result column="skillgroup_name" jdbcType="VARCHAR" property="skillgroupName" />
+    </association>
   </resultMap>
+
+    <select id="findAllByPage" parameterType="pageBean" resultMap="BaseResultMap">
+      SELECT schedule_id,schedule.skillgroup_id,skillgroup.skillgroup_name, date,datestart,datelast FROM schedule join skillgroup on schedule.skillgroup_id = skillgroup.skillgroup_id
+      <where>
+        <if test="queryVal!=null">
+          schedule.skillgroup_id in (select skillgroup_id from skillgroup where skillgroup_name like CONCAT('%',#{queryVal},'%'))
+        </if>
+      </where>
+    </select>
+    <delete id="delete" parameterType="int">
+      delete from schedule where schedule_id=#{scheduleId}
+    </delete>
+  <insert id="save" parameterType="schedule">
+    insert into schedule values (null,#{skillgroup.skillgroupId},#{date},#{datestart},#{datelast})
+  </insert>
+  <select id="findOne" parameterType="int" resultMap="BaseResultMap">
+     SELECT schedule_id,schedule.skillgroup_id,skillgroup.skillgroup_name, date,datestart,datelast FROM schedule join skillgroup on schedule.skillgroup_id = skillgroup.skillgroup_id
+     where schedule_id=#{scheduleId}
+  </select>
+  <update id="update" parameterType="schedule">
+    update schedule
+    <set>
+
+      <if test="skillgroup.skillgroupId!=null">
+        skillgroup_id=#{skillgroup.skillgroupId},
+      </if>
+      <if test="date!=null">
+        date=#{date},
+      </if>
+      <if test="datestart!=null">
+        datestart=#{datestart},
+      </if>
+      <if test="datelast!=null">
+        datelast=#{datelast},
+      </if>
+    </set>
+    <where>
+      schedule_id =#{scheduleId}
+    </where>
+
+  </update>
 </mapper>
