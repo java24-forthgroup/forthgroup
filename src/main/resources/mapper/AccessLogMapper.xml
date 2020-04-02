@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniuxy.dao.AccessLogMapper">
+
+    <select id="queryByPage" parameterType="pageBean" resultType="accessLog">
+        select * from accesslog
+        <where>
+            <if test="queryName!=null">
+                userName like CONCAT('%',#{queryName},'%')
+            </if>
+        </where>
+        order by addDate desc
+        limit ${(nowPage-1)*pageRow},${pageRow}
+    </select>
+    <select id="countByPage"  resultType="int">
+        select count(*) from accesslog
+        <where>
+            <if test="queryName!=null">
+                userName like CONCAT('%',#{queryName},'%')
+            </if>
+        </where>
+  </select>
+  <!-- 访问增加日志的信息 -->
+  <insert id="save" parameterType="accessLog">
+		insert into accesslog
+		values(null,#{method},#{url},#{ip},#{userName},#{addDate},#{status})
+  </insert>
+    <!--删除-->
+    <delete id="delete" parameterType="java.lang.Integer" >
+        delete from accesslog
+        <where>
+            logid=#{logid}
+        </where>
+    </delete>
+    <!--批量删除-->
+    <delete id="deletelogs">
+        delete from accesslog
+        <where>
+            <foreach collection="array" item="logid" open="logid in(" close=")" separator=",">
+                #{logid}
+            </foreach>
+        </where>
+    </delete>
+
+
+</mapper>
