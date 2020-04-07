@@ -27,4 +27,5 @@ public interface SkillgroupService {
     void delete(Integer SkillgroupId);
 
 
+    Integer queryDoctorBySkillgroup(Integer skillgroupId);
 }

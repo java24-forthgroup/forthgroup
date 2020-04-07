@@ -17,6 +17,7 @@ public interface ApprecordMapper {
 
     List<Apprecord> findAllByPage(PageBean pageBean);
     List<Apprecord> findAll();
+
     void delete(int apprecordId);
     void book(Apprecord apprecord);
     Apprecord findOne(int apprecordId);

@@ -10,5 +10,6 @@ import java.util.List;
  */
 public interface ProjectMapper {
     List<Project> findAll();
+    List<Project> queryBySkillgroup(Integer skillgroupId);
 
 }

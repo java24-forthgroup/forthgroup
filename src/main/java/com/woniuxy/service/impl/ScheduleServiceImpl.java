@@ -26,6 +26,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
+    public List<Schedule> queryByDate(String date) {
+        return scheduleMapper.queryByDate( date);
+    }
+
+    @Override
     public List<Schedule> findAllByPage(PageBean pageBean) {
         return scheduleMapper.findAllByPage(pageBean);
     }

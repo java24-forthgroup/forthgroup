@@ -1,8 +1,8 @@
 package com.woniuxy.controller;
 
-import com.woniuxy.pojo.Apprecord;
-import com.woniuxy.pojo.Message;
-import com.woniuxy.pojo.PageBean;
+import com.woniuxy.dao.EmpMapper;
+import com.woniuxy.dao.ProjectMapper;
+import com.woniuxy.pojo.*;
 import com.woniuxy.service.ApprecordService;
 import com.woniuxy.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,17 +26,21 @@ public class ApprecordController {
     ApprecordService apprecordService;
     @Autowired
     PatientService patientService;
+    @Autowired
+    EmpMapper empMapper;
+    @Autowired
+    ProjectMapper projectMapper;
     //查询全部
     @RequestMapping("index")
     public String index(){
         return "apprecord/index";
     }
-    //去预约
+    //去预约//
     @RequestMapping("goBook")
     public String goBook(Model model,Integer userId){
-        Map map = patientService.findPatientByUserId(userId);
-
-        model.addAttribute("map",map);
+        Patient patient = patientService.findPatientByUserId(userId);
+        System.out.println(patient);
+        model.addAttribute("patient",patient);
         return "apprecord/book";
     }
     @RequestMapping("findAllByPage")
@@ -66,11 +71,17 @@ public class ApprecordController {
     @RequestMapping("findOne")
     public String findOne(Model mode , Integer apprecordId){
         Message message = new Message();
+        Map<String,Object> map = new HashMap<>();
         try {
-            Map map = apprecordService.findOne(apprecordId);
 
+            Apprecord apprecord = apprecordService.findOne(apprecordId);
+            List<Emp> empList = empMapper.findAllDoctor();
+            List<Project> projectList = projectMapper.findAll();
+
+            map.put("empList",empList);
+            map.put("projectList",projectList);
+            map.put("apprecord",apprecord);
             mode.addAttribute("map",map);
-
             return "apprecord/update";
         }catch(Exception e) {
             e.printStackTrace();

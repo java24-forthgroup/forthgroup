@@ -1,10 +1,7 @@
 package com.woniuxy.controller;
 
 import com.woniuxy.pojo.*;
-import com.woniuxy.service.AroomService;
-import com.woniuxy.service.EmpService;
-import com.woniuxy.service.RoleService;
-import com.woniuxy.service.UserService;
+import com.woniuxy.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +24,8 @@ public class EmpController {
     UserService userService;
     @Autowired
     RoleService roleService;
+    @Autowired
+    SkillgroupService skillgroupService;
 
     @RequestMapping("index")
     public String list(Model model) {
@@ -197,5 +196,18 @@ public class EmpController {
             message.setFlag(false);
         }
         return message;
+    }
+    @RequestMapping("queryDoctorBySkillgroup")
+    @ResponseBody
+    public List queryBySkillgroup(Integer skillgroupId){
+        List<Emp> empList =null;
+        try {
+            Integer aroomId =  skillgroupService.queryDoctorBySkillgroup(skillgroupId);
+            empList = empService.queryDoctorByAroomId(aroomId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(empList);
+        return empList;
     }
 }

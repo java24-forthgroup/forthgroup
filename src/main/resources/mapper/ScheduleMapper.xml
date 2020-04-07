@@ -55,4 +55,8 @@
     </where>
 
   </update>
+  <select id="queryByDate" parameterType="String" resultMap="BaseResultMap">
+    select  DISTINCT schedule.skillgroup_id,skillgroup_Name from schedule join skillgroup on skillgroup.skillgroup_id = schedule.skillgroup_id
+    <where>date=#{date}</where>
+  </select>
 </mapper>

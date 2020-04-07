@@ -58,4 +58,9 @@ public class EmpServiceImpl implements EmpService {
         return mapper.findUserIdByempId(empId);
     }
 
+    @Override
+    public List<Emp> queryDoctorByAroomId(Integer aroomId) {
+        return mapper.queryDoctorByAroomId(aroomId);
+    }
+
 }

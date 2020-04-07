@@ -113,5 +113,18 @@ public class ScheduleController {
         }
         return message;
     }
+    @RequestMapping("queryByDate")
+    @ResponseBody
+    public List<Schedule> queryByDate(String bookTime){
+        List<Schedule> scheduleList= null;
+        try {
+            scheduleList = scheduleService.queryByDate(bookTime);
 
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return scheduleList;
+    }
 }

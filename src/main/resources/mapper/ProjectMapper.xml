@@ -12,4 +12,8 @@
   <select id="findAll" resultMap="BaseResultMap">
     select * from project
   </select>
+  <select id="queryBySkillgroup" parameterType="int" resultMap="BaseResultMap">
+     select project_id,project_name from project
+     <where>skillgroup_id = #{skillgroupId}</where>
+  </select>
 </mapper>

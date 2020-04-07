@@ -21,4 +21,6 @@ public interface EmpMapper {
     void delete(Integer empId);
 
     int findUserIdByempId(Integer empId);
+
+    List<Emp> queryDoctorByAroomId(Integer aroomId);
 }
