@@ -72,9 +72,8 @@
           <div class="row placeholders">
             <div class="col-xs-6 col-sm-3 placeholder">
                 <a href="/apprecord/goBook?userId=${loginUser.userId}"> <h4>去预约</h4> </a>
-
-
             </div>
+
             <div class="col-xs-6 col-sm-3 placeholder">
               <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
               <h4>Label</h4>
