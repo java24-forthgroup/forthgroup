@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface EmpMapper {
     List<Emp> findAll();
-
+    List<Emp> findAllDoctor();
     List<Emp> selectByPage(PageBean<Emp> pageBean);
 
     int countAll(PageBean<Emp> pageBean);
@@ -21,4 +21,6 @@ public interface EmpMapper {
     void delete(Integer empId);
 
     int findUserIdByempId(Integer empId);
+
+    List<Emp> queryDoctorByAroomId(Integer aroomId);
 }

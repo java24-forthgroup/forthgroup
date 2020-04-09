@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 @Transactional
 public class SourcetypeServiceImpl implements SourcetypeService {
-    @Autowired
+    @Autowired(required = false)
     SourcetypeMapper sourcetypeMapper;
 
     @Override

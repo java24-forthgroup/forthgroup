@@ -24,5 +24,6 @@ public interface SkillgroupMapper {
     void update(Skillgroup Skillgroup);
 
     void delete(Integer SkillgroupId);
-    
+
+    Integer queryDoctorBySkillgroup(Integer skillgroupId);
 }

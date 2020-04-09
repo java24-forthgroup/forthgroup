@@ -18,5 +18,6 @@ public interface PatientMapper {
 
     void delPatients(Integer[] typeId);
 
+    Patient findPatientByUserId(Integer userId);
 
 }

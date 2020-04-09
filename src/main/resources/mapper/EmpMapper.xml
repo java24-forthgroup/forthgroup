@@ -25,6 +25,10 @@
   <select id="findAll" resultMap="BaseResultMap">
 		select * from emp
 	</select>
+  <!-- 查询所有医生-->
+  <select id="findAllDoctor" resultMap="BaseResultMap">
+		select * from emp where emp_id in(select emp_id from emprole where role_id=3)
+	</select>
 
 
   <select id="findOne" parameterType="int" resultMap="BaseResultMap">
@@ -97,8 +101,13 @@
       emp_id=#{empId}
     </where>
   </update>
-
+  <!--通过员工id查用户id-->
   <select id="findUserIdByempId" parameterType="int" resultType="int">
         select user_id from emp where emp_id = #{empId}
+  </select>
+  <!--通过科室id查用户-->
+
+  <select id="queryDoctorByAroomId" parameterType="int" resultMap="BaseResultMap">
+        select * from emp where aroom_id = #{aroomId}
   </select>
 </mapper>

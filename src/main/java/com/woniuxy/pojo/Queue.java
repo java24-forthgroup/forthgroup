@@ -12,7 +12,8 @@ public class Queue {
     private Integer queueNum;
     private Integer aroomId;
     private String patientStatus;
-    private  Aroom aroom;
+    private Aroom aroom;
+    private Patient patient;
 
     public Queue(Integer queueId,Integer queueNum,Integer aroomId){
         this.queueId=queueId;

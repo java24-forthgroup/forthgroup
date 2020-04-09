@@ -57,4 +57,8 @@
   <insert id="save" parameterType="patient">
     insert into patient values (null,#{roleId},#{userId},#{patientName},#{patientAge},#{patientSex},#{patientCount},#{patientStatus})
   </insert>
+  <!-- 通过用户id查患者-->
+  <select id="findPatientByUserId" parameterType="int" resultMap="BaseResultMap">
+    select * from Patient where user_id =#{userId}
+  </select>
 </mapper>

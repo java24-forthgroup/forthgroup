@@ -92,6 +92,7 @@
                   <th>队列编号</th>
                   <th>科室名称</th>
                   <th>队列序号</th>
+                  <th>病人名称</th>
                   <th width="100">操作</th>
                 </tr>
               </thead>
@@ -101,7 +102,7 @@
              </tbody>
 			  <tfoot>
 			     <tr >
-				     <td colspan="5" align="center">
+				     <td colspan="10" align="center">
 						<ul class="pagination" id="byPage">
 								
 					    </ul>
@@ -220,7 +221,8 @@
                                 tableStr+="<td>"+queue.queueId+"</td>";
                                 tableStr+="<td>"+queue.aroom.aroomName+"</td>";
                                 tableStr+="<td>"+queue.aroom.aroomName+"组:"+queue.queueNum+"</td>";
-		                        tableStr+="<td>";
+                                tableStr+="<td>"+queue.patient.patientName+"</td>";
+                                tableStr+="<td>";
 		          				//tableStr+="<button type='button' onclick='updateQueue("+queue.queueId+")' class='btn btn-primary btn-xs'><i class='glyphicon glyphicon-pencil'></i></button>";
 		          				tableStr+="<button type='button' onclick='deletequeue("+queue.queueId+")' class='btn btn-danger btn-xs'><i class='glyphicon glyphicon-remove'></i></button>";
 		          				tableStr+="</td>";

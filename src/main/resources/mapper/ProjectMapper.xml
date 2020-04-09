@@ -9,4 +9,11 @@
     <result column="project_cost" jdbcType="DECIMAL" property="projectCost" />
     <result column="project_comment" jdbcType="VARCHAR" property="projectComment" />
   </resultMap>
+  <select id="findAll" resultMap="BaseResultMap">
+    select * from project
+  </select>
+  <select id="queryBySkillgroup" parameterType="int" resultMap="BaseResultMap">
+     select project_id,project_name from project
+     <where>skillgroup_id = #{skillgroupId}</where>
+  </select>
 </mapper>

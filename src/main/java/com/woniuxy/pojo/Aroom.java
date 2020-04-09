@@ -12,5 +12,5 @@ public class Aroom {
     private String aroomName;
     private String aroomCode;
     private String aroomAddr;
-
+    
 }

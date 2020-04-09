@@ -47,9 +47,10 @@ public class DoctorWorkController {
             apprecord.setCostStatus("是");
             //更新状态
             apprecordService.update(apprecord);
-
             //从数据库中得到科室名称   首先通过病人预约的医技项目拿到对应的医技组，然后通过医技组拿到科室
             Apprecord app = apprecordService.getAroomByProjectId(apprecord.getProjectId());
+
+            System.out.println(app);
             int aroomId = app.getAroom().getAroomId();
             Queue queue=new Queue(1,0,aroomId);
 
@@ -86,6 +87,7 @@ public class DoctorWorkController {
             queue.setAroomId(aroomId);
             //根据aroomId拿到Aroom,供予页面显示
             queue.setAroom(aroomService.findOne(aroomId));
+            queue.setPatient(app.getPatient());
             queue.setQueueNum(QueueNum);
             //将队列信息存储在redis缓存中
             redisTemplate.opsForZSet().add("queue",queue,queue.getQueueId());
