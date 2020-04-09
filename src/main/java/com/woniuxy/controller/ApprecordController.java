@@ -26,9 +26,9 @@ public class ApprecordController {
     ApprecordService apprecordService;
     @Autowired
     PatientService patientService;
-    @Autowired
+    @Autowired(required = false)
     EmpMapper empMapper;
-    @Autowired
+    @Autowired(required = false)
     ProjectMapper projectMapper;
     //查询全部
     @RequestMapping("index")

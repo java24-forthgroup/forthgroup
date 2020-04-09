@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Service
 public class CroomServiceImpl implements CroomService {
-	@Autowired
+	@Autowired(required = false)
 	CroomMapper mapper;
 	@Override
 	public List<Croom> findAll() {

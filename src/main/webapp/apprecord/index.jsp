@@ -63,7 +63,7 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
 			<div class="tree">
-
+                <%@ include file="../menu.jsp" %>
 			</div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -192,7 +192,6 @@
             function deletePatient(apprecordId){
             	layer.confirm("是否删除该患者?",  {icon: 3, title:'提示'}, function(cindex){
     			    layer.close(cindex);
-
     			    $.ajax({
     			    	url:"${APPPATH}/apprecord/delete",
     			    	type:"post",
@@ -211,6 +210,29 @@
     			    layer.close(cindex);
     			});
             }
+
+            function confirm(apprecordId){
+                layer.confirm("是否确认该记录?",  {icon: 3, title:'提示'}, function(cindex){
+                    layer.close(cindex);
+                    $.ajax({
+                        url:"${APPPATH}/apprecord/confirm",
+                        type:"post",
+                        data:{"apprecordId":apprecordId},
+                        success:function(result){
+                            if(result.flag){
+                                layer.msg("确认成功!", {time:1000, icon:0, shift:6}, function(){});
+                                window.location.href="${APPPATH}/apprecord/index";
+                            }else{
+                                layer.msg("确认失败!", {time:1000, icon:0, shift:5}, function(){});
+                            }
+                        }
+                    });
+
+                }, function(cindex){
+                    layer.close(cindex);
+                });
+            }
+
             function queryByPage(nowPage){
             	var jsonData = {"nowPage":nowPage};
             	if(queryFlag){
@@ -236,7 +258,7 @@
                                 tableStr+="<td>"+apprecord.attendStatus+"</td>";
                                 tableStr+="<td>"+apprecord.costStatus+"</td>";
 		                        tableStr+="<td>";
-
+                                tableStr+="<button type='button' onclick='confirm("+apprecord.apprecordId+")' class='btn btn-success btn-xs'><i class='glyphicon glyphicon-ok'></i></button>";
 		          				tableStr+="<button type='button' onclick='updatePatient("+apprecord.apprecordId+")' class='btn btn-primary btn-xs'><i class='glyphicon glyphicon-pencil'></i></button>";
 		          				tableStr+="<button type='button' onclick='deletePatient("+apprecord.apprecordId+")' class='btn btn-danger btn-xs'><i class='glyphicon glyphicon-remove'></i></button>";
 		          				tableStr+="</td>";

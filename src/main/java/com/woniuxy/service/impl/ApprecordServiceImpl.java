@@ -1,27 +1,40 @@
 package com.woniuxy.service.impl;
 
 import com.woniuxy.dao.ApprecordMapper;
-import com.woniuxy.dao.PatientMapper;
 import com.woniuxy.pojo.Apprecord;
+import com.woniuxy.dao.PatientMapper;
 import com.woniuxy.pojo.PageBean;
+
 import com.woniuxy.service.ApprecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
-/**
- * @auther: 秦浦华
- * @DATE: 2020/3/28   16:27
- */
 @Service
 @Transactional
 public class ApprecordServiceImpl implements ApprecordService {
-    @Autowired
+    @Autowired(required = false)
     ApprecordMapper apprecordMapper;
-    @Autowired
+    @Autowired(required = false)
     PatientMapper patientMapper;
+
+    @Override
+    public void setPatientQueueNum(Map<String, Object> map) {
+        apprecordMapper.setPatientQueueNum(map);
+    }
+
+    @Override
+    public Apprecord getAroomByProjectId(Integer projectId) {
+        return apprecordMapper.getAroomByProjectId(projectId);
+    }
+
+    @Override
+    public Apprecord findOne(Integer apprecordId) {
+        return apprecordMapper.findOne(apprecordId);
+    }
 
     @Override
     public int countAll(PageBean pageBean) {
@@ -52,25 +65,21 @@ public class ApprecordServiceImpl implements ApprecordService {
 
     @Override
     public Apprecord findOne(int apprecordId) {
-
-
         Apprecord apprecord = apprecordMapper.findOne(apprecordId);
-
         return apprecord ;
     }
 
     @Override
     public void update(Apprecord apprecord) {
-        patientMapper.update(apprecord.getPatient());
         apprecordMapper.update(apprecord);
+        //patientMapper.update(apprecord.getPatient());
+        //apprecordMapper.update(apprecord);
     }
 
     @Override
     public List<Apprecord> findAllByPageBean(PageBean pageBean) {
         return apprecordMapper.findAllByPageBean(pageBean);
     }
-
-
 
     @Override
     public void delApprecords(Integer[] typeId) {

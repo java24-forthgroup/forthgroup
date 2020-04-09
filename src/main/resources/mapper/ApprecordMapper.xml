@@ -1,18 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.woniuxy.dao.ApprecordMapper">
+
   <sql id="base_col_list">
         apprecord_Id,emp_id,project_id,patient_id,attend_Status,cost_Status
   </sql>
   <resultMap id="BaseResultMap" type="com.woniuxy.pojo.Apprecord">
     <id column="apprecord_id" jdbcType="INTEGER" property="apprecordId" />
-
+    <id column="emp_id" jdbcType="INTEGER" property="empId" />
+    <id column="project_id" jdbcType="INTEGER" property="projectId" />
+    <id column="patient_id" jdbcType="INTEGER" property="patientId" />
     <result column="attend_status" jdbcType="VARCHAR" property="attendStatus" />
     <result column="cost_status" jdbcType="VARCHAR" property="costStatus" />
+    <!--关联员工表-->
+    <association property="emp" javaType="emp" column="cid" fetchType="lazy">
+    <id column="emp_id" jdbcType="INTEGER" property="empId" />
+    <result column="aroom_id" jdbcType="INTEGER" property="aroomId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="emp_name" jdbcType="VARCHAR" property="empName" />
+    <result column="emp_birthday" jdbcType="DATE" property="empBirthday" />
+    <result column="emp_grade" jdbcType="VARCHAR" property="empGrade" />
+    </association>
+    <!--关联医技项目表-->
+    <association property="project" javaType="project" column="cid" fetchType="lazy">
+    <id column="project_id" jdbcType="INTEGER" property="projectId" />
+    <result column="skillgroup_id" jdbcType="INTEGER" property="skillgroupId" />
+    <result column="equipment_id" jdbcType="INTEGER" property="equipmentId" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="project_cost" jdbcType="DECIMAL" property="projectCost" />
+    <result column="project_comment" jdbcType="VARCHAR" property="projectComment" />
+    </association>
+    <!--关联病人表-->
+    <association property="patient" javaType="patient" column="cid" fetchType="lazy">
+    <id column="patient_id" jdbcType="INTEGER" property="patientId" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="patient_name" jdbcType="VARCHAR" property="patientName" />
+    <result column="patient_age" jdbcType="INTEGER" property="patientAge" />
+    <result column="patient_sex" jdbcType="VARCHAR" property="patientSex" />
+    <result column="patient_count" jdbcType="INTEGER" property="patientCount" />
+    <result column="patient_status" jdbcType="VARCHAR" property="patientStatus" />
+    </association>
+    <!--关联医技组-->
+    <association property="skillgroup" javaType="skillgroup" column="cid" fetchType="lazy">
+    <id column="skillgroup_id" jdbcType="INTEGER" property="skillgroupId" />
+    <result column="aroom_id" jdbcType="INTEGER" property="aroomId" />
+    <result column="source_id" jdbcType="INTEGER" property="sourceId" />
+    <result column="skillgroup_name" jdbcType="VARCHAR" property="skillgroupName" />
+    </association>
+    <!--关联科室-->
+    <association property="aroom" javaType="aroom" column="cid" fetchType="lazy">
+    <id column="aroom_id" jdbcType="INTEGER" property="aroomId" />
+    <result column="aroom_name" jdbcType="VARCHAR" property="aroomName" />
+    <result column="aroom_code" jdbcType="VARCHAR" property="aroomCode" />
+    <result column="aroom_addr" jdbcType="VARCHAR" property="aroomAddr" />
+    </association>
+
     <association property="emp" column="emp_id" javaType="Emp"  select="findOneEmp"></association>
     <association property="project" column="project_id" javaType="Project"  select="findOneProject" ></association>
     <association property="patient" column="patient_id" javaType="Patient"  select="findOnePatient"></association>
+
   </resultMap>
+
+  <insert id="setPatientQueueNum" parameterType="java.util.Map">
+        insert into queue (queue_id,queue_num,aroom_id) values(null,#{QueueNum},#{aroomId});
+    </insert>
+
+  <select id="getAroomByProjectId" parameterType="int" resultMap="BaseResultMap">
+       select * from aroom a,skillgroup s,project p,apprecord app,patient pa
+       where a.aroom_id=s.aroom_id and s.skillgroup_id=p.skillgroup_id and p.project_id = app.project_id and pa.patient_id = app.patient_id
+       and app.project_id = #{projectId}
+  </select>
+
+  <select id="findOne" parameterType="int" resultMap="BaseResultMap">
+    select  * from apprecord where apprecord_id=#{apprecordId}
+  </select>
+    <update id="update" parameterType="apprecord">
+        update apprecord
+        <set>
+            <if test="empId!=null">
+                emp_id=#{empId},
+            </if>
+            <if test="projectId!=null">
+                project_id=#{projectId},
+            </if>
+            <if test="patientId!=null">
+                patient_id=#{patientId},
+            </if>
+            <if test="attendStatus!=null">
+                attend_status=#{attendStatus},
+            </if>
+            <if test="costStatus!=null">
+                cost_status=#{costStatus},
+            </if>
+        </set>
+        <where>
+            apprecord_id=#{apprecordId}
+        </where>
+    </update>
   <resultMap id="empMap" type="emp">
     <id column="emp_id" jdbcType="INTEGER" property="empId" />
     <result column="aroom_id" jdbcType="INTEGER" property="aroomId" />
@@ -59,8 +144,9 @@
     </where>
   </select>
   <select id="findAllByPage" parameterType="pageBean" resultMap="BaseResultMap">
-    select <include refid="base_col_list"></include> from  Apprecord
+    select *  from  Apprecord a,emp e,project p,patient pa
     <where>
+        a.emp_id = e.emp_id and p.project_id = a.project_id and a.patient_id = pa.patient_id
       <if test="queryVal!=null">
         patient_Id in (select patient_Id from patient where patient_name like CONCAT('%',#{queryVal},'%'))
       </if>
@@ -73,31 +159,6 @@
   <delete id="delete" parameterType="int">
     delete from apprecord where apprecord_Id =#{apprecordId}
   </delete>
-  <update id="update" parameterType="apprecord">
-    update apprecord
-    <set>
-
-      <if test="emp.empId!=null">
-        emp_id=#{emp.empId},
-      </if>
-      <if test="project.projectId!=null">
-        project_id=#{project.projectId},
-      </if>
-      <if test="attendStatus!=null">
-        attend_status=#{attendStatus},
-      </if>
-      <if test="costStatus!=null">
-        cost_status=#{costStatus},
-      </if>
-    </set>
-    <where>
-      apprecord_id =#{apprecordId}
-    </where>
-  </update>
-  <select id="findOne" parameterType="int" resultMap="BaseResultMap">
-    select * from apprecord
-    <where>patient_id=#{patientId}</where>
-  </select>
   <insert id="book" parameterType="apprecord">
     insert into apprecord values (null,#{emp.empId},#{project.projectId},#{patient.patientId},#{attendStatus},#{costStatus})
   </insert>

@@ -11,10 +11,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-	<link rel="stylesheet" href="${APPPATHPath}/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="${APPPATHPath}/css/font-awesome.min.css">
-	<link rel="stylesheet" href="${APPPATHPath}/css/main.css">
-	<link rel="stylesheet" href="${APPPATHPath}/css/doc.min.css">
+	<link rel="stylesheet" href="${APPPATH}/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="${APPPATH}/css/font-awesome.min.css">
+	<link rel="stylesheet" href="${APPPATH}/css/main.css">
+	<link rel="stylesheet" href="${APPPATH}/css/doc.min.css">
 	<style>
 	.tree li {
         list-style-type: none;
@@ -40,13 +40,13 @@
 						<li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
 						<li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
 						<li class="divider"></li>
-						<li><a href="${APPPATHPath}/logout"><i class="glyphicon glyphicon-off"></i>退出系统</a></li>
+						<li><a href="${APPPATH}/logout"><i class="glyphicon glyphicon-off"></i>退出系统</a></li>
 					  </ul>
 			    </div>
 			</li>
             <li style="margin-left:10px;padding-top:8px;">
 				<button type="button" class="btn btn-default btn-danger">
-				  <span class="glyphicon glyphicon-question-sign"></span> 帮助
+					<a href="${APPPATH}/help.jsp" style="color: white"> <span class="glyphicon glyphicon-question-sign"></span> 帮助</a>
 				</button>
 			</li>
           </ul>
@@ -60,7 +60,9 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-
+			<div class="tree">
+				<%@ include file="../menu.jsp" %>
+			</div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<ol class="breadcrumb">
@@ -157,9 +159,9 @@
 		</div>
 	  </div>
 	</div>
-    <script src="${APPPATHPath}/jquery/jquery-2.1.1.min.js"></script>
-    <script src="${APPPATHPath}/bootstrap/js/bootstrap.min.js"></script>
-	<script src="${APPPATHPath}/script/docs.min.js"></script>
+    <script src="${APPPATH}/jquery/jquery-2.1.1.min.js"></script>
+    <script src="${APPPATH}/bootstrap/js/bootstrap.min.js"></script>
+	<script src="${APPPATH}/script/docs.min.js"></script>
         <script type="text/javascript">
             $(function () {
 			    $(".list-group-item").click(function(){
@@ -197,11 +199,11 @@
 
 				$("#btnCroomEdit").click(function() {
 					$.ajax({
-						url:"${APPPATHPath}/croom/croomEditSubmit",
+						url:"${APPPATH}/croom/croomEditSubmit",
 						type:"post",
 						data:{"aroomId":$("#aroomId").val(),"croomId":$("#croomId").val(),"croomCode":$("#croomCode").val(),"croomAddr":$("#croomAddr").val()},
 						success:function(result){
-							window.location.href = "${APPPATHPath}/croom/croomListByPage";
+							window.location.href = "${APPPATH}/croom/croomListByPage";
 						}
 					});
 				});

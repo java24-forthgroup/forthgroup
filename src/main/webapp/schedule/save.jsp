@@ -11,10 +11,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-	<link rel="stylesheet" href="${ItemPath}/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="${ItemPath}/css/font-awesome.min.css">
-	<link rel="stylesheet" href="${ItemPath}/css/main.css">
-	<link rel="stylesheet" href="${ItemPath}/css/doc.min.css">
+	<link rel="stylesheet" href="${APPPATH}/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="${APPPATH}/css/font-awesome.min.css">
+	<link rel="stylesheet" href="${APPPATH}/css/main.css">
+	<link rel="stylesheet" href="${APPPATH}/css/doc.min.css">
 	<style>
 	.tree li {
         list-style-type: none;
@@ -44,7 +44,7 @@
 						<li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
 						<li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
 						<li class="divider"></li>
-						<li><a href="${ItemPath}/logout"><i class="glyphicon glyphicon-off"></i>退出系统</a></li>
+						<li><a href="${APPPATH}/logout"><i class="glyphicon glyphicon-off"></i>退出系统</a></li>
 					  </ul>
 			    </div>
 			</li>
@@ -148,9 +148,9 @@
 		</div>
 	  </div>
 	</div>
-    <script src="${ItemPath}/jquery/jquery-2.1.1.min.js"></script>
-    <script src="${ItemPath}/bootstrap/js/bootstrap.min.js"></script>
-	<script src="${ItemPath}/script/docs.min.js"></script>
+    <script src="${APPPATH}/jquery/jquery-2.1.1.min.js"></script>
+    <script src="${APPPATH}/bootstrap/js/bootstrap.min.js"></script>
+	<script src="${APPPATH}/script/docs.min.js"></script>
         <script type="text/javascript">
             $(function () {
 			    $(".list-group-item").click(function(){
