@@ -74,18 +74,6 @@
 				<form role="form" id="updateForm">
 				  <div class="form-group">
 					<input type="hidden" id="sourceId" name="sourceId"  value="${source.sourceId}"/>
-					<label for="exampleInputPassword1">队列序号</label>
-					 <select name="queueId" class="form-control">
-						  <c:forEach items="${queueList}" var="queue">
-							  <option value="${queue.queueId}"
-								<c:if test="${source.queue.queueId==queue.queueId}">
-									selected="selected"
-								</c:if>
-							  >
-								    ${queue.queueNum}
-							  </option>
-						  </c:forEach>
-					 </select>
 					 <label for="exampleInputPassword1">医技组名称</label>
 					  <select name="skillgroupId" class="form-control">
 						  <c:forEach items="${skillgroupList}" var="skillgroup">

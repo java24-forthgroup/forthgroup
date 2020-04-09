@@ -27,7 +27,7 @@ public class ApprecordServiceImpl implements ApprecordService {
     }
 
     @Override
-    public Apprecord getAroomByProjectId(Integer projectId) {
+    public List<Apprecord> getAroomByProjectId(Integer projectId) {
         return apprecordMapper.getAroomByProjectId(projectId);
     }
 

@@ -73,12 +73,6 @@
 			  <div class="panel-body">
 				<form role="form" id="saveForm">
 				  <div class="form-group">
-					<label for="exampleInputPassword1">队列序号</label>
-					 <select name="queueId" class="form-control">
-						  <c:forEach items="${queueList}" var="queue">
-							  <option value="${queue.queueId}">${queue.queueNum}</option>
-						  </c:forEach>
-					 </select><br/>
 					 <label for="exampleInputPassword1">医技组名称</label>
 					  <select name="skillgroupId" class="form-control">
 						  <c:forEach items="${skillgroupList}" var="skillgroup">
