@@ -117,11 +117,7 @@ public class QueueController {
             if(pageBean.getNowPage()==null) {
                 pageBean.setNowPage(1);
             }
-            if(pageBean.getNowPage()==1) {
-                queueSet = redisTemplate.opsForZSet().rangeByScore("queue", (pageBean.getNowPage() - 1) * pageBean.getPageRow(), pageBean.getPageRow());
-            }else{
-                queueSet= redisTemplate.opsForZSet().rangeByScore("queue",(pageBean.getNowPage()-1)*pageBean.getPageRow()+1,pageBean.getNowPage()*pageBean.getPageRow());
-            }
+            queueSet= redisTemplate.opsForZSet().rangeByScore("queue",(pageBean.getNowPage()-1)*pageBean.getPageRow()+1,pageBean.getNowPage()*pageBean.getPageRow());
             //使用迭代器遍历redis中的queue集合，
             //开始使用foreach遍历set   使用set中remove方法 报错ConcurrentModificationException
             Iterator<Queue> it = queueSet.iterator();

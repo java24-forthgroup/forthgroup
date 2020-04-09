@@ -94,7 +94,6 @@
                 <tr >
                   <th width="80">序号</th>
                   <th width="50"><input type="checkbox" id="checkAll"></th>
-                  <th>队列序号</th>
                   <th>医技组名称</th>
                   <th>号源池类型</th>
                   <th>号源池数量</th>
@@ -226,7 +225,6 @@
 	            				tableStr+="<tr>";
 		                        tableStr+="<td>"+(index+1) +"</td>";
                                 tableStr+="<td><input type='checkbox' class='delCheck' name='sourceIds' value='"+source.sourceId+"'></td>";
-                                tableStr+="<td>"+source.queue.queueNum+"</td>";
                                 tableStr+="<td>"+source.skillgroup.skillgroupName+"</td>";
                                 tableStr+="<td>"+source.sourcetype.typeName+"</td>";;
                                 tableStr+="<td>"+source.sourceNum+"</td>";

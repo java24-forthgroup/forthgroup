@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface ApprecordService {
     void setPatientQueueNum(Map<String, Object> map);
-    Apprecord getAroomByProjectId(Integer projectId);
+    List<Apprecord> getAroomByProjectId(Integer projectId);
     Apprecord findOne(Integer apprecordId);
     int countAll(PageBean pageBean);
     List<Apprecord> findAllByPage(PageBean pageBean);

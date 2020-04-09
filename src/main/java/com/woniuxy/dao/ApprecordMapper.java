@@ -10,7 +10,7 @@ import java.util.Map;
 public interface ApprecordMapper {
     void setPatientQueueNum(Map<String, Object> map);
 
-    Apprecord getAroomByProjectId(Integer projectId);
+    List<Apprecord> getAroomByProjectId(Integer projectId);
 
     Apprecord findOne(Integer apprecordId);
 

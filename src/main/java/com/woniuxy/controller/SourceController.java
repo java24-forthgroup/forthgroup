@@ -24,8 +24,6 @@ public class SourceController {
     @Autowired
     SourceService sourceService;
     @Autowired
-    QueueService queueService;
-    @Autowired
     SkillgroupService skillgroupService;
     @Autowired
     SourcetypeService sourcetypeService;
@@ -39,11 +37,8 @@ public class SourceController {
     public String addUI(Model model) {
        //医技组集合
        List<Skillgroup> skillgroupList = skillgroupService.findAll();
-       //队列集合
-       List<Queue> queueList  = queueService.findAll();
        //号源池类型集合
        List<Sourcetype> sourcetypeList  = sourcetypeService.findAll();
-       model.addAttribute("queueList",queueList);
        model.addAttribute("skillgroupList",skillgroupList);
        model.addAttribute("sourcetypeList",sourcetypeList);
        return "source/addSource";
@@ -102,9 +97,7 @@ public class SourceController {
         System.out.println("sssssssssssssss"+sourceId);
         //查询所有发送至页面
         List<Skillgroup> skillgroupList = skillgroupService.findAll();
-        List<Queue> queueList  = queueService.findAll();
         List<Sourcetype> sourcetypeList  = sourcetypeService.findAll();
-        model.addAttribute("queueList",queueList);
         model.addAttribute("skillgroupList",skillgroupList);
         model.addAttribute("sourcetypeList",sourcetypeList);
         //号源池信息

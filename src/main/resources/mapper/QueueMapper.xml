@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.woniuxy.dao.QueueMapper">
-  <sql id="base_col_list">
-		queue_id,queue_num,aroom_id,patient_statis
-  </sql>
   <resultMap id="BaseResultMap" type="com.woniuxy.pojo.Queue">
     <id column="queue_id" jdbcType="INTEGER" property="queueId" />
     <result column="queue_num" jdbcType="INTEGER" property="queueNum" />
@@ -31,13 +28,13 @@
   <!-- 查询全部-->
   <select id="findAll" parameterType="queue" resultMap="BaseResultMap" >
 		select
-           <include refid="base_col_list"></include>
+           *
 		from queue
 	</select>
   <!-- 分页和查询 -->
   <select id="queryByPage" parameterType="pageBean" resultMap="BaseResultMap" >
     select
-       <include refid="base_col_list"></include>
+       *
     from queue
     <!-- 模糊查询条件 -->
     where aroom_id in (
@@ -79,7 +76,7 @@
   <!-- 修改 -->
   <select id="findOne" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
-       <include refid="base_col_list"></include>
+       *
     from queue
     where queue_id=#{queueId}
   </select>
