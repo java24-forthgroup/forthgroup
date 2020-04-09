@@ -105,4 +105,9 @@
   <select id="findUserIdByempId" parameterType="int" resultType="int">
         select user_id from emp where emp_id = #{empId}
   </select>
+  <!--通过科室id查用户-->
+
+  <select id="queryDoctorByAroomId" parameterType="int" resultMap="BaseResultMap">
+        select * from emp where aroom_id = #{aroomId}
+  </select>
 </mapper>

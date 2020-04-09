@@ -5,7 +5,6 @@ import com.woniuxy.pojo.Patient;
 import com.woniuxy.pojo.User;
 
 import java.util.List;
-import java.util.Map;
 
 public interface PatientService {
     //查全部
@@ -25,6 +24,6 @@ public interface PatientService {
 
     void delPatients(Integer[] typeId);
     //通过userId查患者
-    Map<String,Object> findPatientByUserId(Integer userId);
+    Patient findPatientByUserId(Integer userId);
 }
 

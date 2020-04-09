@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface ScheduleService {
     int countAll(PageBean pageBean);
-
+    List<Schedule> queryByDate(String date);
     List<Schedule> findAllByPage(PageBean pageBean);
     List<Schedule> findAll();
     void delete(int scheduleId);

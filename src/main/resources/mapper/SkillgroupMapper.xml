@@ -14,4 +14,7 @@
   <select id="findOne" parameterType="int" resultMap="BaseResultMap">
     select * from aroom where skillgroup_id = #{skillgroupId}
   </select>
+  <select id="queryDoctorBySkillgroup" parameterType="int" resultType="int">
+        select aroom_Id from skillgroup where skillgroup_id = #{skillgroupId}
+    </select>
 </mapper>

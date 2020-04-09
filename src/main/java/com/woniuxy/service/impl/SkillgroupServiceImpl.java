@@ -55,4 +55,9 @@ public class SkillgroupServiceImpl implements SkillgroupService {
     public void delete(Integer SkillgroupId) {
         skillgroupMapper.delete(SkillgroupId);
     }
+
+    @Override
+    public Integer queryDoctorBySkillgroup(Integer skillgroupId) {
+        return skillgroupMapper.queryDoctorBySkillgroup(skillgroupId);
+    }
 }

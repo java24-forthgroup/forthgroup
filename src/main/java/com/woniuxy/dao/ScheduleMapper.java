@@ -1,7 +1,7 @@
 package com.woniuxy.dao;
 
-import com.woniuxy.pojo.Schedule;
 import com.woniuxy.pojo.PageBean;
+import com.woniuxy.pojo.Schedule;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -13,6 +13,7 @@ import java.util.List;
 @Mapper
 public interface ScheduleMapper {
     int countAll(PageBean pageBean);
+    List<Schedule> queryByDate(String date);
     List<Schedule> findAllByPage(PageBean pageBean);
     List<Schedule> findAll();
     void delete(int scheduleId);

@@ -90,7 +90,7 @@
                         <div class="form-group">
                             <label 患者性别></label>
                                 男<input type="checkbox" id="patientSex" name="patientSex" value="男">
-                                女<input type="checkbox"  id="patientSex" name="patientSex" value="女">
+                                女<input type="checkbox"  id="patientSex1" name="patientSex" value="女">
                             </div>
 
                         <div class="form-group">
@@ -207,7 +207,7 @@
                 success:function(result){
                     if(result.flag){
                         layer.msg("注册成功!", {time:1000, icon:0, shift:6}, function(){});
-                        window.location.href="${APPPATH}/patient/index";
+                        window.location.href="${APPPATH}/index";
                     }else{
                         layer.msg("注册失败!", {time:1000, icon:0, shift:5}, function(){});
                     }

@@ -1,18 +1,15 @@
 package com.woniuxy.service.impl;
 
 import com.woniuxy.dao.ApprecordMapper;
-import com.woniuxy.dao.EmpMapper;
 import com.woniuxy.dao.PatientMapper;
-import com.woniuxy.dao.ProjectMapper;
-import com.woniuxy.pojo.*;
+import com.woniuxy.pojo.Apprecord;
+import com.woniuxy.pojo.PageBean;
 import com.woniuxy.service.ApprecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @auther: 秦浦华
@@ -23,10 +20,6 @@ import java.util.Map;
 public class ApprecordServiceImpl implements ApprecordService {
     @Autowired
     ApprecordMapper apprecordMapper;
-    @Autowired
-    EmpMapper empMapper;
-    @Autowired
-    ProjectMapper projectMapper;
     @Autowired
     PatientMapper patientMapper;
 
@@ -58,20 +51,16 @@ public class ApprecordServiceImpl implements ApprecordService {
     }
 
     @Override
-    public Map findOne(int apprecordId) {
-        Map<String ,Object> result = new HashMap();
-        List<Emp> empList = empMapper.findAllDoctor();
-        List<Project> projectList = projectMapper.findAll();
+    public Apprecord findOne(int apprecordId) {
+
+
         Apprecord apprecord = apprecordMapper.findOne(apprecordId);
-        result.put("empList",empList);
-        result.put("projectList",projectList);
-        result.put("apprecord",apprecord);
-        return result ;
+
+        return apprecord ;
     }
 
     @Override
     public void update(Apprecord apprecord) {
-
         patientMapper.update(apprecord.getPatient());
         apprecordMapper.update(apprecord);
     }
@@ -80,6 +69,8 @@ public class ApprecordServiceImpl implements ApprecordService {
     public List<Apprecord> findAllByPageBean(PageBean pageBean) {
         return apprecordMapper.findAllByPageBean(pageBean);
     }
+
+
 
     @Override
     public void delApprecords(Integer[] typeId) {

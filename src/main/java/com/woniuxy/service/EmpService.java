@@ -22,4 +22,5 @@ public interface EmpService {
 
     int findUserIdByempId(Integer empId);
 
+    List<Emp> queryDoctorByAroomId(Integer aroomId);
 }

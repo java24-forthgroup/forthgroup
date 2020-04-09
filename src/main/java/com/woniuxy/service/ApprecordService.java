@@ -4,7 +4,6 @@ import com.woniuxy.pojo.Apprecord;
 import com.woniuxy.pojo.PageBean;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @auther: 秦浦华
@@ -17,7 +16,7 @@ public interface ApprecordService {
     List<Apprecord> findAll();
     void delete(int apprecordId);
     void book(Apprecord apprecord);
-    Map findOne(int apprecordId);
+    Apprecord findOne(int apprecordId);
     void update (Apprecord apprecord);
     List<Apprecord> findAllByPageBean(PageBean pageBean);
 

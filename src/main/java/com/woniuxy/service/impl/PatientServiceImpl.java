@@ -43,6 +43,7 @@ public class PatientServiceImpl implements PatientService {
         patient.setPatientStatus("否");
         patient.setPatientCount(0);
         patient.setRoleId(4);
+        int i = 8/0;
         patientMapper.save(patient);
     }
 
@@ -73,14 +74,10 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public Map<String,Object> findPatientByUserId(Integer userId) {
-        Map<String,Object> map = new HashMap<>();
+    public Patient findPatientByUserId(Integer userId) {
+
         Patient patient = patientMapper.findPatientByUserId(userId);
-        List<Emp> empList = empMapper.findAll();
-        List<Project> projectList = projectMapper.findAll();
-        map.put("patient",patient);
-        map.put("empList",empList);
-        map.put("projectList",projectList);
-        return map;
+
+        return patient;
     }
 }
