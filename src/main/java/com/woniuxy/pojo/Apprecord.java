@@ -14,5 +14,9 @@ public class Apprecord {
     private Integer patientId;
     private String attendStatus;
     private String costStatus;
-
+    private Emp emp;
+    private Project project;
+    private Patient patient;
+    private Skillgroup skillgroup;
+    private Aroom aroom;
 }

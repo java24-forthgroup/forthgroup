@@ -1,6 +1,7 @@
 package com.woniuxy.pojo;
 
 import java.util.List;
+import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +16,7 @@ public class PageBean<T> {
 	private Integer countRow;
 	private Integer countPage;
 	private List<T> list;
+	private Set<T> set;
 	private String queryVal;
 	private String queryName;
 }

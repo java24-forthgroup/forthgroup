@@ -69,7 +69,6 @@ public class EmpController {
     public Object saveEmp(Emp emp,User user) {
         Message message = new Message();
         try {
-            user.setUpwd("123");
             userService.save(user);
             System.out.println("添加用户成功");
             emp.setUserId(user.getUserId());

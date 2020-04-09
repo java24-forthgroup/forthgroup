@@ -17,5 +17,6 @@ public interface PatientService {
     int countAll(PageBean page);
 
     void delPatients(Integer[] typeId);
+
 }
 

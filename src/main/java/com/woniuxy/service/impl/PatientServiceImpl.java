@@ -15,10 +15,11 @@ import java.util.List;
 @Transactional
 @Service
 public class PatientServiceImpl implements PatientService {
-    @Autowired
+    @Autowired(required = false)
     PatientMapper patientMapper;
-    @Autowired
+    @Autowired(required = false)
     UserMapper userMapper;
+
     @Override
     public List<Patient> findAll() {
         return patientMapper.findAll();
@@ -65,4 +66,5 @@ public class PatientServiceImpl implements PatientService {
     public void delPatients(Integer[] typeId) {
 
     }
+
 }

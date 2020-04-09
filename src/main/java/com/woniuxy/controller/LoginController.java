@@ -34,7 +34,7 @@ public class LoginController {
         User loginUser = userService.login(user);
         if (loginUser != null) {
             session.setAttribute("loginUser", loginUser);
-//             获得该用户的的许可
+        // 获得该用户的的许可
             List<Permission> permissionList = userService.selectPermissionByUser(loginUser);
             Permission root = null;
             Map<Integer, Permission> map = new HashMap<Integer, Permission>();
@@ -52,10 +52,9 @@ public class LoginController {
             }
             // 将登录用户的菜单存入session
             session.setAttribute("root", root);
-
             // cookie
             String uname = request.getParameter("uname");
-            System.out.println(uname);
+
             Cookie cookie = new Cookie("uname", uname);
             // 设置cookie过期时间
             cookie.setMaxAge(3600);
@@ -81,7 +80,6 @@ public class LoginController {
         session.invalidate();
         return "redirect:login";
     }
-
     //跳转到帮助页面
     @RequestMapping("help")
     public String help() {

@@ -39,7 +39,7 @@ table tbody td:nth-child(even) {
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<div>
-					<a class="navbar-brand" style="font-size: 32px;" href="#">医疗预约平台</a>
+					<a class="navbar-brand" style="font-size: 32px;" href="${APPPATH}/main">医疗预约平台</a>
 				</div>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
@@ -126,6 +126,10 @@ table tbody td:nth-child(even) {
 					//   <a><span></span></a>
 					var aObj = $("#" + treeNode.tId + "_a"); // tId = permissionTree_1, ==> $("#permissionTree_1_a")
 					aObj.attr("href", "javascript:;");
+					//  设置阻止超链接
+					$(aObj).click(function(event){
+						return false;
+					});
 					if (treeNode.editNameFlag
 							|| $("#btnGroup" + treeNode.tId).length > 0)
 						return;
@@ -219,6 +223,8 @@ table tbody td:nth-child(even) {
 				layer.close(cindex);
 			});
 		}
+
+
 		$(function() {
 			$(".list-group-item").click(function() {
 				if ($(this).find("ul")) {
