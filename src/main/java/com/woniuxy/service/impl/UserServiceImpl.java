@@ -31,7 +31,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User User) {
-        User.setUpwd("123");
+        //MD5  将123转为加密数字   采用md5.js在前端实现
+        User.setUpwd("202cb962ac59075b964b07152d234b70");
         mapper.save(User);
     }
 

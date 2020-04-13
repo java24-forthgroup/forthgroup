@@ -44,7 +44,6 @@ public class PatientServiceImpl implements PatientService {
         patient.setPatientStatus("否");
         patient.setPatientCount(0);
         patient.setRoleId(4);
-        int i = 8/0;
         patientMapper.save(patient);
     }
 

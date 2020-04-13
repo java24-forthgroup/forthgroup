@@ -27,7 +27,7 @@
 	</select>
   <!-- 查询所有医生-->
   <select id="findAllDoctor" resultMap="BaseResultMap">
-		select * from emp where emp_id in(select emp_id from emprole where role_id=3)
+		select * from emp where emp_id in(select emp_id from emp where user_id in (select user_id from userrole where role_id=3))
 	</select>
 
 
