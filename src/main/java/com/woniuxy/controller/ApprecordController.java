@@ -5,6 +5,7 @@ import com.woniuxy.dao.ProjectMapper;
 import com.woniuxy.pojo.*;
 import com.woniuxy.service.ApprecordService;
 import com.woniuxy.service.PatientService;
+import com.woniuxy.service.SourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,8 @@ public class ApprecordController {
     EmpMapper empMapper;
     @Autowired
     ProjectMapper projectMapper;
+    @Autowired
+    SourceService sourceService;
     //查询全部
     @RequestMapping("index")
     public String index(){
@@ -39,9 +42,26 @@ public class ApprecordController {
     @RequestMapping("goBook")
     public String goBook(Model model,Integer userId){
         Patient patient = patientService.findPatientByUserId(userId);
+
         System.out.println(patient);
         model.addAttribute("patient",patient);
         return "apprecord/book";
+    }
+    @RequestMapping("queryBySkillgroupId")
+    @ResponseBody
+    public Message queryBySkillgroupId(Integer skillgroupId){
+        System.out.println(skillgroupId+"+++++++++++++++++++++++");
+        Message message = new Message();
+        try {
+            int sourceCount = sourceService.queryBySkillgroupId(skillgroupId);
+            message.setObj(sourceCount);
+            message.setFlag(true);
+        }catch(Exception e) {
+            e.printStackTrace();
+            message.setFlag(false);
+        }
+        return message;
+       
     }
     @RequestMapping("findAllByPage")
     @ResponseBody
@@ -122,12 +142,14 @@ public class ApprecordController {
     //预约
     @ResponseBody
     @RequestMapping("book")
-    public Message book(Apprecord apprecord){
+    public Message book(Apprecord apprecord,Skillgroup skillgroup){
         Message message = new Message();
         try {
 
-            apprecordService.book(apprecord);
-
+            Integer result = apprecordService.book(apprecord, skillgroup);
+            if(result==0){
+                message.setFlag(false);
+            }
             message.setFlag(true);
         }catch(Exception e) {
             e.printStackTrace();

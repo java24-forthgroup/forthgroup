@@ -2,8 +2,10 @@ package com.woniuxy.service.impl;
 
 import com.woniuxy.dao.ApprecordMapper;
 import com.woniuxy.dao.PatientMapper;
+import com.woniuxy.dao.SourceMapper;
 import com.woniuxy.pojo.Apprecord;
 import com.woniuxy.pojo.PageBean;
+import com.woniuxy.pojo.Skillgroup;
 import com.woniuxy.service.ApprecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,8 @@ public class ApprecordServiceImpl implements ApprecordService {
     ApprecordMapper apprecordMapper;
     @Autowired
     PatientMapper patientMapper;
-
+    @Autowired
+    SourceMapper sourceMapper;
     @Override
     public int countAll(PageBean pageBean) {
         return apprecordMapper.countAll(pageBean);
@@ -44,10 +47,18 @@ public class ApprecordServiceImpl implements ApprecordService {
     }
 
     @Override
-    public void book(Apprecord apprecord) {
-        apprecord.setAttendStatus("否");
-        apprecord.setCostStatus("否");
-        apprecordMapper.book(apprecord);
+    public Integer book(Apprecord apprecord, Skillgroup skillgroup) {
+
+        int count = sourceMapper.queryBySkillgroupId(skillgroup.getSkillgroupId());
+        if(count==0){
+            return 0;
+        }else {
+            apprecord.setAttendStatus("否");
+            apprecord.setCostStatus("否");
+            apprecordMapper.book(apprecord);
+            sourceMapper.deductionSource(skillgroup.getSkillgroupId());
+            return 1;
+        }
     }
 
     @Override

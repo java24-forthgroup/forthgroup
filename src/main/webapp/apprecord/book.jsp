@@ -90,7 +90,7 @@
 						</div>
 						<div class="form-group">
 							<label >预约医技</label>
-							<SELECT name="skillgroup.skillgroupId" id="skillgroup" class="form-control">
+							<SELECT name="skillgroupId" id="skillgroup" class="form-control">
 
 								<option value=''></option>
 
@@ -111,6 +111,10 @@
 								<option value=''></option>
 
 							</SELECT>
+						</div>
+						<div class="form-group">
+							<label >今日剩余可预约数</label>
+							<input id="sourceCount" type="text" class="form-control" readonly="value">
 						</div>
 
 						<div class="form-group">
@@ -215,6 +219,7 @@
 				}
 				queryBySkillgroup();
 				queryDoctorBySkillgroup();
+				queryBySkillgroupId($("#skillgroup").val());
 			}
 		})
 	});
@@ -268,6 +273,21 @@
 			}
 		})
 	}
+	$("#skillgroup").change(function(){
+		queryBySkillgroupId($("#skillgroup").val());
+	});
+	function queryBySkillgroupId(skillgroupId){
+
+		$.ajax({
+			url:"${APPPATH }/apprecord/queryBySkillgroupId",
+			type:"post",
+			data:{"skillgroupId":skillgroupId},
+
+			success:function(data){
+				$("#sourceCount").val(data.obj)
+			}
+		})
+	}
 	$(function () {
 		$(".list-group-item").click(function(){
 			if ( $(this).find("ul") ) {
@@ -280,7 +300,10 @@
 			}
 		});
 		$("#btnSave").click(function(){
-
+			if($("#sourceCount").val()==0){
+				layer.msg("今天预约已满!", {time:1000, icon:0, shift:6}, function(){});
+				return false;
+			}
 			$.ajax({
 				url:"${APPPATH}/apprecord/book",
 				type:"post",

@@ -9,5 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Message {
 	private Boolean flag;
+	private String sourceStatus;
 	private Object obj;
 }

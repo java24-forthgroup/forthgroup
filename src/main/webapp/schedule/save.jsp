@@ -75,7 +75,7 @@
 			<div class="panel panel-default">
               <div class="panel-heading">科室数据<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
 			  <div class="panel-body">
-				<form role="form">
+				<form role="form" id="saveForm">
 				  <div class="form-group">
 
 					<label >医技组</label>
@@ -101,20 +101,7 @@
 
 
 				  <button type="button" id="btnSave" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> 新增</button>
-					<div class="form-group">
-					<label >科室名称</label>
-					<input type="text" id="aroomName" name="aroomName" class="form-control"  placeholder="请输入科室名称">
-				  </div>
-				  <div class="form-group">
-					<label >科室编号</label>
-					<input type="text" id="aroomCode" name="aroomCode" class="form-control"  placeholder="请输入科室编号">
-				  </div>
-				  <div class="form-group">
-					<label >科室地址</label>
-					<input type="email" id="aroomAddr" name="aroomAddr" class="form-control" placeholder="请输入科室地址">
-				  </div>
-				  <button type="button" id="btnAroomAdd" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i>确定新增</button>
-				  <button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
+
 
 				</form>
 			  </div>
@@ -151,6 +138,7 @@
     <script src="${ItemPath}/jquery/jquery-2.1.1.min.js"></script>
     <script src="${ItemPath}/bootstrap/js/bootstrap.min.js"></script>
 	<script src="${ItemPath}/script/docs.min.js"></script>
+	<script src="${APPPATH }/layer/layer.js"></script>
         <script type="text/javascript">
             $(function () {
 			    $(".list-group-item").click(function(){

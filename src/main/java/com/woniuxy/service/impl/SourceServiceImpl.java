@@ -59,4 +59,9 @@ public class SourceServiceImpl implements SourceService {
     public void deleteSources(Integer[] sourceIds) {
         sourceMapper.deleteSources(sourceIds);
     }
+
+    @Override
+    public int queryBySkillgroupId(Integer skillgroup) {
+        return sourceMapper.queryBySkillgroupId(skillgroup);
+    }
 }

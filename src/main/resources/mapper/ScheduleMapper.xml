@@ -13,6 +13,14 @@
       <result column="source_id" jdbcType="INTEGER" property="sourceId" />
       <result column="skillgroup_name" jdbcType="VARCHAR" property="skillgroupName" />
     </association>
+    <association property="source" column="source_id" javaType="source" >
+      <id column="source_id" jdbcType="INTEGER" property="sourceId" />
+      <result column="queue_id" jdbcType="INTEGER" property="queueId" />
+      <result column="skillgroup_id" jdbcType="INTEGER" property="skillgroupId" />
+      <result column="type_id" jdbcType="INTEGER" property="typeId" />
+      <result column="source_num" jdbcType="INTEGER" property="sourceNum" />
+
+    </association>
   </resultMap>
 
     <select id="findAllByPage" parameterType="pageBean" resultMap="BaseResultMap">
@@ -27,10 +35,10 @@
       delete from schedule where schedule_id=#{scheduleId}
     </delete>
   <insert id="save" parameterType="schedule">
-    insert into schedule values (null,#{skillgroup.skillgroupId},#{date},#{datestart},#{datelast})
+    insert into schedule values (null,#{skillgroup.skillgroupId},#{date},#{datestart},#{datelast},#{source.sourceId})
   </insert>
   <select id="findOne" parameterType="int" resultMap="BaseResultMap">
-     SELECT schedule_id,schedule.skillgroup_id,skillgroup.skillgroup_name, date,datestart,datelast FROM schedule join skillgroup on schedule.skillgroup_id = skillgroup.skillgroup_id
+     SELECT schedule_id,schedule.skillgroup_id,skillgroup.skillgroup_name, date,datestart,datelast ,schedule.source_id FROM schedule join skillgroup on schedule.skillgroup_id = skillgroup.skillgroup_id
      where schedule_id=#{scheduleId}
   </select>
   <update id="update" parameterType="schedule">

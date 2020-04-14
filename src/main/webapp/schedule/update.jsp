@@ -162,6 +162,7 @@
     <script src="${APPPATHPath}/jquery/jquery-2.1.1.min.js"></script>
     <script src="${APPPATHPath}/bootstrap/js/bootstrap.min.js"></script>
 	<script src="${APPPATHPath}/script/docs.min.js"></script>
+	<script src="${APPPATH }/layer/layer.js"></script>
         <script type="text/javascript">
             $(function () {
 			    $(".list-group-item").click(function(){
