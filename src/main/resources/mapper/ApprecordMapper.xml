@@ -73,7 +73,7 @@
   </select>
 
   <select id="findOne" parameterType="int" resultMap="BaseResultMap">
-    select  * from apprecord where apprecord_id=#{apprecordId}
+    select  * from Apprecord a,emp e,project p,patient pa where a.emp_id = e.emp_id and p.project_id = a.project_id and a.patient_id = pa.patient_id and apprecord_id=#{apprecordId}
   </select>
     <update id="update" parameterType="apprecord">
         update apprecord

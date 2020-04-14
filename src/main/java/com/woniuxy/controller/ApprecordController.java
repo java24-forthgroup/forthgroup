@@ -75,13 +75,16 @@ public class ApprecordController {
         try {
 
             Apprecord apprecord = apprecordService.findOne(apprecordId);
-            List<Emp> empList = empMapper.findAllDoctor();
+            System.out.println(apprecord);
+//            List<Emp> empList = empMapper.findAllDoctor();
+            List<Emp> empList = empMapper.findAll();
             List<Project> projectList = projectMapper.findAll();
-
-            map.put("empList",empList);
-            map.put("projectList",projectList);
-            map.put("apprecord",apprecord);
-            mode.addAttribute("map",map);
+//            map.put("empList",empList);
+//            map.put("projectList",projectList);
+//            map.put("apprecord",apprecord);
+            mode.addAttribute("projectList",projectList);
+            mode.addAttribute("empList",empList);
+            mode.addAttribute("apprecord",apprecord);
             return "apprecord/update";
         }catch(Exception e) {
             e.printStackTrace();

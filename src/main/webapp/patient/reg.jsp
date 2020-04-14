@@ -133,6 +133,7 @@
     </div>
 </div>
 <script src="${APPPATH }/jquery/jquery-2.1.1.min.js"></script>
+<script src="${APPPATH }/jquery/md5.js"></script>
 <script src="${APPPATH }/bootstrap/js/bootstrap.min.js"></script>
 <script src="${APPPATH }/script/docs.min.js"></script>
 <script src="${APPPATH }/layer/layer.js"></script>
@@ -194,6 +195,9 @@
                 return;
             }
             var patientStatusVal = $("#upwd").val();
+            //使用md5进行加密
+            var b = hex_md5(patientStatusVal);
+            $("#upwd").val(b);
             if(patientStatusVal==""){
                 layer.msg("密码不能为空!", {time:1000, icon:0, shift:5}, function(){});
                 return;
