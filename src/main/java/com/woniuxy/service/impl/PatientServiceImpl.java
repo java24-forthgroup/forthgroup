@@ -17,14 +17,15 @@ import java.util.Map;
 @Transactional
 @Service
 public class PatientServiceImpl implements PatientService {
-    @Autowired
+    @Autowired(required = false)
     PatientMapper patientMapper;
-    @Autowired
+    @Autowired(required = false)
     UserMapper userMapper;
-    @Autowired
+    @Autowired(required = false)
     EmpMapper empMapper;
-    @Autowired
+    @Autowired(required = false)
     ProjectMapper projectMapper;
+
     @Override
     public List<Patient> findAll() {
         return patientMapper.findAll();
@@ -54,7 +55,6 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void update(Patient patient) {
-
         patientMapper.update(patient);
     }
 
@@ -70,14 +70,11 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void delPatients(Integer[] typeId) {
-
     }
-
     @Override
     public Patient findPatientByUserId(Integer userId) {
-
         Patient patient = patientMapper.findPatientByUserId(userId);
-
         return patient;
     }
+
 }

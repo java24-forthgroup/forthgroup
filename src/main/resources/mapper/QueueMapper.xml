@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.woniuxy.dao.QueueMapper">
-  <sql id="base_col_list">
-		queue_id,queue_num,aroom_id
-  </sql>
   <resultMap id="BaseResultMap" type="com.woniuxy.pojo.Queue">
     <id column="queue_id" jdbcType="INTEGER" property="queueId" />
     <result column="queue_num" jdbcType="INTEGER" property="queueNum" />
     <result column="aroom_id" jdbcType="INTEGER" property="aroomId" />
+    <result column="patient_status" jdbcType="INTEGER" property="patientStatus" />
     <!--关联科室表信息-->
     <association property="aroom" javaType="Aroom" column="aroom_id" select="findOneAroom" >
         <id column="aroom_id" jdbcType="INTEGER" property="aroomId" />
@@ -20,6 +18,7 @@
     <result column="aroom_code" jdbcType="VARCHAR" property="aroomCode" />
     <result column="aroom_addr" jdbcType="VARCHAR" property="aroomAddr" />
   </resultMap>
+
  <select id="findOneAroom" parameterType="int" resultMap="AroomMap">
     select * from aroom
     <where>
@@ -29,13 +28,13 @@
   <!-- 查询全部-->
   <select id="findAll" parameterType="queue" resultMap="BaseResultMap" >
 		select
-           <include refid="base_col_list"></include>
+           *
 		from queue
 	</select>
   <!-- 分页和查询 -->
   <select id="queryByPage" parameterType="pageBean" resultMap="BaseResultMap" >
     select
-       <include refid="base_col_list"></include>
+       *
     from queue
     <!-- 模糊查询条件 -->
     where aroom_id in (
@@ -65,7 +64,7 @@
   <!-- 增加 -->
   <insert id="save" parameterType="queue">
 		insert into queue
-		values(null,#{queueNum},#{aroomId})
+		values(null,#{queueNum},#{aroomId},"正常")
   </insert>
   <!--删除-->
    <delete id="delete" parameterType="java.lang.Integer" >
@@ -77,7 +76,7 @@
   <!-- 修改 -->
   <select id="findOne" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
-       <include refid="base_col_list"></include>
+       *
     from queue
     where queue_id=#{queueId}
   </select>
@@ -89,6 +88,9 @@
       </if>
       <if test="aroomId!=null">
         aroom_id=#{aroomId},
+      </if>
+      <if test="patientStatus!=null">
+         patient_status=#{patientStatus},
       </if>
     </set>
     <where>

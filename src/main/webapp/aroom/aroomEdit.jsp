@@ -46,7 +46,7 @@
 			</li>
             <li style="margin-left:10px;padding-top:8px;">
 				<button type="button" class="btn btn-default btn-danger">
-				  <span class="glyphicon glyphicon-question-sign"></span> 帮助
+					<a href="${APPPATH}/help.jsp" style="color: white"> <span class="glyphicon glyphicon-question-sign"></span> 帮助</a>
 				</button>
 			</li>
           </ul>
@@ -60,7 +60,9 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-
+			<div class="tree">
+				<%@ include file="../menu.jsp" %>
+			</div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<ol class="breadcrumb">

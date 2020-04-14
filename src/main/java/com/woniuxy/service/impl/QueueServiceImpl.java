@@ -51,13 +51,23 @@ public class QueueServiceImpl implements QueueService {
 
     @Override
     public void delete(Integer queueId) {
-
         queueMapper.delete(queueId);
     }
 
     @Override
     public void update(Queue queue) {
+        queueMapper.update(queue);
+    }
 
+    @Override
+    public void confirmaccept(Queue queue) {
+        queue.setPatientStatus("正常");
+        queueMapper.update(queue);
+    }
+
+    @Override
+    public void confirmreject(Queue queue) {
+        queue.setPatientStatus("不正常");
         queueMapper.update(queue);
     }
 }

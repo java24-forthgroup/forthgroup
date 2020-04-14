@@ -98,7 +98,7 @@
       </if>
     </set>
     <where>
-      eid=#{eid}
+      emp_id=#{empId}
     </where>
   </update>
   <!--通过员工id查用户id-->

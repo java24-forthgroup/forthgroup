@@ -31,6 +31,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User User) {
+        User.setUpwd("123");
         mapper.save(User);
     }
 

@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 @Transactional
 public class ScheduleServiceImpl implements ScheduleService {
-    @Autowired
+    @Autowired(required = false)
     ScheduleMapper scheduleMapper;
 
     @Override

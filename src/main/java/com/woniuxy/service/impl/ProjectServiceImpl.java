@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 @Transactional
 public class ProjectServiceImpl implements ProjectService {
-    @Autowired
+    @Autowired(required = false)
     ProjectMapper projectMapper;
     @Override
     public List<Project> queryBySkillgroup(Integer skillgroupId) {

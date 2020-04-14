@@ -23,7 +23,9 @@ public interface PatientService {
     int countAll(PageBean page);
 
     void delPatients(Integer[] typeId);
+
     //通过userId查患者
     Patient findPatientByUserId(Integer userId);
+
 }
 
