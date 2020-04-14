@@ -211,13 +211,13 @@
     			});
             }
 
-            function confirm(apprecordId){
+            function confirm(apprecordId,projectId){
                 layer.confirm("是否确认该记录?",  {icon: 3, title:'提示'}, function(cindex){
                     layer.close(cindex);
                     $.ajax({
                         url:"${APPPATH}/apprecord/confirm",
                         type:"post",
-                        data:{"apprecordId":apprecordId},
+                        data:{"apprecordId":apprecordId,"projectId":projectId},
                         success:function(result){
                             if(result.flag){
                                 layer.msg("确认成功!", {time:1000, icon:0, shift:6}, function(){});
@@ -258,7 +258,7 @@
                                 tableStr+="<td>"+apprecord.attendStatus+"</td>";
                                 tableStr+="<td>"+apprecord.costStatus+"</td>";
 		                        tableStr+="<td>";
-                                tableStr+="<button type='button' onclick='confirm("+apprecord.apprecordId+")' class='btn btn-success btn-xs'><i class='glyphicon glyphicon-ok'></i></button>";
+                                tableStr+="<button type='button' onclick='confirm("+apprecord.apprecordId+','+apprecord.projectId+")' class='btn btn-success btn-xs'><i class='glyphicon glyphicon-ok'></i></button>";
 		          				tableStr+="<button type='button' onclick='updatePatient("+apprecord.apprecordId+")' class='btn btn-primary btn-xs'><i class='glyphicon glyphicon-pencil'></i></button>";
 		          				tableStr+="<button type='button' onclick='deletePatient("+apprecord.apprecordId+")' class='btn btn-danger btn-xs'><i class='glyphicon glyphicon-remove'></i></button>";
 		          				tableStr+="</td>";

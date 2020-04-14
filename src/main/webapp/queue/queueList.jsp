@@ -93,6 +93,7 @@
                   <th>科室名称</th>
                   <th>队列序号</th>
                   <th>病人名称</th>
+                  <th>病人状态</th>
                   <th width="100">操作</th>
                 </tr>
               </thead>
@@ -175,9 +176,49 @@
     			    layer.close(cindex);
     			});
             }
-            function updateQueue(queueId){
-            	window.location.href="${APPPATH}/queue/updateUI?queueId="+queueId;
+            function accept(queueId){
+                layer.confirm("是否确认合格",  {icon: 3, title:'提示'}, function(cindex){
+                    layer.close(cindex);
+                    $.ajax({
+                        url:"${APPPATH}/queue/accept",
+                        type:"post",
+                        data:{"queueId":queueId},
+                        success:function(result){
+                            if(result.flag){
+                                layer.msg("确认成功!", {time:1000, icon:0, shift:6}, function(){});
+                                window.location.href="${APPPATH}/queue/queueList";
+                            }else{
+                                layer.msg("确认失败!", {time:1000, icon:0, shift:5}, function(){});
+                            }
+                        }
+                    });
+
+                }, function(cindex){
+                    layer.close(cindex);
+                });
             }
+
+         function reject(queueId){
+             layer.confirm("是否确认不合格",  {icon: 3, title:'提示'}, function(cindex){
+                 layer.close(cindex);
+                 $.ajax({
+                     url:"${APPPATH}/queue/reject",
+                     type:"post",
+                     data:{"queueId":queueId},
+                     success:function(result){
+                         if(result.flag){
+                             layer.msg("确认成功!", {time:1000, icon:0, shift:6}, function(){});
+                             window.location.href="${APPPATH}/queue/queueList";
+                         }else{
+                             layer.msg("确认失败!", {time:1000, icon:0, shift:5}, function(){});
+                         }
+                     }
+                 });
+
+             }, function(cindex){
+                 layer.close(cindex);
+             });
+         }
 
             <!--删除-->
             function deletequeue(queueId){
@@ -222,8 +263,10 @@
                                 tableStr+="<td>"+queue.aroom.aroomName+"</td>";
                                 tableStr+="<td>"+queue.aroom.aroomName+"组:"+queue.queueNum+"</td>";
                                 tableStr+="<td>"+queue.patient.patientName+"</td>";
+                                tableStr+="<td>"+queue.patientStatus+"</td>";
                                 tableStr+="<td>";
-		          				//tableStr+="<button type='button' onclick='updateQueue("+queue.queueId+")' class='btn btn-primary btn-xs'><i class='glyphicon glyphicon-pencil'></i></button>";
+		          				tableStr+="<button type='button' onclick='accept("+queue.queueId+")' class='btn btn-success btn-xs'><i class='glyphicon glyphicon-star'></i></button>";
+                                tableStr+="<button type='button' onclick='reject("+queue.queueId+")' class='btn btn-primary btn-xs'><i class='glyphicon glyphicon-star-empty'></i></button>";
 		          				tableStr+="<button type='button' onclick='deletequeue("+queue.queueId+")' class='btn btn-danger btn-xs'><i class='glyphicon glyphicon-remove'></i></button>";
 		          				tableStr+="</td>";
 	                          	tableStr+="</tr>";

@@ -11,7 +11,7 @@ public class Queue {
     private Integer queueId;
     private Integer queueNum;
     private Integer aroomId;
-    private String patientStatus;
+    private String patientStatus="未进行检查";
     private Aroom aroom;
     private Patient patient;
 

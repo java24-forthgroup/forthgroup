@@ -38,8 +38,10 @@ public class DoctorWorkController {
     //使用redis  Set操作queue
     @RequestMapping("confirm")
     @ResponseBody
-    public Object confirm(Integer apprecordId){
+    public Object confirm(Integer apprecordId,Integer projectId){
         Message message = new Message();
+        System.out.println("-----"+apprecordId);
+        System.out.println("******"+projectId);
         try {
             //通过id得到预约记录
             Apprecord apprecord = apprecordService.findOne(apprecordId);
@@ -49,48 +51,50 @@ public class DoctorWorkController {
             //更新状态
             apprecordService.update(apprecord);
             //从数据库中得到科室名称   首先通过病人预约的医技项目拿到对应的医技组，然后通过医技组拿到科室
-            List<Apprecord> appList = apprecordService.getAroomByProjectId(apprecord.getProjectId());
+            List<Apprecord> appList = apprecordService.getAroomByProjectId(projectId);
             for (Apprecord app:appList) {
-                int aroomId = app.getAroom().getAroomId();
-                Queue queue = new Queue(1, 0, aroomId);
-                int QueueNum = 1;
-                //从redis缓存中查出所有的队列信息
-                Set<Queue> queueSet = redisTemplate.opsForZSet().range("queue", 0, -1);
-                //刚开始set集合为null  size为0
-                int queueId = queueSet.size() + 1;
-                //将存储在redis中的aroomId 存储在aIdSet中
-                Set<Integer> aIdSet = new HashSet<Integer>();
-                for (Queue q : queueSet) {
-                    int aId = q.getAroomId();
-                    if (!aIdSet.contains(aId)) {
-                        aIdSet.add(aId);
-                    }
-                }
-                //判断aroomId是否在aIdSet中，如果在的话，就给对应的QueueNum+1
-                //不存在的话QueueNum=1
-                if (aIdSet.contains(aroomId)) {
-                    //根据预约信息  分配相应的队列编号
-                    //该科室已经有患者排队
+                if(app.getProjectId()==projectId&&app.getApprecordId()==apprecordId){
+                    int aroomId = app.getAroom().getAroomId();
+                    Queue queue = new Queue(1, 0, aroomId);
+                    int QueueNum = 1;
+                    //从redis缓存中查出所有的队列信息
+                    Set<Queue> queueSet = redisTemplate.opsForZSet().range("queue", 0, -1);
+                    //刚开始set集合为null  size为0
+                    int queueId = queueSet.size() + 1;
+                    //将存储在redis中的aroomId 存储在aIdSet中
+                    Set<Integer> aIdSet = new HashSet<Integer>();
                     for (Queue q : queueSet) {
-                        if (aroomId == q.getAroomId()) {
-                            int Num = q.getQueueNum();
-                            QueueNum = ++Num;
+                        int aId = q.getAroomId();
+                        if (!aIdSet.contains(aId)) {
+                            aIdSet.add(aId);
                         }
                     }
-                } else {
-                    //根据预约信息  分配相应的队列编号
-                    //该科室已经有患者排队
-                    QueueNum = 1;
+                    //判断aroomId是否在aIdSet中，如果在的话，就给对应的QueueNum+1
+                    //不存在的话QueueNum=1
+                    if (aIdSet.contains(aroomId)) {
+                        //根据预约信息  分配相应的队列编号
+                        //该科室已经有患者排队
+                        for (Queue q : queueSet) {
+                            if (aroomId == q.getAroomId()) {
+                                int Num = q.getQueueNum();
+                                QueueNum = ++Num;
+                            }
+                        }
+                    } else {
+                        //根据预约信息  分配相应的队列编号
+                        //该科室已经有患者排队
+                        QueueNum = 1;
+                    }
+                    queue.setQueueId(queueId++);
+                    queue.setAroomId(aroomId);
+                    //根据aroomId拿到Aroom,供予页面显示
+                    queue.setAroom(aroomService.findOne(aroomId));
+                    queue.setPatient(app.getPatient());
+                    queue.setQueueNum(QueueNum);
+                    //将队列信息存储在redis缓存中
+                    redisTemplate.opsForZSet().add("queue", queue, queue.getQueueId());
+                    redisTemplate.expire("queue", 12, TimeUnit.HOURS);
                 }
-                queue.setQueueId(queueId++);
-                queue.setAroomId(aroomId);
-                //根据aroomId拿到Aroom,供予页面显示
-                queue.setAroom(aroomService.findOne(aroomId));
-                queue.setPatient(app.getPatient());
-                queue.setQueueNum(QueueNum);
-                //将队列信息存储在redis缓存中
-                redisTemplate.opsForZSet().add("queue", queue, queue.getQueueId());
-                redisTemplate.expire("queue", 12, TimeUnit.HOURS);
             }
             message.setFlag(true);
         }catch(Exception e) {
