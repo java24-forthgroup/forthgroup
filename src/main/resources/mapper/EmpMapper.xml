@@ -110,4 +110,9 @@
   <select id="queryDoctorByAroomId" parameterType="int" resultMap="BaseResultMap">
         select * from emp where aroom_id = #{aroomId}
   </select>
+  
+  <select id="findOneDoctorByUserId" parameterType="int" resultMap="BaseResultMap">
+  		select * from emp where user_id=#{userId}
+  </select>
+  
 </mapper>

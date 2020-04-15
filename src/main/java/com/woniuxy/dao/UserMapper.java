@@ -32,4 +32,6 @@ public interface UserMapper {
     void assignRoles(Map<String, Object> map);
 
     void saveUserRole(Integer userId, Integer RoleId);
+
+	User findUserById(Integer userId);
 }

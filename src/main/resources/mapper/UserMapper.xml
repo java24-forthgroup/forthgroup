@@ -62,6 +62,13 @@
     <where>uname = #{uname}</where>
   </select>
 
+	<select id="findUserById" parameterType="int" resultMap="BaseResultMap">
+    select * from user where user_id=#{userId}
+  </select>
+
+  <update id="update" parameterType="user" >
+  	update user set upwd=#{upwd} where user_id=#{userId}
+  </update>
     <insert id="saveUserRole" parameterType="int">
         insert into userrole values(null,${userId},${RoleId})
     </insert>

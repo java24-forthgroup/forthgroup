@@ -29,4 +29,5 @@ public interface RoleService {
 	List<Role> findAssignRolesByUserId(Integer userId);
 
 	List<Role> findUnAssignRolesByUserId(Integer[] rids);
+
 }
