@@ -27,7 +27,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
-            <div><a class="navbar-brand" style="font-size:32px;" href="user.html">修改密码</a></div>
+			<div><a class="navbar-brand" style="font-size:32px;" href="${APPPATH}/main">医疗预约平台</a></div>
         </div>
         
         <div id="navbar" class="navbar-collapse collapse">
@@ -121,6 +121,7 @@
     <script src="${APPPATH}/jquery/jquery-2.1.1.min.js"></script>
     <script src="${APPPATH}/bootstrap/js/bootstrap.min.js"></script>
 	<script src="${APPPATH}/script/docs.min.js"></script>
+	<script src="${APPPATH }/jquery/md5.js"></script>
         <script type="text/javascript">
             $(function () {
 			    $(".list-group-item").click(function(){
@@ -133,7 +134,17 @@
 						}
 					}
 				});
+
 				$("#btnPwdEditSubmit").click(function() {
+					var upwdVal = $("#upwd").val();
+					//使用md5进行加密
+					var b = hex_md5(upwdVal);
+					$("#upwd").val(b);
+					if(upwdVal==""){
+						layer.msg("密码不能为空!", {time:1000, icon:0, shift:5}, function(){});
+						return;
+					}
+
 					$.ajax({
 						url:"${APPPATH}/Info/PwdEditSubmit",
 						type:"post",

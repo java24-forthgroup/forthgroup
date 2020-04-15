@@ -27,7 +27,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
-            <div><a class="navbar-brand" style="font-size:32px;" href="user.html">医疗预约平台</a></div>
+			<div><a class="navbar-brand" style="font-size:32px;" href="${APPPATH}/main">医疗预约平台</a></div>
         </div>
         
         <div id="navbar" class="navbar-collapse collapse">
@@ -87,7 +87,7 @@
 				  </div>
 				 <div class="form-group">
 					<label for="exampleInputEmail1">所属科室</label>
-					<input type="email" id="aroomId" name="aroomId" class="form-control" value="${empInfo.aroom.aroomName}" readonly="readonly">
+					<input type="email"  name="aroomId" class="form-control" value="${empInfo.aroom.aroomName}" readonly="readonly">
 				  </div>
 				  <div class="form-group">
 					<label for="exampleInputEmail1">您的职称</label>
