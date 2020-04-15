@@ -1,14 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.woniuxy.dao.ProjectMapper">
+
+  <insert id="save" parameterType="Project">
+    insert into project values(null,#{skillgroup.skillgroupId},#{equipment.equipmentId},#{projectName},#{projectCost},#{projectComment})
+  </insert>
+
+  <delete id="delete" parameterType="int">
+    delete from project where project_id=#{projectId}
+  </delete>
+
+  <delete id="deletes" >
+    delete from project
+    <where>
+      project_id IN
+      <foreach collection="array" item="projectId" open="(" close=")" separator=",">
+        #{projectId}
+      </foreach>
+    </where>
+  </delete>
+
+  <update id="update" parameterType="Project">
+    update project set skillgroup_id=#{skillgroup.skillgroupId},equipment_id=#{equipment.equipmentId},
+    project_name=#{projectName},project_cost=#{projectCost},project_comment=#{projectComment}
+    where project_id=#{projectId}
+  </update>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    SELECT * FROM project p,equipment e,skillgroup s
+    WHERE p.skillgroup_id=s.skillgroup_id and p.equipment_id=e.equipment_id
+  </select>
+  <select id="findOne" parameterType="int" resultMap="BaseResultMap">
+    SELECT * FROM project p,equipment e,skillgroup s
+    WHERE p.skillgroup_id=s.skillgroup_id and p.equipment_id=e.equipment_id
+    and p.project_id=#{projectId}
+  </select>
+
+  <select id="selectByPage" parameterType="PageBean" resultMap="BaseResultMap">
+    SELECT * FROM project p,equipment e,skillgroup s
+    WHERE p.skillgroup_id=s.skillgroup_id and p.equipment_id=e.equipment_id
+    Limit ${(nowPage-1)*pageRow},${pageRow}
+  </select>
+
+  <select id="countAll" resultType="int">
+    SELECT count(*) FROM project
+  </select>
+
   <resultMap id="BaseResultMap" type="com.woniuxy.pojo.Project">
     <id column="project_id" jdbcType="INTEGER" property="projectId" />
-    <result column="skillgroup_id" jdbcType="INTEGER" property="skillgroupId" />
-    <result column="equipment_id" jdbcType="INTEGER" property="equipmentId" />
     <result column="project_name" jdbcType="VARCHAR" property="projectName" />
     <result column="project_cost" jdbcType="DECIMAL" property="projectCost" />
     <result column="project_comment" jdbcType="VARCHAR" property="projectComment" />
+    <association property="skillgroup" javaType="skillgroup" column="skillgroup_id">
+      <id column="skillgroup_id" property="skillgroupId" />
+      <result column="skillgroup_name" property="skillgroupName" />
+    </association>
+
+    <association property="equipment" javaType="equipment" column="equipment_id">
+      <id column="equipment_id" property="equipmentId" />
+      <result column="equipment_name" property="equipmentName" />
+    </association>
   </resultMap>
+
   <select id="findAll" resultMap="BaseResultMap">
     select * from project
   </select>
