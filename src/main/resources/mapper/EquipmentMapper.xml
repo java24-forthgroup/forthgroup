@@ -1,10 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.woniuxy.dao.EquipmentMapper">
-  <resultMap id="BaseResultMap" type="com.woniuxy.pojo.Equipment">
+
+  <resultMap id="BaseResultMap" type="com.woniuxy.pojo.Equipment"></resultMap>
+
+
+  <insert id="save" parameterType="Equipment">
+    insert into equipment values(null,#{aroom.aroomId},#{equipmentName},#{equipmentStatus})
+  </insert>
+
+  <delete id="delete" parameterType="int">
+    delete from equipment where equipment_id=#{equipmentId}
+  </delete>
+
+  <delete id="deletes" >
+    delete from equipment
+    <where>
+      equipment_id IN
+      <foreach collection="array" item="equipmentId" open="(" close=")" separator=",">
+        #{equipmentId}
+      </foreach>
+    </where>
+  </delete>
+
+  <update id="update" parameterType="Equipment">
+    update equipment
+    <set>
+      <if test="aroom.aroomId!=null">
+        aroom_id=#{aroom.aroomId},
+      </if>
+      <if test="equipmentName!=null">
+        equipment_name=#{equipmentName},
+      </if>
+      <if test="equipmentStatus!=null">
+        equipment_status=#{equipmentStatus}
+      </if>
+    </set>
+    <where>
+      equipment_id=#{equipmentId}
+    </where>
+  </update>
+
+  <select id="findAll" resultMap="EquipmentMap">
+    SELECT * FROM equipment e,aroom a WHERE e.aroom_id=a.aroom_id
+  </select>
+  <select id="findOne" parameterType="int" resultMap="EquipmentMap">
+    SELECT * FROM equipment e,aroom a WHERE e.aroom_id=a.aroom_id AND e.equipment_id=#{equipment_id}
+  </select>
+
+  <select id="selectByPage" parameterType="PageBean" resultMap="EquipmentMap">
+    SELECT * FROM equipment e,aroom a WHERE e.aroom_id=a.aroom_id
+    Limit ${(nowPage-1)*pageRow},${pageRow}
+  </select>
+
+  <select id="countAll" resultType="int">
+    SELECT count(*) FROM equipment
+  </select>
+
+
+
+  <resultMap id="EquipmentMap" type="Equipment">
+
     <id column="equipment_id" jdbcType="INTEGER" property="equipmentId" />
-    <result column="aroom_id" jdbcType="INTEGER" property="aroomId" />
     <result column="equipment_name" jdbcType="VARCHAR" property="equipmentName" />
     <result column="equipment_status" jdbcType="VARCHAR" property="equipmentStatus" />
+    <association property="aroom" javaType="aroom" column="aroom_id">
+      <id column="aroom_id" property="aroomId" />
+      <result column="aroom_name" property="aroomName" />
+    </association>
   </resultMap>
 </mapper>

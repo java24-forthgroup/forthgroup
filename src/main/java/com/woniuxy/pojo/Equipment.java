@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Equipment {
     private Integer equipmentId;
-    private Integer aroomId;
+    private Aroom aroom;
     private String equipmentName;
     private String equipmentStatus;
 }
