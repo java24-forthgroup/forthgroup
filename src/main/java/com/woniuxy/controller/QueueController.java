@@ -152,9 +152,12 @@ public class QueueController {
             //确认到诊   检查通过
             Set<Queue> set= redisTemplate.opsForZSet().rangeByScore("queue",queue.getQueueId(),queue.getQueueId());
             for(Queue q:set){
+                //保证修改的原子性
+                redisTemplate.multi();
                 redisTemplate.opsForZSet().removeRangeByScore("queue",q.getQueueId(),q.getQueueId());
                 q.setPatientStatus("检查合格");
                 redisTemplate.opsForZSet().add("queue",q,q.getQueueId());
+                redisTemplate.exec();
             }
             message.setFlag(true);
         }catch(Exception e) {
@@ -173,9 +176,11 @@ public class QueueController {
             //确认未到诊 或者检查不通过
             Set<Queue> set= redisTemplate.opsForZSet().rangeByScore("queue",queue.getQueueId(),queue.getQueueId());
             for(Queue q:set){
+                redisTemplate.multi();
                 redisTemplate.opsForZSet().removeRangeByScore("queue",q.getQueueId(),q.getQueueId());
                 q.setPatientStatus("检查不合格");
                 redisTemplate.opsForZSet().add("queue",q,q.getQueueId());
+                redisTemplate.exec();
             }
             message.setFlag(true);
         }catch(Exception e) {

@@ -62,4 +62,8 @@
     <where>uname = #{uname}</where>
   </select>
 
+    <insert id="saveUserRole" parameterType="int">
+        insert into userrole values(null,${userId},${RoleId})
+    </insert>
+
 </mapper>

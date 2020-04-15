@@ -148,7 +148,7 @@
     <where>
         a.emp_id = e.emp_id and p.project_id = a.project_id and a.patient_id = pa.patient_id
       <if test="queryVal!=null">
-        patient_Id in (select patient_Id from patient where patient_name like CONCAT('%',#{queryVal},'%'))
+        and pa.patient_id in (select patient_Id from patient where patient_name like CONCAT('%',#{queryVal},'%'))
       </if>
     </where>
     limit ${(nowPage-1)*pageRow},${pageRow}
