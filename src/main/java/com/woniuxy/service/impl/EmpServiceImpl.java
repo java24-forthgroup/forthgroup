@@ -63,4 +63,10 @@ public class EmpServiceImpl implements EmpService {
         return mapper.queryDoctorByAroomId(aroomId);
     }
 
+    //通过用户id找到这个医生
+    @Override
+    public Emp findOneDoctorByUserId(Integer userId) {
+        return mapper.findOneDoctorByUserId(userId);
+    }
+
 }

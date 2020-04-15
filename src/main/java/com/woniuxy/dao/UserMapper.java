@@ -30,4 +30,6 @@ public interface UserMapper {
     User findOneByUname(String uname);
 
     void assignRoles(Map<String, Object> map);
+
+	User findUserById(Integer userId);
 }

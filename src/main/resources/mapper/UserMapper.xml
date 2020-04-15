@@ -62,4 +62,11 @@
     <where>uname = #{uname}</where>
   </select>
 
+	<select id="findUserById" parameterType="int" resultMap="BaseResultMap">
+    select * from user where user_id=#{userId}
+  </select>
+  
+  <update id="update" parameterType="user" >
+  	update user set upwd=#{upwd} where user_id=#{userId}
+  </update>
 </mapper>

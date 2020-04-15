@@ -77,4 +77,9 @@ public class UserServiceImpl implements UserService {
 		mapper.removeRoles(map);
 	}
 
+	@Override
+	public User findUserById(Integer userId) {
+		return mapper.findUserById(userId);
+	}
+
 }

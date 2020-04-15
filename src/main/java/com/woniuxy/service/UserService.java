@@ -30,4 +30,6 @@ public interface UserService {
     void delete(Integer eid);
 
     User findOneByUname(String uname);
+
+    User findUserById(Integer userId);
 }
