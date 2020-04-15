@@ -106,10 +106,6 @@
                           <img src="images/201607271939462.jpg" alt="...">
                       </div>
 
-                      <div class="item ">
-                          <img src="images/2020041519396581.jpg" alt="...">
-                      </div>
-
                       <div class="item">
                           <img src="images/2016072719555688.jpg" alt="...">
                       </div>
