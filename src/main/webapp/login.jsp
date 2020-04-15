@@ -12,20 +12,33 @@
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/login.css">
 	<style>
-
+        .background{
+            background-image: url("images/2020041519396581.jpg");
+            background-size: cover;
+        }
+        canvas{z-index:-1;position:absolute;}
+        #style{
+            width:300px;
+            height:auto;
+            overflow:hidden;
+            margin:5% auto 0 auto;
+            padding:40px;
+            box-shadow:0 -15px 30px #0d957a;
+            border-radius:5px;
+            opacity: 0.9;
+        }
 	</style>
   </head>
-  <body>
-  	
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <body class="background">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="background-color:#4898d5;opacity: 0.5;border: 0px;width: 300px">
       <div class="container-fluid">
         <div class="navbar-header">
-          <div><a class="navbar-brand" href="index.html" style="font-size:32px;">医疗预约平台</a></div>
+          <div><a class="navbar-brand" href="index.html" style="font-size:32px;color: white">医疗预约平台</a></div>
         </div>
       </div>
     </nav>
 
-    <div class="container">
+    <div class="container" id="style">
 		
       <form class="form-signin" role="form" id="form1" action="login" method="post">
         <h2 class="form-signin-heading"><i class="glyphicon glyphicon-user"></i>${message } 用户登录</h2>
@@ -43,10 +56,17 @@
       </form>
     </div>
     <script src="jquery/jquery-2.1.1.min.js"></script>
+    <script src="jquery/Particleground.js"></script>
     <script src="${APPPATH }/jquery/md5.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="layer/layer.js"></script>
     <script>
+
+        $('body').particleground({
+            dotColor: '#4898d5',
+            lineColor: '#4898d5'
+        });
+
         function doReg() {
             window.location.href='${APPPATH }/patient/reg.jsp';
         }

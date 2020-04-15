@@ -29,7 +29,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
-          <div><a class="navbar-brand" style="font-size:32px;" href="#">用户维护</a></div>
+            <div><a class="navbar-brand" style="font-size:32px;" href="${APPPATH}/main">医疗预约平台</a></div>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -211,13 +211,13 @@
     			});
             }
 
-            function confirm(apprecordId){
+            function confirm(apprecordId,projectId){
                 layer.confirm("是否确认该记录?",  {icon: 3, title:'提示'}, function(cindex){
                     layer.close(cindex);
                     $.ajax({
                         url:"${APPPATH}/apprecord/confirm",
                         type:"post",
-                        data:{"apprecordId":apprecordId},
+                        data:{"apprecordId":apprecordId,"projectId":projectId},
                         success:function(result){
                             if(result.flag){
                                 layer.msg("确认成功!", {time:1000, icon:0, shift:6}, function(){});
@@ -258,7 +258,7 @@
                                 tableStr+="<td>"+apprecord.attendStatus+"</td>";
                                 tableStr+="<td>"+apprecord.costStatus+"</td>";
 		                        tableStr+="<td>";
-                                tableStr+="<button type='button' onclick='confirm("+apprecord.apprecordId+")' class='btn btn-success btn-xs'><i class='glyphicon glyphicon-ok'></i></button>";
+                                tableStr+="<button type='button' onclick='confirm("+apprecord.apprecordId+','+apprecord.projectId+")' class='btn btn-success btn-xs'><i class='glyphicon glyphicon-ok'></i></button>";
 		          				tableStr+="<button type='button' onclick='updatePatient("+apprecord.apprecordId+")' class='btn btn-primary btn-xs'><i class='glyphicon glyphicon-pencil'></i></button>";
 		          				tableStr+="<button type='button' onclick='deletePatient("+apprecord.apprecordId+")' class='btn btn-danger btn-xs'><i class='glyphicon glyphicon-remove'></i></button>";
 		          				tableStr+="</td>";

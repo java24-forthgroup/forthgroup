@@ -1,19 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.woniuxy.dao.SkillgroupMapper">
+
+
+
+  <insert id="save" parameterType="Skillgroup">
+    insert into skillgroup values(null,#{aroom.aroomId},#{sourceId},#{skillgroupName})
+  </insert>
+
+  <delete id="delete" parameterType="int">
+    delete from skillgroup where skillgroup_id=#{skillgroupId}
+  </delete>
+
+  <delete id="deletes" >
+    delete from skillgroup
+    <where>
+      skillgroup_id IN
+      <foreach collection="array" item="skillgroupId" open="(" close=")" separator=",">
+        #{skillgroupId}
+      </foreach>
+    </where>
+  </delete>
+
+  <update id="update" parameterType="Skillgroup">
+    update skillgroup set aroom_id=#{aroom.aroomId},source_id=#{sourceId},skillgroup_name=#{skillgroupName}
+    where skillgroup_id=#{skillgroupId}
+  </update>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    SELECT * FROM skillgroup s,aroom a WHERE s.aroom_id=a.aroom_id
+  </select>
+  <select id="findOne" parameterType="int" resultMap="BaseResultMap">
+    SELECT * FROM skillgroup s,aroom a WHERE s.aroom_id=a.aroom_id AND s.skillgroup_id=#{skillgroupId}
+  </select>
+
+  <select id="selectByPage" parameterType="PageBean" resultMap="BaseResultMap">
+    SELECT * FROM skillgroup s,aroom a WHERE s.aroom_id=a.aroom_id
+    Limit ${(nowPage-1)*pageRow},${pageRow}
+  </select>
+
+  <select id="countAll" resultType="int">
+    SELECT count(*) FROM skillgroup
+  </select>
+
+
+
+
+
+
   <resultMap id="BaseResultMap" type="com.woniuxy.pojo.Skillgroup">
     <id column="skillgroup_id" jdbcType="INTEGER" property="skillgroupId" />
-    <result column="aroom_id" jdbcType="INTEGER" property="aroomId" />
     <result column="source_id" jdbcType="INTEGER" property="sourceId" />
     <result column="skillgroup_name" jdbcType="VARCHAR" property="skillgroupName" />
+    <association property="aroom" javaType="aroom" column="aroom_id">
+      <id column="aroom_id" property="aroomId" />
+      <result column="aroom_name" property="aroomName" />
+    </association>
   </resultMap>
-  <select id="findAll" resultMap="BaseResultMap">
+  <!--<select id="findAll" resultMap="BaseResultMap">
 		select * from skillgroup
 	</select>
 
   <select id="findOne" parameterType="int" resultMap="BaseResultMap">
     select * from aroom where skillgroup_id = #{skillgroupId}
-  </select>
+  </select>-->
   <select id="queryDoctorBySkillgroup" parameterType="int" resultType="int">
         select aroom_Id from skillgroup where skillgroup_id = #{skillgroupId}
     </select>
