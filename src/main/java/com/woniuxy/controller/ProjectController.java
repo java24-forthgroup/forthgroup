@@ -171,6 +171,19 @@ public class ProjectController {
         return s;
     }
 
+    @RequestMapping("queryBySkillgroup")
+    @ResponseBody
+    public List queryBySkillgroup(Integer skillgroupId){
+
+        List<Project> projectList = null;
+
+        try {
+            projectList = projectService.queryBySkillgroup(skillgroupId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return projectList;
+    }
 
 
 }

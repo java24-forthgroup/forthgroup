@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class Skillgroup {
     private Integer skillgroupId;
     private Integer sourceId;
+    private Integer aroomId;
     private String skillgroupName;
     private Aroom aroom;
     private Skillgroup skillgroup;

@@ -39,4 +39,5 @@ public interface ProjectMapper {
 
     void deletes(Integer[] projectId);
 
+    List<Project> queryBySkillgroup(Integer skillgroupId);
 }

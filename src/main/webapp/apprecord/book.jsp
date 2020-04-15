@@ -228,7 +228,7 @@
 	function queryBySkillgroup(){
 		project.options.length=0;
 		$.ajax({
-			url:"${APPPATH }/project/queryBySkillgroup",
+			url:"${APPPATH }/Project/queryBySkillgroup",
 			type:"post",
 			data:{"skillgroupId":$("#skillgroup").val()},
 

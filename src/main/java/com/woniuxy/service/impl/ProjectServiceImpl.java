@@ -81,4 +81,9 @@ public class ProjectServiceImpl implements ProjectService {
         projectMapper.deletes(projectId);
 
     }
+
+    @Override
+    public List<Project> queryBySkillgroup(Integer skillgroupId) {
+        return projectMapper.queryBySkillgroup(skillgroupId);
+    }
 }

@@ -40,4 +40,5 @@ public interface ProjectService {
 
     void deletes(Integer[] projectId);
 
+    List<Project> queryBySkillgroup(Integer skillgroupId);
 }

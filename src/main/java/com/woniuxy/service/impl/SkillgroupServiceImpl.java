@@ -118,10 +118,9 @@ public class SkillgroupServiceImpl implements SkillgroupService {
 
     }
 
-    @Override
+        @Override
     public Integer queryDoctorBySkillgroup(Integer skillgroupId) {
-        return null;
-
-    }
+            return skillgroupMapper.queryDoctorBySkillgroup(skillgroupId);
+        }
 
 }

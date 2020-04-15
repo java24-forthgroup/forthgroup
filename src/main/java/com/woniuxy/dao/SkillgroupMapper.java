@@ -53,5 +53,6 @@ public interface SkillgroupMapper {
     int countAll();
 
     void deletes(Integer[] skillgroupId);
+    Integer queryDoctorBySkillgroup(Integer skillgroupId);
 
 }
