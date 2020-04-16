@@ -61,7 +61,7 @@
     select * from patient
     <where>patient_id=#{patientId}</where>
   </select>
-  <insert id="save" parameterType="patient">
+  <insert id="save" parameterType="patient" useGeneratedKeys="true" keyProperty="patientId">
     insert into patient values (null,#{roleId},#{userId},#{patientName},#{patientAge},#{patientSex},#{patientCount},#{patientStatus})
   </insert>
   <!-- 通过用户id查患者-->

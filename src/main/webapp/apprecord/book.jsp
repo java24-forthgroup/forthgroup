@@ -46,7 +46,7 @@
 				</li>
 				<li style="margin-left:10px;padding-top:8px;">
 					<button type="button" class="btn btn-default btn-danger">
-						<span class="glyphicon glyphicon-question-sign"></span> 帮助
+						<a href="${APPPATH}/help.jsp" style="color: white"> <span class="glyphicon glyphicon-question-sign"></span> 帮助</a>
 					</button>
 				</li>
 			</ul>
@@ -61,7 +61,7 @@
 	<div class="row">
 		<div class="col-sm-3 col-md-2 sidebar">
 			<div class="tree">
-
+				<%@ include file="../menu.jsp" %>
 			</div>
 		</div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -80,9 +80,11 @@
 
 							<div class="form-group">
 								<div class="form-group">
+
 									<label>选择日期：</label>
 									<!--指定 date标记-->
 										<div >
+
 											<input type="" name="bookTime"  class="form-control" id="bookTime" autocomplete="off">
 										</div>
 								</div>
@@ -96,6 +98,15 @@
 
 							</SELECT>
 						</div>
+					<!--	<div class="form-group">
+							<label >时间段</label>
+							<SELECT name="dated" id="dated" class="form-control">
+
+								<option value=''></option>
+
+							</SELECT>
+						</div>
+						-->
 						<div class="form-group">
 							<label >预约项目</label>
 							<SELECT name="project.projectId" id="project" class="form-control">
@@ -220,6 +231,7 @@
 				queryBySkillgroup();
 				queryDoctorBySkillgroup();
 				queryBySkillgroupId($("#skillgroup").val());
+			//	queryDatedBySkillgroup($("#skillgroup").val());
 			}
 		})
 	});
@@ -233,7 +245,7 @@
 	function queryBySkillgroup(){
 		project.options.length=0;
 		$.ajax({
-			url:"${APPPATH }/project/queryBySkillgroup",
+			url:"${APPPATH }/Project/queryBySkillgroup",
 			type:"post",
 			data:{"skillgroupId":$("#skillgroup").val()},
 
@@ -288,6 +300,22 @@
 			}
 		})
 	}
+	$("#skillgroup").change(function(){
+		queryBySkillgroupId($("#skillgroup").val());
+	});
+	function queryDatedBySkillgroup(skillgroupId){
+
+		$.ajax({
+			url:"${APPPATH }/schedule/queryDatedBySkillgroup",
+			type:"post",
+			data:{"skillgroupId":skillgroupId},
+
+			success:function(data){
+				$("#date").val(data.obj.datestar+data.obj.datelast)
+			}
+		})
+	}
+
 	$(function () {
 		$(".list-group-item").click(function(){
 			if ( $(this).find("ul") ) {

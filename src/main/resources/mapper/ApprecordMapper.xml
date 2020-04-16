@@ -171,7 +171,11 @@
     <where>
         a.emp_id = e.emp_id and p.project_id = a.project_id and a.patient_id = pa.patient_id
       <if test="queryVal!=null">
+
         and pa.patient_Id in (select patient_Id from patient where patient_name like CONCAT('%',#{queryVal},'%'))
+
+        and pa.patient_id in (select patient_Id from patient where patient_name like CONCAT('%',#{queryVal},'%'))
+
       </if>
     </where>
     limit ${(nowPage-1)*pageRow},${pageRow}
@@ -190,7 +194,7 @@
     delete from apprecord where apprecord_Id =#{apprecordId}
   </delete>
   <insert id="book" parameterType="apprecord">
-    insert into apprecord values (null,#{emp.empId},#{project.projectId},#{patient.patientId},#{attendStatus},#{costStatus})
+    insert into apprecord values (null,#{emp.empId},#{project.projectId},#{patient.patientId},null,#{attendStatus},#{costStatus})
   </insert>
   <select id="myBook" parameterType="pageBean" resultMap="MyBook">
     SELECT apprecord_id,emp.emp_id,emp.emp_name,apprecord.project_Id,project.project_name,patient.patient_id,patient.patient_name,cost_status,date,datestart,datelast FROM apprecord join project on project.project_id = apprecord.project_id JOIN `schedule` ON schedule.skillgroup_id=project.skillgroup_id JOIN emp ON apprecord.emp_id = emp.emp_id JOIN patient ON apprecord.patient_id=patient.patient_id

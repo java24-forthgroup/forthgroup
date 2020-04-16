@@ -41,7 +41,9 @@
 							  <li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
 							  <li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
 							  <li class="divider"></li>
-							  <li><a href="logout"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
+
+							  <li><a href="${APPPATH}/logout"><i class="glyphicon glyphicon-off"></i>退出系统</a></li>
+
 						  </ul>
 					  </div>
 				  </li>
@@ -61,14 +63,14 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-
+			<%@ include file="../menu.jsp" %>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				<ol class="breadcrumb">
-				  <li><a href="#">首页</a></li>
-				  <li><a href="#">科室信息</a></li>
-				  <li class="active">新增科室</li>
-				</ol>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title"><i class="glyphicon glyphicon-th"></i> 数据列表</h3>
+				</div>
+				<div class="panel-body">
 			<div class="panel panel-default">
               <div class="panel-heading">科室数据<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
 			  <div class="panel-body">

@@ -23,4 +23,7 @@ public interface EmpService {
     int findUserIdByempId(Integer empId);
 
     List<Emp> queryDoctorByAroomId(Integer aroomId);
+
+    //通过用户得到员工信息
+	Emp findOneDoctorByUserId(Integer userId);
 }

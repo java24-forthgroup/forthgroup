@@ -6,6 +6,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 
+
 @Configuration
 public class Myconfig {
     @Bean
@@ -17,6 +18,8 @@ public class Myconfig {
         rt.setValueSerializer(genericJackson2JsonRedisSerializer);
         rt.setHashKeySerializer(genericJackson2JsonRedisSerializer);
         rt.setHashValueSerializer(genericJackson2JsonRedisSerializer);
+        //使用redis事务
+        rt.setEnableTransactionSupport(true);
         return rt;
     }
 

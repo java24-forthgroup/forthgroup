@@ -45,6 +45,7 @@ public class PatientServiceImpl implements PatientService {
         patient.setPatientCount(0);
         patient.setRoleId(4);
         patientMapper.save(patient);
+        userMapper.saveUserRole(user.getUserId(),patient.getRoleId());
     }
 
     @Override

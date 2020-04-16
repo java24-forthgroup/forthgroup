@@ -23,4 +23,6 @@ public interface EmpMapper {
     int findUserIdByempId(Integer empId);
 
     List<Emp> queryDoctorByAroomId(Integer aroomId);
+
+	Emp findOneDoctorByUserId(Integer userId);
 }

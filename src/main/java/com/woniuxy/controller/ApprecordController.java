@@ -42,10 +42,8 @@ public class ApprecordController {
     //去预约//
     @RequestMapping("goBook")
     public String goBook(Model model,Integer userId){
-        Patient patient = patientService.findPatientByUserId(userId);
 
-        System.out.println(patient);
-        model.addAttribute("patient",patient);
+
         return "apprecord/book";
     }
     //去我的预约
@@ -185,11 +183,14 @@ public class ApprecordController {
     //预约
     @ResponseBody
     @RequestMapping("book")
-    public Message book(Apprecord apprecord,Skillgroup skillgroup,HttpSession session){
+    public Message book(String dated,Apprecord apprecord,Skillgroup skillgroup,HttpSession session){
         Message message = new Message();
         try {
-            Patient loginUser = (Patient)session.getAttribute("loginUser");
-            apprecord.setEmpId(loginUser.getPatientId());
+            System.out.println(dated+"wwwwwwwwwwwwwwwwwwwwwwwwwwwww");
+            User loginUser = (User)session.getAttribute("loginUser");
+            Patient patient = patientService.findPatientByUserId(loginUser.getUserId());
+            apprecord.setPatient(patient);
+            System.out.println(apprecord);
             Integer result = apprecordService.book(apprecord, skillgroup);
             if(result==0){
                 message.setFlag(false);

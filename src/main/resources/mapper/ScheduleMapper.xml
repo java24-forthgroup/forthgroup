@@ -65,7 +65,7 @@
 
   </update>
   <select id="queryByDate" parameterType="String" resultMap="BaseResultMap">
-    select  DISTINCT schedule.skillgroup_id,skillgroup_Name from schedule join skillgroup on skillgroup.skillgroup_id = schedule.skillgroup_id
+    select  DISTINCT schedule.skillgroup_id,skillgroup_Name,datestart,datelast from schedule join skillgroup on skillgroup.skillgroup_id = schedule.skillgroup_id
     <where>date=#{date}</where>
   </select>
   <select id="countAll" parameterType="pageBean" resultType="integer">
@@ -76,4 +76,11 @@
       </if>
     </where>
   </select>
+<select id="queryDatedBySkillgroup" parameterType="int" resultMap="BaseResultMap">
+  select * from schedule
+  <where>
+    Skillgroup_id = #{skillgroupId}
+  </where>
+</select>
+
 </mapper>

@@ -21,4 +21,6 @@ public interface ScheduleMapper {
     Schedule findOne(int scheduleId);
     void update (Schedule schedule);
     List<Schedule> findAllByPageBean(PageBean pageBean);
+
+    Schedule queryDatedBySkillgroup(Integer skillgroupId);
 }

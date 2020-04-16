@@ -84,4 +84,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     public List<Schedule> findAllByPageBean(PageBean pageBean) {
         return null;
     }
+
+    @Override
+    public Schedule queryDatedBySkillgroup(Integer skillgroupId) {
+        return scheduleMapper.queryDatedBySkillgroup(skillgroupId);
+    }
 }

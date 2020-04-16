@@ -11,6 +11,15 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/main.css">
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/normalize.css" type="text/css" />
+    <link rel="stylesheet" href="css/index.css" type="text/css" />
+    <script language="javascript" type="text/javascript" src="bootstrap/js/Kunyi.Respond.min.js" ></script>
+    <script language="javascript" type="text/javascript" src="bootstrap/js/KunyiHTML5.min.js"></script>
+    <script language="javascript" type="text/javascript" src="bootstrap/js/Kunyilibrary.js"></script>
+
     <style>
         .tree li {
             list-style-type: none;
@@ -66,31 +75,64 @@
                 <%@ include file="menu.jsp" %>
             </div>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">帮助页面</h1>
-
-            <div class="row placeholders">
-                <div class="col-xs-6 col-sm-3 placeholder">
-                    <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
-                    <h4>帮助</h4>
-                    <span class="text-muted">woniuxy</span>
-                </div>
-                <div class="col-xs-6 col-sm-3 placeholder">
-                    <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
-                    <h4>帮助</h4>
-                    <span class="text-muted">woniuxy</span>
-                </div>
-                <div class="col-xs-6 col-sm-3 placeholder">
-                    <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
-                    <h4>帮助</h4>
-                    <span class="text-muted">woniuxy</span>
-                </div>
-                <div class="col-xs-6 col-sm-3 placeholder">
-                    <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
-                    <h4>帮助</h4>
-                    <span class="text-muted">woniuxy</span>
-                </div>
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header"></h1>
+         <div class="row placeholders">
+            <div class="navSub2 nav_Menu01">
+                <dl>
+                    <dt>尊敬的病人家属：</dt>
+                    <dd class="pic"><img src="images/pic/pic_001.jpg" width="126" height="77"></dd>
+                    <dd class="text">欢迎您来我院探望亲友！为了保证病人的休息和治疗，维护良好的医疗秩序，请您配合在规定的时间内探视病人。</dd>
+                    <dd class="info"><em>我院病房探视时间为：</em>
+                        <p>每周一至周六：下午 3：00 - 7：00</p><p>周日：上午 9：00 - 12：00</p><p>下午 3：00 -  7：00</p></dd>
+                </dl>
+                <div class="BottomHidden"></div>
+                <dl>
+                    <dt>医院标题</dt>
+                    <dd class="pic"><img src="images/pic/pic_002.jpg" width="126" height="77"></dd>
+                    <dd class="text"><p>座落于中华民族的发源地 -  ，是历史悠久的西医医院。</p><p>医院详细地址位于城区东郊， 。</p></dd>
+                    <dd class="info"><em>急救电话 ： </em>
+                        <span>120</span></dd>
+                </dl>
             </div>
+            <div class="navSub3 nav_Route">
+                <dl><dt>乘车路线</dt>
+                    <dd><em>公交全部路线</em><p>
+                        101路、109路东线、80路、2路、2路快线、82路、65路、98路、47路、158路 </p></dd>
+                    <dd><em>长途汽车客运中心站</em>
+                        <p>101路、109东线、2路 </p></dd>
+                    <dd class="text"><p><em>长途汽车客运北站</em> </p>
+                        <p><span>77路、47路</span><span>158路</span></p>
+                    </dd>
+                    <dd><em>汽车客运站</em>
+                        <p>40路</p></dd>
+                </dl>
+                <%--<a href="http://map.baidu.com/ target="_blank">电子地图</a>--%>
+            </div><div class="clear"></div>
+        </div>
+
+            <%--<div class="row placeholders">
+                <div class="col-xs-6 col-sm-3 placeholder">
+                    <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
+                    <h4>帮助</h4>
+                    <span class="text-muted">woniuxy</span>
+                </div>
+                <div class="col-xs-6 col-sm-3 placeholder">
+                    <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
+                    <h4>帮助</h4>
+                    <span class="text-muted">woniuxy</span>
+                </div>
+                <div class="col-xs-6 col-sm-3 placeholder">
+                    <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
+                    <h4>帮助</h4>
+                    <span class="text-muted">woniuxy</span>
+                </div>
+                <div class="col-xs-6 col-sm-3 placeholder">
+                    <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
+                    <h4>帮助</h4>
+                    <span class="text-muted">woniuxy</span>
+                </div>
+            </div>--%>
         </div>
     </div>
 </div>
