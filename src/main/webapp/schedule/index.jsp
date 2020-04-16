@@ -251,7 +251,7 @@
                                     byPageStr+="<li><a href='#' onclick='queryByPage("+(i)+")'>"+i+"</a></li>";
                                 }
                             }
-                            byPageStr+="<li class='"+(result.obj.nowPage==result.obj.countPage?'disabled':'')+"'><a href='#'  onclick='queryByPage("+(result.obj.nowPage==result.obj.countPage?result.obj.countPage:(result.obj.nowPage+1))+")'>下一页</a></li>";
+                            byPageStr+="<li class='"+(result.obj.nowPage==result.obj.countPage?'disabled':'')+"'><a   onclick='queryByPage("+(result.obj.nowPage==result.obj.countPage?result.obj.countPage:(result.obj.nowPage+1))+")'>下一页</a></li>";
                             $("#byPage").html(byPageStr);
             			}else{
             				layer.msg("查询失败!", {time:1000, icon:0, shift:5}, function(){});

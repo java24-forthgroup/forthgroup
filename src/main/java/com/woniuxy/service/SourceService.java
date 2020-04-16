@@ -26,4 +26,6 @@ public interface SourceService {
     void update(Source source);
 
     void deleteSources(Integer[] sourceIds);
+
+    int queryBySkillgroupId(Integer skillgroup);
 }

@@ -22,7 +22,14 @@
     limit ${(nowPage-1)*pageRow},${pageRow}
   </select>
   <select id="countAll"  resultType="int">
-    select count(*) from Patient
+    select count(*) from  Patient
+    <where>
+      <if test="queryVal!=null">
+        patientName like CONCAT('%',#{queryVal},'%')
+      </if>
+
+    </where>
+    limit ${(nowPage-1)*pageRow},${pageRow}
   </select>
   <delete id="delete" parameterType="int">
     delete from Patient where patient_id =#{patientId}

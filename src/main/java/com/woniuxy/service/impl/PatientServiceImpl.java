@@ -4,15 +4,15 @@ import com.woniuxy.dao.EmpMapper;
 import com.woniuxy.dao.PatientMapper;
 import com.woniuxy.dao.ProjectMapper;
 import com.woniuxy.dao.UserMapper;
-import com.woniuxy.pojo.*;
+import com.woniuxy.pojo.PageBean;
+import com.woniuxy.pojo.Patient;
+import com.woniuxy.pojo.User;
 import com.woniuxy.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Transactional
 @Service

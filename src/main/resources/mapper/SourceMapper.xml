@@ -9,6 +9,14 @@
         <result column="skillgroup_id" jdbcType="INTEGER" property="skillgroupId" />
         <result column="type_id" jdbcType="INTEGER" property="typeId" />
         <result column="source_num" jdbcType="INTEGER" property="sourceNum" />
+
+        <!--关联队列表-->
+        <association property="queue" javaType="queue" column="queue_id" fetchType="lazy">
+            <id column="queue_id" jdbcType="INTEGER" property="queueId" />
+            <result column="queue_num" jdbcType="INTEGER" property="queueNum" />
+            <result column="aroom_id" jdbcType="INTEGER" property="aroomId" />
+        </association>
+
         <!--关联医技组表-->
         <association property="skillgroup" javaType="Skillgroup" column="skillgroup_id" fetchType="lazy">
             <id column="skillgroup_id" jdbcType="INTEGER" property="skillgroupId" />
@@ -56,10 +64,12 @@
         </where>
     </select>
     <!-- 增加 -->
-    <insert id="save" parameterType="source">
+    <insert id="save" parameterType="source" useGeneratedKeys="true" keyProperty="sourceId">
 		insert into source
-		values(null,#{skillgroupId},#{typeId},#{sourceNum})
+		values(null,null,#{skillgroupId},#{typeId},#{sourceNum})
   </insert>
+
+
     <!--删除-->
     <delete id="delete" parameterType="java.lang.Integer" >
         delete from source
@@ -98,4 +108,24 @@
             source_id=#{sourceId}
         </where>
     </update>
+    <update id="deductionSource" parameterType="int" >
+        UPDATE source set source_num = (
+        SELECT source_num-1 FROM
+                (
+                    SELECT DISTINCT source.source_num FROM source JOIN skillgroup on source.source_id=skillgroup.source_id
+                    JOIN schedule on skillgroup.skillgroup_id=schedule.skillgroup_id WHERE skillgroup.skillgroup_id=#{skillgroupId}
+                ) b
+
+        ) WHERE source_id = (
+            SELECT source_id FROM
+                (
+                    SELECT DISTINCT skillgroup.source_id FROM source JOIN skillgroup on source.source_id=skillgroup.source_id
+                    JOIN schedule on skillgroup.skillgroup_id=schedule.skillgroup_id WHERE skillgroup.skillgroup_id=#{skillgroupId}
+                ) a
+        )
+            </update>
+    <select id="queryBySkillgroupId" parameterType="int" resultType="int">
+          SELECT DISTINCT source.source_num FROM source JOIN skillgroup on source.source_id=skillgroup.source_id
+                    JOIN schedule on skillgroup.skillgroup_id=schedule.skillgroup_id WHERE skillgroup.skillgroup_id=#{skillgroupId}
+    </select>
 </mapper>

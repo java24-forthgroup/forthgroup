@@ -26,4 +26,10 @@ public interface SourceMapper {
     void update(Source source);
 
     void deleteSources(Integer[] sourceIds);
+    //号源减一
+    void deductionSource(Integer skillgroupId);
+
+    int queryBySkillgroupId(Integer skillgroup);
+
+    int insert(Source source);
 }

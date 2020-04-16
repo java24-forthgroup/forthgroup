@@ -111,6 +111,20 @@
                           <img src="images/201607271939462.jpg" alt="...">
                       </div>
 
+
+            </div>
+
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">woniuxy</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">woniuxy</span>
+            </div>
+
                       <div class="item">
                           <img src="images/2016072719555688.jpg" alt="...">
                       </div>
@@ -265,6 +279,7 @@
                       </div>
                   </div>
               </section>
+
           </div>
         </div>
       </div>

@@ -19,4 +19,5 @@ public class Apprecord {
     private Patient patient;
     private Skillgroup skillgroup;
     private Aroom aroom;
+    private Schedule schedule;
 }

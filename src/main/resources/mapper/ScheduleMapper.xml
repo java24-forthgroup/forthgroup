@@ -13,6 +13,14 @@
       <result column="source_id" jdbcType="INTEGER" property="sourceId" />
       <result column="skillgroup_name" jdbcType="VARCHAR" property="skillgroupName" />
     </association>
+    <association property="source" column="source_id" javaType="source" >
+      <id column="source_id" jdbcType="INTEGER" property="sourceId" />
+      <result column="queue_id" jdbcType="INTEGER" property="queueId" />
+      <result column="skillgroup_id" jdbcType="INTEGER" property="skillgroupId" />
+      <result column="type_id" jdbcType="INTEGER" property="typeId" />
+      <result column="source_num" jdbcType="INTEGER" property="sourceNum" />
+
+    </association>
   </resultMap>
 
     <select id="findAllByPage" parameterType="pageBean" resultMap="BaseResultMap">
@@ -22,15 +30,16 @@
           schedule.skillgroup_id in (select skillgroup_id from skillgroup where skillgroup_name like CONCAT('%',#{queryVal},'%'))
         </if>
       </where>
+      limit ${(nowPage-1)*pageRow},${pageRow}
     </select>
     <delete id="delete" parameterType="int">
       delete from schedule where schedule_id=#{scheduleId}
     </delete>
   <insert id="save" parameterType="schedule">
-    insert into schedule values (null,#{skillgroup.skillgroupId},#{date},#{datestart},#{datelast})
+    insert into schedule values (null,#{skillgroup.skillgroupId},#{date},#{datestart},#{datelast},#{source.sourceId})
   </insert>
   <select id="findOne" parameterType="int" resultMap="BaseResultMap">
-     SELECT schedule_id,schedule.skillgroup_id,skillgroup.skillgroup_name, date,datestart,datelast FROM schedule join skillgroup on schedule.skillgroup_id = skillgroup.skillgroup_id
+     SELECT schedule_id,schedule.skillgroup_id,skillgroup.skillgroup_name, date,datestart,datelast ,schedule.source_id FROM schedule join skillgroup on schedule.skillgroup_id = skillgroup.skillgroup_id
      where schedule_id=#{scheduleId}
   </select>
   <update id="update" parameterType="schedule">
@@ -56,7 +65,22 @@
 
   </update>
   <select id="queryByDate" parameterType="String" resultMap="BaseResultMap">
-    select  DISTINCT schedule.skillgroup_id,skillgroup_Name from schedule join skillgroup on skillgroup.skillgroup_id = schedule.skillgroup_id
+    select  DISTINCT schedule.skillgroup_id,skillgroup_Name,datestart,datelast from schedule join skillgroup on skillgroup.skillgroup_id = schedule.skillgroup_id
     <where>date=#{date}</where>
   </select>
+  <select id="countAll" parameterType="pageBean" resultType="integer">
+    SELECT count(*) FROM schedule join skillgroup on schedule.skillgroup_id = skillgroup.skillgroup_id
+    <where>
+      <if test="queryVal!=null">
+        schedule.skillgroup_id in (select skillgroup_id from skillgroup where skillgroup_name like CONCAT('%',#{queryVal},'%'))
+      </if>
+    </where>
+  </select>
+<select id="queryDatedBySkillgroup" parameterType="int" resultMap="BaseResultMap">
+  select * from schedule
+  <where>
+    Skillgroup_id = #{skillgroupId}
+  </where>
+</select>
+
 </mapper>

@@ -80,9 +80,11 @@
 
 							<div class="form-group">
 								<div class="form-group">
+
 									<label>选择日期：</label>
 									<!--指定 date标记-->
 										<div >
+
 											<input type="" name="bookTime"  class="form-control" id="bookTime" autocomplete="off">
 										</div>
 								</div>
@@ -90,12 +92,21 @@
 						</div>
 						<div class="form-group">
 							<label >预约医技</label>
-							<SELECT name="skillgroup.skillgroupId" id="skillgroup" class="form-control">
+							<SELECT name="skillgroupId" id="skillgroup" class="form-control">
 
 								<option value=''></option>
 
 							</SELECT>
 						</div>
+					<!--	<div class="form-group">
+							<label >时间段</label>
+							<SELECT name="dated" id="dated" class="form-control">
+
+								<option value=''></option>
+
+							</SELECT>
+						</div>
+						-->
 						<div class="form-group">
 							<label >预约项目</label>
 							<SELECT name="project.projectId" id="project" class="form-control">
@@ -111,6 +122,10 @@
 								<option value=''></option>
 
 							</SELECT>
+						</div>
+						<div class="form-group">
+							<label >今日剩余可预约数</label>
+							<input id="sourceCount" type="text" class="form-control" readonly="value">
 						</div>
 
 						<div class="form-group">
@@ -215,6 +230,8 @@
 				}
 				queryBySkillgroup();
 				queryDoctorBySkillgroup();
+				queryBySkillgroupId($("#skillgroup").val());
+			//	queryDatedBySkillgroup($("#skillgroup").val());
 			}
 		})
 	});
@@ -268,6 +285,37 @@
 			}
 		})
 	}
+	$("#skillgroup").change(function(){
+		queryBySkillgroupId($("#skillgroup").val());
+	});
+	function queryBySkillgroupId(skillgroupId){
+
+		$.ajax({
+			url:"${APPPATH }/apprecord/queryBySkillgroupId",
+			type:"post",
+			data:{"skillgroupId":skillgroupId},
+
+			success:function(data){
+				$("#sourceCount").val(data.obj)
+			}
+		})
+	}
+	$("#skillgroup").change(function(){
+		queryBySkillgroupId($("#skillgroup").val());
+	});
+	function queryDatedBySkillgroup(skillgroupId){
+
+		$.ajax({
+			url:"${APPPATH }/schedule/queryDatedBySkillgroup",
+			type:"post",
+			data:{"skillgroupId":skillgroupId},
+
+			success:function(data){
+				$("#date").val(data.obj.datestar+data.obj.datelast)
+			}
+		})
+	}
+
 	$(function () {
 		$(".list-group-item").click(function(){
 			if ( $(this).find("ul") ) {
@@ -280,7 +328,10 @@
 			}
 		});
 		$("#btnSave").click(function(){
-
+			if($("#sourceCount").val()==0){
+				layer.msg("今天预约已满!", {time:1000, icon:0, shift:6}, function(){});
+				return false;
+			}
 			$.ajax({
 				url:"${APPPATH}/apprecord/book",
 				type:"post",

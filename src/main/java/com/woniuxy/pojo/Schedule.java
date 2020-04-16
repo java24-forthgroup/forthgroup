@@ -16,4 +16,6 @@ public class Schedule {
     private String datestart;
 
     private String datelast;
+
+    private Source source;
 }

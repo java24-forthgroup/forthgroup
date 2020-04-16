@@ -1,9 +1,16 @@
 package com.woniuxy.service.impl;
 
 import com.woniuxy.dao.ApprecordMapper;
+
+import com.woniuxy.dao.PatientMapper;
+import com.woniuxy.dao.SourceMapper;
+
 import com.woniuxy.pojo.Apprecord;
 import com.woniuxy.dao.PatientMapper;
 import com.woniuxy.pojo.PageBean;
+
+import com.woniuxy.pojo.Patient;
+import com.woniuxy.pojo.Skillgroup;
 
 import com.woniuxy.service.ApprecordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +27,8 @@ public class ApprecordServiceImpl implements ApprecordService {
     ApprecordMapper apprecordMapper;
     @Autowired(required = false)
     PatientMapper patientMapper;
-
+    @Autowired(required = false)
+    SourceMapper sourceMapper;
     @Override
     public void setPatientQueueNum(Map<String, Object> map) {
         apprecordMapper.setPatientQueueNum(map);
@@ -57,10 +65,18 @@ public class ApprecordServiceImpl implements ApprecordService {
     }
 
     @Override
-    public void book(Apprecord apprecord) {
-        apprecord.setAttendStatus("否");
-        apprecord.setCostStatus("否");
-        apprecordMapper.book(apprecord);
+    public Integer book(Apprecord apprecord, Skillgroup skillgroup) {
+
+        int count = sourceMapper.queryBySkillgroupId(skillgroup.getSkillgroupId());
+        if(count==0){
+            return 0;
+        }else {
+            apprecord.setAttendStatus("否");
+            apprecord.setCostStatus("否");
+            apprecordMapper.book(apprecord);
+            sourceMapper.deductionSource(skillgroup.getSkillgroupId());
+            return 1;
+        }
     }
 
     @Override
@@ -78,11 +94,18 @@ public class ApprecordServiceImpl implements ApprecordService {
 
     @Override
     public List<Apprecord> findAllByPageBean(PageBean pageBean) {
-        return apprecordMapper.findAllByPageBean(pageBean);
+        return apprecordMapper.findAllByPage(pageBean);
     }
 
     @Override
     public void delApprecords(Integer[] typeId) {
 
+    }
+
+
+
+    @Override
+    public List<Apprecord> myBook(PageBean pageBean) {
+        return apprecordMapper.myBook(pageBean);
     }
 }

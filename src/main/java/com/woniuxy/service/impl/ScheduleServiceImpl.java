@@ -1,8 +1,10 @@
 package com.woniuxy.service.impl;
 
 import com.woniuxy.dao.ScheduleMapper;
+import com.woniuxy.dao.SourceMapper;
 import com.woniuxy.pojo.PageBean;
 import com.woniuxy.pojo.Schedule;
+import com.woniuxy.pojo.Source;
 import com.woniuxy.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,10 +21,12 @@ import java.util.List;
 public class ScheduleServiceImpl implements ScheduleService {
     @Autowired(required = false)
     ScheduleMapper scheduleMapper;
+    @Autowired
+    SourceMapper sourceMapper;
 
     @Override
     public int countAll(PageBean pageBean) {
-        return 0;
+        return scheduleMapper.countAll(pageBean);
     }
 
     @Override
@@ -42,11 +46,27 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public void delete(int scheduleId) {
+        Schedule schedule = scheduleMapper.findOne(scheduleId);
+        System.out.println(schedule);
         scheduleMapper.delete(scheduleId);
-    }
 
+        sourceMapper.delete(schedule.getSource().getSourceId());
+    }
+    //增加排班，并且对应增加对应的号源池
     @Override
     public void save(Schedule schedule) {
+        Source source = new Source();
+        source.setSkillgroupId(schedule.getSkillgroup().getSkillgroupId());
+        source.setSourceNum(300);
+        source.setTypeId(1);
+        source.setQueueId(null);
+
+        sourceMapper.save(source);
+
+        int num =source.getSourceId();
+        System.out.println(num);
+        source.setSourceId(num);
+        schedule.setSource(source);
         scheduleMapper.save(schedule);
     }
 
@@ -63,5 +83,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<Schedule> findAllByPageBean(PageBean pageBean) {
         return null;
+    }
+
+    @Override
+    public Schedule queryDatedBySkillgroup(Integer skillgroupId) {
+        return scheduleMapper.queryDatedBySkillgroup(skillgroupId);
     }
 }

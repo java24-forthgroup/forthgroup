@@ -12,7 +12,8 @@ public class Source {
     private Integer skillgroupId;
     private Integer typeId;
     private Integer sourceNum;
-
+    private Queue queue;
+    private Integer queueId;
     //表中对应的对象类型
     private  Skillgroup skillgroup;
     private  Sourcetype sourcetype;
