@@ -24,7 +24,8 @@ public class PatientController {
     @RequestMapping("index")
     public String index(){
         return "patient/index";
-    } @RequestMapping("goSave")
+    }
+    @RequestMapping("goSave")
     public String goSave(){
         return "patient/save";
     }

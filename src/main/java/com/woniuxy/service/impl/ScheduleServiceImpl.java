@@ -19,14 +19,14 @@ import java.util.List;
 @Service
 @Transactional
 public class ScheduleServiceImpl implements ScheduleService {
-    @Autowired
+    @Autowired(required = false)
     ScheduleMapper scheduleMapper;
     @Autowired
     SourceMapper sourceMapper;
 
     @Override
     public int countAll(PageBean pageBean) {
-        return 0;
+        return scheduleMapper.countAll(pageBean);
     }
 
     @Override

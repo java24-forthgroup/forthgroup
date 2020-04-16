@@ -2,16 +2,17 @@ package com.woniuxy.dao;
 
 import com.woniuxy.pojo.Apprecord;
 import com.woniuxy.pojo.PageBean;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
-/**
- * @auther: 秦浦华
- * @DATE: 2020/3/28   16:26
- */
-@Mapper
 public interface ApprecordMapper {
+    void setPatientQueueNum(Map<String, Object> map);
+
+    List<Apprecord> getAroomByProjectId(Integer projectId);
+
+    Apprecord findOne(Integer apprecordId);
+
 
     int countAll(PageBean pageBean);
 
@@ -22,6 +23,9 @@ public interface ApprecordMapper {
     void book(Apprecord apprecord);
     Apprecord findOne(int apprecordId);
     void update (Apprecord apprecord);
+
+
     List<Apprecord> findAllByPageBean(PageBean pageBean);
 
+    List<Apprecord> myBook(PageBean pageBean);
 }

@@ -101,15 +101,5 @@ public class PermissionController {
 		
 		return zTree;
 	}
-	
-	public void queryZTree(Permission permission) {
 
-		List<Permission> children = permissionService.selectByParentid(permission.getPermissionId());
-		if(children!=null) {
-			for(Permission child:children) {
-				queryZTree(child);
-			}
-		}
-		permission.setChildren(children);
-	}
 }

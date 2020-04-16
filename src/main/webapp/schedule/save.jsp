@@ -11,10 +11,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-	<link rel="stylesheet" href="${ItemPath}/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="${ItemPath}/css/font-awesome.min.css">
-	<link rel="stylesheet" href="${ItemPath}/css/main.css">
-	<link rel="stylesheet" href="${ItemPath}/css/doc.min.css">
+	<link rel="stylesheet" href="${APPPATH}/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="${APPPATH}/css/font-awesome.min.css">
+	<link rel="stylesheet" href="${APPPATH}/css/main.css">
+	<link rel="stylesheet" href="${APPPATH}/css/doc.min.css">
 	<style>
 	.tree li {
         list-style-type: none;
@@ -30,30 +30,27 @@
         <div class="navbar-header">
             <div><a class="navbar-brand" style="font-size:32px;" href="sourceType.html">医疗预约平台</a></div>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li style="padding-top:8px;">
-				<div class="btn-group">
-				  <button type="button" class="btn btn-default btn-success dropdown-toggle" data-toggle="dropdown">
-					<i class="glyphicon glyphicon-sourceType"></i> ${loginUser.uname } <span class="caret"></span>
-
-					<i class="glyphicon glyphicon-user">${loginUser.uname}</i><span class="caret"></span>
-
-				  </button>
-					  <ul class="dropdown-menu" role="menu">
-						<li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
-						<li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
-						<li class="divider"></li>
-						<li><a href="${ItemPath}/logout"><i class="glyphicon glyphicon-off"></i>退出系统</a></li>
-					  </ul>
-			    </div>
-			</li>
-            <li style="margin-left:10px;padding-top:8px;">
-				<button type="button" class="btn btn-default btn-danger">
-				  <span class="glyphicon glyphicon-question-sign"></span> 帮助
-				</button>
-			</li>
-          </ul>
+		  <div id="navbar" class="navbar-collapse collapse">
+			  <ul class="nav navbar-nav navbar-right">
+				  <li style="padding-top:8px;">
+					  <div class="btn-group">
+						  <button type="button" class="btn btn-default btn-success dropdown-toggle" data-toggle="dropdown">
+							  <i class="glyphicon glyphicon-user"></i> ${loginUser.uname } <span class="caret"></span>
+						  </button>
+						  <ul class="dropdown-menu" role="menu">
+							  <li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
+							  <li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
+							  <li class="divider"></li>
+							  <li><a href="logout"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
+						  </ul>
+					  </div>
+				  </li>
+				  <li style="margin-left:10px;padding-top:8px;">
+					  <button type="button" class="btn btn-default btn-danger">
+						  <a href="${APPPATH}/help.jsp" style="color: white"> <span class="glyphicon glyphicon-question-sign"></span> 帮助</a>
+					  </button>
+				  </li>
+			  </ul>
           <form class="navbar-form navbar-right">
             <input type="text" class="form-control" placeholder="Search...">
           </form>
@@ -135,10 +132,16 @@
 		</div>
 	  </div>
 	</div>
+
     <script src="${ItemPath}/jquery/jquery-2.1.1.min.js"></script>
     <script src="${ItemPath}/bootstrap/js/bootstrap.min.js"></script>
 	<script src="${ItemPath}/script/docs.min.js"></script>
 	<script src="${APPPATH }/layer/layer.js"></script>
+
+    <script src="${APPPATH}/jquery/jquery-2.1.1.min.js"></script>
+    <script src="${APPPATH}/bootstrap/js/bootstrap.min.js"></script>
+	<script src="${APPPATH}/script/docs.min.js"></script>
+
         <script type="text/javascript">
             $(function () {
 			    $(".list-group-item").click(function(){

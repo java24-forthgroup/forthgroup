@@ -11,6 +11,13 @@ public class Queue {
     private Integer queueId;
     private Integer queueNum;
     private Integer aroomId;
-    private  Aroom aroom;
+    private String patientStatus;
+    private Aroom aroom;
+    private Patient patient;
 
+    public Queue(Integer queueId,Integer queueNum,Integer aroomId){
+        this.queueId=queueId;
+        this.queueNum=queueNum;
+        this.aroomId=aroomId;
+    }
 }

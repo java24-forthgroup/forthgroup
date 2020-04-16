@@ -11,10 +11,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-	<link rel="stylesheet" href="${APPPATHPath}/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="${APPPATHPath}/css/font-awesome.min.css">
-	<link rel="stylesheet" href="${APPPATHPath}/css/main.css">
-	<link rel="stylesheet" href="${APPPATHPath}/css/doc.min.css">
+	<link rel="stylesheet" href="${APPPATH}/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="${APPPATH}/css/font-awesome.min.css">
+	<link rel="stylesheet" href="${APPPATH}/css/main.css">
+	<link rel="stylesheet" href="${APPPATH}/css/doc.min.css">
 	<style>
 	.tree li {
         list-style-type: none;
@@ -40,7 +40,7 @@
 						<li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
 						<li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
 						<li class="divider"></li>
-						<li><a href="${APPPATHPath}/logout"><i class="glyphicon glyphicon-off"></i>退出系统</a></li>
+						<li><a href="${APPPATH}/logout"><i class="glyphicon glyphicon-off"></i>退出系统</a></li>
 					  </ul>
 			    </div>
 			</li>
@@ -159,10 +159,16 @@
 		</div>
 	  </div>
 	</div>
+<<<<<<< HEAD
     <script src="${APPPATHPath}/jquery/jquery-2.1.1.min.js"></script>
     <script src="${APPPATHPath}/bootstrap/js/bootstrap.min.js"></script>
 	<script src="${APPPATHPath}/script/docs.min.js"></script>
 	<script src="${APPPATH }/layer/layer.js"></script>
+
+    <script src="${APPPATH}/jquery/jquery-2.1.1.min.js"></script>
+    <script src="${APPPATH}/bootstrap/js/bootstrap.min.js"></script>
+	<script src="${APPPATH}/script/docs.min.js"></script>
+
         <script type="text/javascript">
             $(function () {
 			    $(".list-group-item").click(function(){
@@ -200,11 +206,11 @@
 
 				$("#btnCroomEdit").click(function() {
 					$.ajax({
-						url:"${APPPATHPath}/croom/croomEditSubmit",
+						url:"${APPPATH}/croom/croomEditSubmit",
 						type:"post",
 						data:{"aroomId":$("#aroomId").val(),"croomId":$("#croomId").val(),"croomCode":$("#croomCode").val(),"croomAddr":$("#croomAddr").val()},
 						success:function(result){
-							window.location.href = "${APPPATHPath}/croom/croomListByPage";
+							window.location.href = "${APPPATH}/croom/croomListByPage";
 						}
 					});
 				});

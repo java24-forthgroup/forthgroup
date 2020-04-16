@@ -1,31 +1,49 @@
 package com.woniuxy.service.impl;
 
 import com.woniuxy.dao.ApprecordMapper;
+
 import com.woniuxy.dao.PatientMapper;
 import com.woniuxy.dao.SourceMapper;
+
 import com.woniuxy.pojo.Apprecord;
+import com.woniuxy.dao.PatientMapper;
 import com.woniuxy.pojo.PageBean;
+
+import com.woniuxy.pojo.Patient;
 import com.woniuxy.pojo.Skillgroup;
+
 import com.woniuxy.service.ApprecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
-/**
- * @auther: 秦浦华
- * @DATE: 2020/3/28   16:27
- */
 @Service
 @Transactional
 public class ApprecordServiceImpl implements ApprecordService {
-    @Autowired
+    @Autowired(required = false)
     ApprecordMapper apprecordMapper;
-    @Autowired
+    @Autowired(required = false)
     PatientMapper patientMapper;
-    @Autowired
+    @Autowired(required = false)
     SourceMapper sourceMapper;
+    @Override
+    public void setPatientQueueNum(Map<String, Object> map) {
+        apprecordMapper.setPatientQueueNum(map);
+    }
+
+    @Override
+    public List<Apprecord> getAroomByProjectId(Integer projectId) {
+        return apprecordMapper.getAroomByProjectId(projectId);
+    }
+
+    @Override
+    public Apprecord findOne(Integer apprecordId) {
+        return apprecordMapper.findOne(apprecordId);
+    }
+
     @Override
     public int countAll(PageBean pageBean) {
         return apprecordMapper.countAll(pageBean);
@@ -63,28 +81,31 @@ public class ApprecordServiceImpl implements ApprecordService {
 
     @Override
     public Apprecord findOne(int apprecordId) {
-
-
         Apprecord apprecord = apprecordMapper.findOne(apprecordId);
-
         return apprecord ;
     }
 
     @Override
     public void update(Apprecord apprecord) {
-        patientMapper.update(apprecord.getPatient());
         apprecordMapper.update(apprecord);
+        //patientMapper.update(apprecord.getPatient());
+        //apprecordMapper.update(apprecord);
     }
 
     @Override
     public List<Apprecord> findAllByPageBean(PageBean pageBean) {
-        return apprecordMapper.findAllByPageBean(pageBean);
+        return apprecordMapper.findAllByPage(pageBean);
+    }
+
+    @Override
+    public void delApprecords(Integer[] typeId) {
+
     }
 
 
 
     @Override
-    public void delApprecords(Integer[] typeId) {
-
+    public List<Apprecord> myBook(PageBean pageBean) {
+        return apprecordMapper.myBook(pageBean);
     }
 }

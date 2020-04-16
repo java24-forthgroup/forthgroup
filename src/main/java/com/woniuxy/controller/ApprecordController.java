@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,9 +28,9 @@ public class ApprecordController {
     ApprecordService apprecordService;
     @Autowired
     PatientService patientService;
-    @Autowired
+    @Autowired(required = false)
     EmpMapper empMapper;
-    @Autowired
+    @Autowired(required = false)
     ProjectMapper projectMapper;
     @Autowired
     SourceService sourceService;
@@ -46,6 +47,45 @@ public class ApprecordController {
         System.out.println(patient);
         model.addAttribute("patient",patient);
         return "apprecord/book";
+    }
+    //去我的预约
+    @RequestMapping("goMyBook")
+    public String goMyBook(Model model,Integer userId){
+        model.addAttribute("userId",userId);
+        return "apprecord/myBook";
+    }
+    //我的预约//
+    @RequestMapping("myBook")
+    @ResponseBody
+    public Message myBook(HttpSession session , PageBean pageBean){
+        Message message = new Message();
+        try {
+            if(pageBean.getNowPage()==null) {
+                pageBean.setNowPage(1);
+            }
+            pageBean.setPageRow(5);
+            User loginUser = (User)session.getAttribute("loginUser");
+            Patient patient = patientService.findPatientByUserId(loginUser.getUserId());
+            System.out.println(patient);
+            pageBean.setQueryVal(patient.getPatientName());
+            int CountRow = apprecordService.countAll(pageBean);
+            System.out.println(CountRow);
+            pageBean.setCountRow(CountRow);
+
+            int countPage = pageBean.getCountRow()%pageBean.getPageRow()==0?pageBean.getCountRow()/pageBean.getPageRow():pageBean.getCountRow()/pageBean.getPageRow()+1;
+            pageBean.setCountPage(countPage);
+
+            List<Apprecord> list= apprecordService.myBook(pageBean);
+            System.out.println(list);
+            System.out.println(list.size());
+            pageBean.setList(list);
+            message.setObj(pageBean);
+            message.setFlag(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            message.setFlag(false);
+        }
+        return message;
     }
     @RequestMapping("queryBySkillgroupId")
     @ResponseBody
@@ -73,7 +113,7 @@ public class ApprecordController {
             }
             pageBean.setPageRow(5);
             int CountRow = apprecordService.countAll(pageBean);
-
+            System.out.println(CountRow);
             pageBean.setCountRow(CountRow);
 
             int countPage = pageBean.getCountRow()%pageBean.getPageRow()==0?pageBean.getCountRow()/pageBean.getPageRow():pageBean.getCountRow()/pageBean.getPageRow()+1;
@@ -95,13 +135,16 @@ public class ApprecordController {
         try {
 
             Apprecord apprecord = apprecordService.findOne(apprecordId);
-            List<Emp> empList = empMapper.findAllDoctor();
+            System.out.println(apprecord);
+//            List<Emp> empList = empMapper.findAllDoctor();
+            List<Emp> empList = empMapper.findAll();
             List<Project> projectList = projectMapper.findAll();
-
-            map.put("empList",empList);
-            map.put("projectList",projectList);
-            map.put("apprecord",apprecord);
-            mode.addAttribute("map",map);
+//            map.put("empList",empList);
+//            map.put("projectList",projectList);
+//            map.put("apprecord",apprecord);
+            mode.addAttribute("projectList",projectList);
+            mode.addAttribute("empList",empList);
+            mode.addAttribute("apprecord",apprecord);
             return "apprecord/update";
         }catch(Exception e) {
             e.printStackTrace();
@@ -142,10 +185,11 @@ public class ApprecordController {
     //预约
     @ResponseBody
     @RequestMapping("book")
-    public Message book(Apprecord apprecord,Skillgroup skillgroup){
+    public Message book(Apprecord apprecord,Skillgroup skillgroup,HttpSession session){
         Message message = new Message();
         try {
-
+            Patient loginUser = (Patient)session.getAttribute("loginUser");
+            apprecord.setEmpId(loginUser.getPatientId());
             Integer result = apprecordService.book(apprecord, skillgroup);
             if(result==0){
                 message.setFlag(false);

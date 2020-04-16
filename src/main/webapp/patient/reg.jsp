@@ -24,7 +24,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <div><a class="navbar-brand" style="font-size:32px;" href="patient.html">用户维护</a></div>
+            <div><a class="navbar-brand" style="font-size:32px;" href="${APPPATH}/main">医疗预约平台</a></div>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -133,6 +133,7 @@
     </div>
 </div>
 <script src="${APPPATH }/jquery/jquery-2.1.1.min.js"></script>
+<script src="${APPPATH }/jquery/md5.js"></script>
 <script src="${APPPATH }/bootstrap/js/bootstrap.min.js"></script>
 <script src="${APPPATH }/script/docs.min.js"></script>
 <script src="${APPPATH }/layer/layer.js"></script>
@@ -194,6 +195,9 @@
                 return;
             }
             var patientStatusVal = $("#upwd").val();
+            //使用md5进行加密
+            var b = hex_md5(patientStatusVal);
+            $("#upwd").val(b);
             if(patientStatusVal==""){
                 layer.msg("密码不能为空!", {time:1000, icon:0, shift:5}, function(){});
                 return;

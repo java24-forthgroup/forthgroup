@@ -25,7 +25,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
-            <div><a class="navbar-brand" style="font-size:32px;" href="user.html">医疗预约平台</a></div>
+            <div><a class="navbar-brand" style="font-size:32px;" href="${APPPATH}/main">医疗预约平台</a></div>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -73,12 +73,6 @@
 			  <div class="panel-body">
 				<form role="form" id="saveForm">
 				  <div class="form-group">
-					<label for="exampleInputPassword1">队列序号</label>
-					 <select name="queueId" class="form-control">
-						  <c:forEach items="${queueList}" var="queue">
-							  <option value="${queue.queueId}">${queue.queueNum}</option>
-						  </c:forEach>
-					 </select><br/>
 					 <label for="exampleInputPassword1">医技组名称</label>
 					  <select name="skillgroupId" class="form-control">
 						  <c:forEach items="${skillgroupList}" var="skillgroup">

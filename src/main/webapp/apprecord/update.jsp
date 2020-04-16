@@ -76,11 +76,11 @@
 
 						<div class="form-group">
 
-							<input type="hidden" id="apprecordId" name="apprecordId" value="${map.apprecord.apprecordId}">
+							<input type="hidden" id="apprecordId" name="apprecordId" value="${apprecord.apprecordId}">
 							<div class="form-group">
 								<label >医生 </label>
 								<SELECT name="emp.empId">
-									<c:forEach items="${map.empList }" var="emp">
+									<c:forEach items="${empList }" var="emp">
 										<option value='${emp.empId }'
 												<c:if test="${map.apprecord.emp.empId==emp.empId }"> selected="selected" </c:if>>
 												${emp.empName }</option>
@@ -92,9 +92,9 @@
 						<div class="form-group">
 							<label >预约项目</label>
 							<SELECT name="project.projectId">
-								<c:forEach items="${map.projectList }" var="project">
+								<c:forEach items="${projectList }" var="project">
 									<option value='${project.projectId }'
-									<c:if test="${map.apprecord.project.projectId==project.projectId }"> selected="selected" </c:if>>
+									<c:if test="${apprecord.project.projectId==project.projectId }"> selected="selected" </c:if>>
 											${project.projectName }</option>
 								</c:forEach>
 							</SELECT>
@@ -102,16 +102,34 @@
 
 						<div class="form-group">
 							<label >患者姓名</label>
-							<input type="hidden" class="form-control" id="patientId" name="patient.patientId" value="${map.apprecord.patient.patientId}">
-							<input type="text" class="form-control" id="patientName" name="patient.patientName" value="${map.apprecord.patient.patientName}">
+							<input type="hidden" class="form-control" id="patientId" name="patient.patientId" value="${apprecord.patient.patientId}">
+							<input type="text" class="form-control" id="patientName" name="patient.patientName" value="${apprecord.patient.patientName}">
 						</div>
 						<div class="form-group">
 							<label >是否签到</label>
-							<input type="text" class="form-control" id="attendStatus" name="attendStatus" value="${map.apprecord.attendStatus}">
+							<select name="costStatus">
+								<c:if test="${apprecord.costStatus=='是'}">
+								<option>${apprecord.costStatus}</option>
+								<option>否</option>
+								</c:if>
+								<c:if test="${apprecord.costStatus=='否'}">
+									<option value="${apprecord.costStatus}">${apprecord.costStatus}</option>
+									<option>是</option>
+								</c:if>
+							</select>
 						</div>
 						<div class="form-group">
 							<label>是否缴费</label>
-							<input type="text" class="form-control" id="costStatus" name="costStatus" value="${map.apprecord.costStatus}">
+							<select name="attendStatus">
+								<c:if test="${apprecord.attendStatus=='是'}">
+									<option>${apprecord.attendStatus}</option>
+									<option>否</option>
+								</c:if>
+								<c:if test="${apprecord.attendStatus=='否'}">
+									<option value="${apprecord.attendStatus}">${apprecord.attendStatus}</option>
+									<option>是</option>
+								</c:if>
+							</select>
 						</div>
 
 						<button type="button" id="btnUpdate" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i> 修改</button>

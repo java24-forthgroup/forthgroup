@@ -25,4 +25,8 @@ public interface QueueService {
 
     void update(Queue queue);
 
+    //体检合格
+    void confirmaccept(Queue queue);
+    //体检不合格
+    void confirmreject(Queue queue);
 }

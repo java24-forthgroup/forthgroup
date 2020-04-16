@@ -30,7 +30,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
-          <div><a class="navbar-brand" style="font-size:32px;" href="#">控制面板</a></div>
+          <div><a class="navbar-brand" style="font-size:32px;" href="${APPPATH}/main">医疗预约平台</a></div>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -49,7 +49,7 @@
 			</li>
             <li style="margin-left:10px;padding-top:8px;">
 				<button type="button" class="btn btn-default btn-danger">
-				  <span class="glyphicon glyphicon-question-sign"></span> 帮助
+                    <a href="${APPPATH}/help.jsp" style="color: white"> <span class="glyphicon glyphicon-question-sign"></span> 帮助</a>
 				</button>
 			</li>
           </ul>
@@ -76,9 +76,7 @@
 
             </div>
             <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">woniuxy</span>
+                <a href="/apprecord/goMyBook?userId=${loginUser.userId}"> <h4>我的预约</h4> </a>
             </div>
             <div class="col-xs-6 col-sm-3 placeholder">
               <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">

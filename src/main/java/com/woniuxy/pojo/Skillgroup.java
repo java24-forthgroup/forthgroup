@@ -12,4 +12,8 @@ public class Skillgroup {
     private Integer aroomId;
     private Integer sourceId;
     private String skillgroupName;
+    private Aroom aroom;
+    private Skillgroup skillgroup;
+    private Source source;
+
 }

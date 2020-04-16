@@ -30,6 +30,7 @@
           schedule.skillgroup_id in (select skillgroup_id from skillgroup where skillgroup_name like CONCAT('%',#{queryVal},'%'))
         </if>
       </where>
+      limit ${(nowPage-1)*pageRow},${pageRow}
     </select>
     <delete id="delete" parameterType="int">
       delete from schedule where schedule_id=#{scheduleId}
@@ -66,5 +67,13 @@
   <select id="queryByDate" parameterType="String" resultMap="BaseResultMap">
     select  DISTINCT schedule.skillgroup_id,skillgroup_Name from schedule join skillgroup on skillgroup.skillgroup_id = schedule.skillgroup_id
     <where>date=#{date}</where>
+  </select>
+  <select id="countAll" parameterType="pageBean" resultType="integer">
+    SELECT count(*) FROM schedule join skillgroup on schedule.skillgroup_id = skillgroup.skillgroup_id
+    <where>
+      <if test="queryVal!=null">
+        schedule.skillgroup_id in (select skillgroup_id from skillgroup where skillgroup_name like CONCAT('%',#{queryVal},'%'))
+      </if>
+    </where>
   </select>
 </mapper>
