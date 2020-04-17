@@ -31,6 +31,9 @@
         .tree-expanded {
             height : auto;
         }
+        .navbar-right{
+            margin-right:10px;
+        }
     </style>
 </head>
 
@@ -43,7 +46,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li style="padding-top:8px;">
+                <li style="padding-top:3px;">
                     <div class="btn-group">
                         <button type="button" class="btn btn-default btn-success dropdown-toggle" data-toggle="dropdown">
                             <i class="glyphicon glyphicon-user"></i> ${loginUser.uname } <span class="caret"></span>
@@ -56,13 +59,13 @@
                         </ul>
                     </div>
                 </li>
-                <li style="margin-left:10px;padding-top:8px;">
+                <li style="margin-left:10px;padding-top:3px;">
                     <button type="button" class="btn btn-default btn-danger">
                         <a href="${APPPATH}/help.jsp" style="color: white"> <span class="glyphicon glyphicon-question-sign"></span> 帮助</a>
                     </button>
                 </li>
             </ul>
-            <form class="navbar-form navbar-right">
+            <form class="navbar-form navbar-right" style="margin-right:150px">
                 <input type="text" class="form-control" placeholder="查询">
             </form>
         </div>

@@ -128,7 +128,7 @@ public class SourceController {
             if(pageBean.getNowPage()==null) {
                 pageBean.setNowPage(1);
             }
-            pageBean.setPageRow(3);
+            pageBean.setPageRow(5);
             List<Source> sourceList = sourceService.queryByPage(pageBean);
             int countRow = sourceService.countByPage(pageBean);
             pageBean.setCountRow(countRow);
