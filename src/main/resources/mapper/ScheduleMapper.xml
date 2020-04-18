@@ -76,11 +76,17 @@
       </if>
     </where>
   </select>
-<select id="queryDatedBySkillgroup" parameterType="int" resultMap="BaseResultMap">
+<select id="queryDatedBySkillgroup" parameterType="schedule" resultMap="BaseResultMap">
   select * from schedule
   <where>
-    Skillgroup_id = #{skillgroupId}
+    Skillgroup_id = #{skillgroup.skillgroupId} and date = #{date}
   </where>
 </select>
+  <select id="queryBySchedule" parameterType="schedule" resultMap="BaseResultMap">
+    select * from schedule
+    <where>
+     date = #{date} and datestart=#{datestart} and datelast=#{datelast}
+    </where>
+  </select>
 
 </mapper>

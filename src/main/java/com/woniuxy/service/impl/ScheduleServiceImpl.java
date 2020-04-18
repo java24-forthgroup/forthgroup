@@ -86,7 +86,12 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public Schedule queryDatedBySkillgroup(Integer skillgroupId) {
-        return scheduleMapper.queryDatedBySkillgroup(skillgroupId);
+    public Schedule queryDatedBySkillgroup(Schedule schedule) {
+        return scheduleMapper.queryDatedBySkillgroup(schedule);
+    }
+
+    @Override
+    public Schedule queryBySchedule(Schedule schedule) {
+        return scheduleMapper.queryBySchedule(schedule);
     }
 }

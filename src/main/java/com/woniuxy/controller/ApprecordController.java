@@ -5,6 +5,7 @@ import com.woniuxy.dao.ProjectMapper;
 import com.woniuxy.pojo.*;
 import com.woniuxy.service.ApprecordService;
 import com.woniuxy.service.PatientService;
+import com.woniuxy.service.ScheduleService;
 import com.woniuxy.service.SourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +36,8 @@ public class ApprecordController {
     ProjectMapper projectMapper;
     @Autowired
     SourceService sourceService;
+    @Autowired
+    ScheduleService scheduleService;
     //查询全部
     @RequestMapping("index")
     public String index(){
@@ -53,7 +57,7 @@ public class ApprecordController {
         return "apprecord/myBook";
     }
     //我的预约//
-    @RequestMapping("myBook")
+        @RequestMapping("myBook")
     @ResponseBody
     public Message myBook(HttpSession session , PageBean pageBean){
         Message message = new Message();
@@ -183,10 +187,19 @@ public class ApprecordController {
     //预约
     @ResponseBody
     @RequestMapping("book")
-    public Message book(String dated,Apprecord apprecord,Skillgroup skillgroup,HttpSession session){
+    public Message book(String bookTime,String dated,Apprecord apprecord,Skillgroup skillgroup,HttpSession session){
         Message message = new Message();
         try {
-            System.out.println(dated+"wwwwwwwwwwwwwwwwwwwwwwwwwwwww");
+            System.out.println(bookTime+"+++++++++++++++++");
+            System.out.println(dated);
+            String[] datedd = dated.split("-");
+            System.out.println(Arrays.toString(datedd));
+            Schedule schedule = new Schedule();
+            schedule.setDate(bookTime);
+            schedule.setDatestart(datedd[0]);
+            schedule.setDatelast(datedd[1]);
+            schedule = scheduleService.queryBySchedule(schedule);
+            apprecord.setSchedule(schedule);
             User loginUser = (User)session.getAttribute("loginUser");
             Patient patient = patientService.findPatientByUserId(loginUser.getUserId());
             apprecord.setPatient(patient);

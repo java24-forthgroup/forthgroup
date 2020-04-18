@@ -20,5 +20,7 @@ public interface ScheduleService {
     void update (Schedule schedule);
     List<Schedule> findAllByPageBean(PageBean pageBean);
 
-    Schedule queryDatedBySkillgroup(Integer skillgroupId);
+    Schedule queryDatedBySkillgroup(Schedule schedule);
+
+    Schedule queryBySchedule(Schedule schedule);
 }

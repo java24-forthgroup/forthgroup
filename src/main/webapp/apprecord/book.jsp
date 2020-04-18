@@ -97,16 +97,11 @@
 								<option value=''></option>
 
 							</SELECT>
-						</div>
-					<!--	<div class="form-group">
+						</div><div class="form-group">
 							<label >时间段</label>
-							<SELECT name="dated" id="dated" class="form-control">
-
-								<option value=''></option>
-
-							</SELECT>
+							<input id="dated" name="dated" type="text" class="form-control" readonly="value">
 						</div>
-						-->
+
 						<div class="form-group">
 							<label >预约项目</label>
 							<SELECT name="project.projectId" id="project" class="form-control">
@@ -231,7 +226,7 @@
 				queryBySkillgroup();
 				queryDoctorBySkillgroup();
 				queryBySkillgroupId($("#skillgroup").val());
-			//	queryDatedBySkillgroup($("#skillgroup").val());
+				queryDatedBySkillgroup($("#skillgroup").val(),$("#bookTime").val());
 			}
 		})
 	});
@@ -287,6 +282,7 @@
 	}
 	$("#skillgroup").change(function(){
 		queryBySkillgroupId($("#skillgroup").val());
+		queryDatedBySkillgroup($("#skillgroup").val());
 	});
 	function queryBySkillgroupId(skillgroupId){
 
@@ -300,22 +296,20 @@
 			}
 		})
 	}
-	$("#skillgroup").change(function(){
-		queryBySkillgroupId($("#skillgroup").val());
-	});
-	function queryDatedBySkillgroup(skillgroupId){
+
+	function queryDatedBySkillgroup(skillgroupId,date){
 
 		$.ajax({
 			url:"${APPPATH }/schedule/queryDatedBySkillgroup",
 			type:"post",
-			data:{"skillgroupId":skillgroupId},
+			data:{"skillgroup.skillgroupId":skillgroupId,"date":date},
 
 			success:function(data){
-				$("#date").val(data.obj.datestar+data.obj.datelast)
+
+				$("#dated").val(data.obj.datestart+"-"+data.obj.datelast)
 			}
 		})
 	}
-
 	$(function () {
 		$(".list-group-item").click(function(){
 			if ( $(this).find("ul") ) {

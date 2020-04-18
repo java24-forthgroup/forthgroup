@@ -129,11 +129,12 @@ public class ScheduleController {
     }
     @RequestMapping("queryDatedBySkillgroup")
     @ResponseBody
-    public Message queryDatedBySkillgroup(Integer skillgroupId){
+    public Message queryDatedBySkillgroup(Schedule schedule){
         Message message = new Message();
+        System.out.println(schedule+"1234564752");
         try {
-            Schedule schedule = scheduleService.queryDatedBySkillgroup(skillgroupId);
-            System.out.println(schedule+"66666666666666666666666666666666");
+             schedule = scheduleService.queryDatedBySkillgroup(schedule);
+
             message.setFlag(true);
             message.setObj(schedule);
         } catch (Exception e) {
