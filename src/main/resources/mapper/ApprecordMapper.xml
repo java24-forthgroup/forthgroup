@@ -17,15 +17,14 @@
     <association property="project" column="project_id" javaType="Project"  select="findOneProject" ></association>
     <association property="patient" column="patient_id" javaType="Patient"  select="findOnePatient"></association>
 
-  </resultMap>
+    <!--关联科室-->
+    <association property="aroom" javaType="aroom" column="emp_id" fetchType="lazy">
+      <id column="aroom_id" jdbcType="INTEGER" property="aroomId" />
+      <result column="aroom_name" jdbcType="VARCHAR" property="aroomName" />
+      <result column="aroom_code" jdbcType="VARCHAR" property="aroomCode" />
+      <result column="aroom_addr" jdbcType="VARCHAR" property="aroomAddr" />
+    </association>
 
-  <resultMap id="MyBook" type="com.woniuxy.pojo.Apprecord">
-    <result column="apprecord_id" jdbcType="INTEGER" property="apprecordId" />
-    <result column="emp_id" jdbcType="INTEGER" property="empId" />
-    <result column="project_id" jdbcType="INTEGER" property="projectId" />
-    <result column="patient_id" jdbcType="INTEGER" property="patientId" />
-    <result column="attend_status" jdbcType="VARCHAR" property="attendStatus" />
-    <result column="cost_status" jdbcType="VARCHAR" property="costStatus" />
     <!--关联员工表-->
     <association property="emp" javaType="emp" column="emp_id" fetchType="lazy">
       <result column="emp_id" jdbcType="INTEGER" property="empId" />
@@ -34,7 +33,6 @@
       <result column="emp_name" jdbcType="VARCHAR" property="empName" />
       <result column="emp_birthday" jdbcType="DATE" property="empBirthday" />
       <result column="emp_grade" jdbcType="VARCHAR" property="empGrade" />
-
     </association>
     <!--关联医技项目表-->
     <association property="project" javaType="project" column="cid" fetchType="lazy">
@@ -81,7 +79,6 @@
         <result column="skillgroup_id" jdbcType="INTEGER" property="skillgroupId" />
         <result column="type_id" jdbcType="INTEGER" property="typeId" />
         <result column="source_num" jdbcType="INTEGER" property="sourceNum" />
-
       </association>
     </association>
   </resultMap>
@@ -196,10 +193,12 @@
   <insert id="book" parameterType="apprecord">
     insert into apprecord values (null,#{emp.empId},#{project.projectId},#{patient.patientId},#{schedule.scheduleId},#{attendStatus},#{costStatus})
   </insert>
+
   <!-- 我的预约 -->
-  <select id="myBook" parameterType="pageBean" resultMap="MyBook">
+  <select id="myBook" parameterType="pageBean" resultMap="BaseResultMap">
     select * from apprecord JOIN `schedule` on schedule.schedule_id = apprecord.schedule_id
     JOIN emp on emp.emp_id = apprecord.emp_id join project on project.project_id = apprecord.project_id JOIN patient on patient.patient_id = apprecord.patient_id
+
     <where>
       <if test="queryVal!=null">
         apprecord.patient_Id = (select patient_Id from patient where patient_name like CONCAT('%',#{queryVal},'%'))

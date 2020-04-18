@@ -54,6 +54,7 @@ public class DoctorWorkController {
             List<Apprecord> appList = apprecordService.getAroomByProjectId(projectId);
             for (Apprecord app:appList) {
                 if(app.getProjectId()==projectId&&app.getApprecordId()==apprecordId){
+                    System.out.println(app);
                     int aroomId = app.getAroom().getAroomId();
                     Queue queue = new Queue(1, 0, aroomId);
                     int QueueNum = 1;

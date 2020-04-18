@@ -46,11 +46,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public void delete(int scheduleId) {
+
         Schedule schedule = scheduleMapper.findOne(scheduleId);
         System.out.println(schedule);
-        scheduleMapper.delete(scheduleId);
 
+        scheduleMapper.delete(scheduleId);
         sourceMapper.delete(schedule.getSource().getSourceId());
+
     }
     //增加排班，并且对应增加对应的号源池
     @Override

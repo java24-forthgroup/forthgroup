@@ -102,31 +102,6 @@
 
 				  </form>
 
-				<form role="form">
-				<input type="hidden" value="${croomEdit.croomId}" id="croomId" name="croomId">
-				  <div class="form-group">
-					<label for="exampleInputPassword1">所属科室</label>
-					<%-- <input type="text" id="aroomId" name="aroomId" value="${croomEdit.aroomId}" class="form-control"  > --%>
-					<select class="form-control" id="aroomId" >
-						<c:forEach items="${aroomList}" var="aroom" varStatus="i">
-							<c:if test="${croomEdit.aroomId==aroom.aroomId}">
-								<option value="${aroom.aroomId}" selected="selected">${aroom.aroomName}</option>
-							</c:if>
-							<option value="${aroom.aroomId}">${aroom.aroomName}</option>
-						</c:forEach>
-					</select>
-				  </div>
-				  <div class="form-group">
-					<label for="exampleInputPassword1">诊室编号</label>
-					<input type="text" id="croomCode" name="croomCode" value="${croomEdit.croomCode}" class="form-control"  >
-				  </div>
-				  <div class="form-group">
-					<label for="exampleInputEmail1">诊室地址</label>
-					<input type="email" id="croomAddr" name="croomAddr" class="form-control" value="${croomEdit.croomAddr}" >
-				  </div>
-				  <button type="button" id="btnCroomEdit" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i>确定修改</button>
-				  <button type="button" class="btn btn-danger" id="reset"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
-				</form>
 
 			  </div>
 			</div>
@@ -159,7 +134,7 @@
 		</div>
 	  </div>
 	</div>
-<<<<<<< HEAD
+
     <script src="${APPPATHPath}/jquery/jquery-2.1.1.min.js"></script>
     <script src="${APPPATHPath}/bootstrap/js/bootstrap.min.js"></script>
 	<script src="${APPPATHPath}/script/docs.min.js"></script>
